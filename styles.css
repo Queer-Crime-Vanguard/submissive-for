@@ -1,0 +1,79 @@
+body {
+    font-family: sans-serif;
+    font-weight: 200;
+    font-size: 14pt;
+    background-image: url(i_neutral.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+#dialogue-box {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    max-width: 30rem;
+    background-color: rgba(170,208,228, 0.5);
+    top: 1em;
+    bottom: 1em;
+    border-radius: 1em;
+    padding: 0.5rem 1em;
+}
+
+#dialogue {
+    position: absolute;
+    padding-right: 1em;
+    bottom: 1em;
+    display: flex;
+    align-items: flex-end;
+    align-content: flex-end;
+    flex-grow: 1;
+    flex-wrap: wrap;
+}
+
+.line {
+    display: none;
+    flex-basis: 100%;
+    transition: all 500ms linear, opacity 100ms linear;
+}
+
+.line.appeared {
+    display: inline;
+    margin-top: -20rem;
+    opacity: 0;
+}
+
+.line.positioned {
+    margin-top: 1rem;
+}
+
+.line.shown {
+    opacity: 1;
+}
+
+.line.left {
+    text-align: left;
+}
+
+.line.right {
+    text-align: right;
+}
+
+.bubble {
+    color: black;
+    display: inline-block;
+    padding: 0 1rem;
+    max-width: 16rem;
+    text-align: left;
+}
+
+.left .bubble {
+    border-radius: 1rem 1rem 1rem 0;
+    background-color: white;
+}
+
+.right .bubble {
+    border-radius: 1rem 1rem 0 1rem;
+    background-color: lightcyan;
+}
