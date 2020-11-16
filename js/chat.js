@@ -5,6 +5,7 @@ function nextline() {
         meta = currentLine.children[0].children[1];
         updateEmotion(currentLine.classList.contains('left'), emoindex(meta));
     }
+    startSound();
     
 }
 
