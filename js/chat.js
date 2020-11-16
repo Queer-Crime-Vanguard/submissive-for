@@ -1,6 +1,10 @@
 function nextline() {
     currentLine = document.querySelector('.line:not(.shown)')
-    if (currentLine) {showNextBubble(currentLine);}
+    if (currentLine) {
+        showNextBubble(currentLine);
+        meta = currentLine.children[0].children[1];
+        updateEmotion(currentLine.classList.contains('left'), emoindex(meta));
+    }
     
 }
 

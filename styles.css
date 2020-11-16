@@ -2,9 +2,10 @@ body {
     font-family: sans-serif;
     font-weight: 200;
     font-size: 14pt;
-    background-image: url(i_neutral.jpg);
+    background: canvas(scene);
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-position: 200px 200px;
+    overflow: hidden;
 }
 
 #dialogue-box {
@@ -76,4 +77,15 @@ body {
 .right .bubble {
     border-radius: 1rem 1rem 0 1rem;
     background-color: lightcyan;
+}
+
+.emotions img {
+    display: none;
+}
+
+canvas.scene {
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:-1;
 }
