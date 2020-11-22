@@ -4,6 +4,8 @@ function nextline() {
         showNextBubble(currentLine);
         meta = currentLine.children[0].children[1];
         updateEmotion(currentLine.classList.contains('left'), emoindex(meta));
+    } else {
+        finishScene();
     }
     startSound();
     

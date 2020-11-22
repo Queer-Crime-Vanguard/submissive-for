@@ -3,6 +3,8 @@ var imgl = new Image(),
 
 var emotions = {};
 
+var redraw = true;
+
 function udpateParams() {
     var height = window.innerHeight;
     var width = window.innerWidth;
@@ -88,23 +90,32 @@ function draw() {
     ctx.drawImage(cr, width-cr.width, 0);
 }
 
+function moveBg(e) {
+    var rect = e.currentTarget.getBoundingClientRect();
+    moveX = (e.clientX-rect.left)/width-0.5;
+    moveY = (e.clientY-rect.top)/height-0.5;
+}
+
+
 function setBg() {
     
     drawFrame();
-    draw();
+    updateBG();
     
     document.body.style.width = window.innerWidth;
     document.body.style.height = window.innerHeight;
 
     document.body.appendChild(c);
+
+    document.body.addEventListener("mousemove", moveBg);
     
-    document.body.addEventListener("mousemove", (e) => {
-        var rect = e.currentTarget.getBoundingClientRect();
-        moveX = (e.clientX-rect.left)/width-0.5;
-        moveY = (e.clientY-rect.top)/height-0.5;
-        draw();
-    })
-    
+}
+
+function finishScene() {
+    document.body.removeEventListener("mousemove", moveBg);
+    redraw = false;
+    bg_canvas = document.querySelector('canvas.scene');
+    bg_canvas.classList.add('blured');
 }
 
 function updateEmotion(left, emoIndex) {
@@ -116,8 +127,12 @@ function updateEmotion(left, emoIndex) {
         } else {
         imgr = img;
         }
-        draw();
     }, 500);
+}
+
+function updateBG() {
+    draw();
+    if (redraw) {requestAnimationFrame(updateBG);}
 }
 
 
