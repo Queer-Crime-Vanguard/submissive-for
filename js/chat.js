@@ -1,7 +1,18 @@
+function getNextLine() {
+    return document.querySelector('.line:not(.shown)')
+}
+
+const autoplayDelay = 350;
+
 function nextline() {
-    currentLine = document.querySelector('.line:not(.shown)')
+    var currentLine = getNextLine();
     if (currentLine) {
-        showNextBubble(currentLine);
+        var delay = showNextBubble(currentLine);
+        setTimeout(() => {var nextLine = getNextLine();
+                          if (nextLine && nextLine.classList.contains('left')) {
+                              /* todo highlight */
+                          } else {nextline();} },
+                   delay+autoplayDelay);
     } else {
         finishScene();
     }
@@ -20,13 +31,18 @@ function showNextBubble(lineNode) {
     var bubble_style = window.getComputedStyle(bubble, null);
     var width = bubble_style.getPropertyValue("width");
     var height = bubble_style.getPropertyValue("height");
+
+    const microDelay = 20;
+    const positioningDelay = 500;
+    const typingDuration = islong ? 1700 : 600;
+    const textAppearDelay = 250;
     
     if (isinstant) {
         setTimeout(() => {lineNode.classList.add("positioned");}, 20)
         setTimeout(() => {lineNode.classList.add("shown");
                           updateEmotion(lineNode.classList.contains('left'), emoindex(meta));
-                         messageSound.play()}, 500)
-        return;
+                         messageSound.play()}, positioningDelay)
+        return positioningDelay;
     }
     
     lineNode.classList.remove("appeared");
@@ -35,11 +51,6 @@ function showNextBubble(lineNode) {
     bubble.appendChild(typingDots);
     lineNode.classList.add("typing");
     lineNode.classList.add("appeared");
-
-    const microDelay = 20;
-    const positioningDelay = 500;
-    const typingDuration = islong ? 1700 : 600;
-    const textAppearDelay = 250;
     
     if (islong) {
         var playAgain = true;
@@ -67,6 +78,8 @@ function showNextBubble(lineNode) {
                positioningDelay + typingDuration)
     setTimeout(() => {lineNode.classList.remove("texthide")}, 
                positioningDelay+typingDuration+textAppearDelay)
+
+    return positioningDelay+typingDuration+textAppearDelay;
 }
 
 

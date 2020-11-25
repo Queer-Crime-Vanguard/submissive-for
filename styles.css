@@ -32,10 +32,22 @@ body {
     border-radius: 1em;
 }
 
+#highlight-box {
+    display: inline-block;
+    position: fixed;
+    bottom: 1.5em;
+    height: 2em;
+    width: 20em;
+    border-radius: 1em;
+    background-color: rgba(255, 255, 255, 0.4);
+    left: 50%;
+    margin-left: -10em;
+}
+
 #dialogue {
     width: 100%;
     position: absolute;
-    bottom: -0.25em;
+    bottom: 2em;
     display: flex;
     align-items: flex-end;
     align-content: flex-end;
