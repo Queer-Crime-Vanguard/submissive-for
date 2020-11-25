@@ -19,13 +19,14 @@
 
 <body onload="preloadImages()">
   <div id="dialogue-box" onclick="nextline()"><div id="dialogue">
-      <div class="line left"><div class="bubble"><p>хорошо!</p><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
+      <div class="line left"><div class="bubble"><div class="text"><p>хорошо!</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
       <div class="line left"><div class="bubble"><p>я рада, что оно так прошло</p><linemeta speaker="j" emotion="happy"></linemeta></div></div>
-      <div class="line right"><div class="bubble"><p>Я бы может и рассказала, но я не хочу, чтобы было понятно про кого это</p><linemeta speaker="i" emotion="unsure"></linemeta></div></div>
+      <div class="line right long"><div class="bubble"><p>Я бы может и рассказала, но я не хочу, чтобы было понятно про кого это</p><linemeta speaker="i" emotion="unsure"></linemeta></div></div>
       <div class="line left"><div class="bubble"><p>да, я работаю с анонимизированными историями</p><linemeta speaker="j" emotion="malice"></linemeta></div></div>
-      <div class="line right"><div class="bubble"><p>...</p><linemeta speaker="i" emotion="sad"></linemeta></div></div>
+      <div class="line right instant"><div class="bubble"><p>эх</p><linemeta speaker="i" emotion="sad"></linemeta></div></div>
       <div class="line right"><div class="bubble"><p>Все началось с того...</p><linemeta speaker="i" emotion="neutral"></linemeta></div></div>
   </div></div>
+  <components>
   <div class="emotions">
       <img src="j_neutral.jpg" class="left" speaker="j" emotion ="neutral">
       <img src="i_neutral.jpg" class="right" speaker="i" emotion="neutral">
@@ -34,5 +35,11 @@
       <img src="i_unsure.jpg" class="right" speaker="i" emotion="unsure">
       <img src="i_sad.jpg" class="right" speaker="i" emotion="sad">
   </div>
+  <div class="wave">
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div>
+  </components>
 </body>
 </html>

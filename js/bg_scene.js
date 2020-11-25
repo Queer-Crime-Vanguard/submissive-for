@@ -121,13 +121,11 @@ function finishScene() {
 function updateEmotion(left, emoIndex) {
     img = emotions[emoIndex];
     console.log('emotion update', left, emoIndex, img);
-    setTimeout(() => {
-        if (left) {
+    if (left) {
         imgl = img;
-        } else {
+    } else {
         imgr = img;
-        }
-    }, 500);
+    }
 }
 
 function updateBG() {

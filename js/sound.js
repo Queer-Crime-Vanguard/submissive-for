@@ -1,6 +1,9 @@
-var audio = new Audio('winter_tales.mp3');
-var started = false;
+var bgmusic = new Audio('winter_tales.mp3');
 
-function startSound() {
-    audio.play();
+function startBgMusic() {
+    bgmusic.play();
 }
+
+var typingSound = new Audio('typing.ogg');
+typingSound.volume = 0.3;
+
