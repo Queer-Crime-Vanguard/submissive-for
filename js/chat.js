@@ -24,7 +24,8 @@ function showNextBubble(lineNode) {
     if (isinstant) {
         setTimeout(() => {lineNode.classList.add("positioned");}, 20)
         setTimeout(() => {lineNode.classList.add("shown");
-                          updateEmotion(lineNode.classList.contains('left'), emoindex(meta));}, 500)
+                          updateEmotion(lineNode.classList.contains('left'), emoindex(meta));
+                         messageSound.play()}, 500)
         return;
     }
     
@@ -61,7 +62,8 @@ function showNextBubble(lineNode) {
     setTimeout(() => {updateEmotion(lineNode.classList.contains('left'), emoindex(meta));
                       bubble.style.width = width;
                       bubble.style.height = height;
-                      lineNode.classList.remove("typing");},
+                      lineNode.classList.remove("typing");
+                      messageSound.play()},
                positioningDelay + typingDuration)
     setTimeout(() => {lineNode.classList.remove("texthide")}, 
                positioningDelay+typingDuration+textAppearDelay)
