@@ -7,17 +7,15 @@
   <title>HandsOff Example</title>
   <meta name="description" content="HandsOff game page">
   <meta name="author" content="HandsOff">
+</head>
 
+<body onload="preloadImages()">
   <link rel="stylesheet" href="styles.css">
-
   <script type="text/javascript" src="js/utils.js"></script>
   <script type="text/javascript" src="js/sound.js"></script>
   <script type="text/javascript" src="js/chat.js"></script>
   <script type="text/javascript" src="js/bg_scene.js"></script>
-
-</head>
-
-<body onload="preloadImages()">
+  
   <div id="dialogue-box" onclick="nextline()"><div id="dialogue">
       <div class="line left"><div class="bubble"><div class="text"><p>хорошо!</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
       <div class="line left"><div class="bubble"><p>я рада, что оно так прошло</p><linemeta speaker="j" emotion="happy"></linemeta></div></div>

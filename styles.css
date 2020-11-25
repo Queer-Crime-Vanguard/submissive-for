@@ -1,6 +1,6 @@
 body {
     font-family: sans-serif;
-    font-weight: 200;
+    font-weight: 300;
     font-size: 14pt;
     background: canvas(scene);
     background-repeat: no-repeat;
@@ -8,24 +8,30 @@ body {
     overflow: hidden;
 }
 
+@media (orientation: portrait) {
+  body {
+      font-size: 4vw;
+  }
+}
+
 #dialogue-box {
     position: absolute;
     margin-left: auto;
     margin-right: auto;
-    left: 0;
-    right: 0;
-    max-width: 30rem;
+    left: 1em;
+    right: 1em;
+    max-width: 28em;
     background-color: rgba(170,208,228, 0.5);
     top: 1em;
     bottom: 1em;
+    border: 1em solid transparent;
     border-radius: 1em;
-    padding: 0.5rem 1em;
 }
 
 #dialogue {
+    width: 100%;
     position: absolute;
-    padding-right: 1em;
-    bottom: 1em;
+    bottom: -0.25em;
     display: flex;
     align-items: flex-end;
     align-content: flex-end;
@@ -53,12 +59,12 @@ body {
 
 .line.appeared {
     display: inline;
-    margin-top: -20rem;
+    margin-top: -20em;
     opacity: 0;
 }
 
 .line.positioned {
-    margin-top: 0.2rem;
+    margin-top: 0.2em;
 }
 
 .line.shown {
@@ -80,8 +86,8 @@ linemeta {
 .bubble {
     color: black;
     display: inline-block;
-    padding: 1rem 1rem;
-    max-width: 16rem;
+    padding: 0.75em 0.75em;
+    max-width: 16em;
     text-align: left;
     overflow: auto;
     transition: all 150ms linear;
@@ -93,12 +99,12 @@ linemeta {
 }
 
 .left .bubble {
-    border-radius: 1rem 1rem 1rem 0;
+    border-radius: 0.75em 0.75em 0.75em 0;
     background-color: white;
 }
 
 .right .bubble {
-    border-radius: 1rem 1rem 0 1rem;
+    border-radius: 0.75em 0.75em 0 0.75em;
     background-color: lightcyan;
 }
 
@@ -107,10 +113,10 @@ components * {
 }
 
 .wave {
-	position:relative;
+	position: relative;
 
 	margin-left: 0.15em;
-	margin-right: auto;
+    margin-right: 0;
 }
 
 .wave .dot {
