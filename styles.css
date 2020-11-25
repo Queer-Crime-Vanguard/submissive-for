@@ -12,6 +12,10 @@ body {
   body {
       font-size: 4vw;
   }
+
+  #dialogue-box {
+      top: 50%;
+  }
 }
 
 #dialogue-box {
