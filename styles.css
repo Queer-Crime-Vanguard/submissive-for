@@ -43,7 +43,7 @@ body {
     display: none;
 }
 
-.line.typing p {
+.line.texthide p {
     display: none;
 }
 
@@ -84,6 +84,7 @@ linemeta {
     max-width: 16rem;
     text-align: left;
     overflow: auto;
+    transition: all 150ms linear;
 }
 
 .bubble p {
