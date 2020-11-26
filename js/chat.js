@@ -4,19 +4,30 @@ function getNextLine() {
 
 const autoplayDelay = 350;
 
+function prepareHighlight() {
+    var nextLine = getNextLine();
+    document.querySelector('#highlight-box').appendChild(nextLine.cloneNode(true).children[0]);
+}
+
 function nextline() {
     var currentLine = getNextLine();
     if (currentLine) {
         var delay = showNextBubble(currentLine);
         setTimeout(() => {var nextLine = getNextLine();
-                          if (nextLine && nextLine.classList.contains('left')) {
-                              /* todo highlight */
+                          if (nextLine && nextLine.classList.contains('left') && !nextLine.classList.contains('auto')) {
+                              prepareHighlight();
                           } else {nextline();} },
                    delay+autoplayDelay);
     } else {
         finishScene();
     }
     // startBgMusic();
+}
+
+function processHighlight() {
+    highlight_box = document.querySelector('#highlight-box');
+    highlight_box.removeChild(highlight_box.children[0]);
+    nextline();
 }
 
 function showNextBubble(lineNode) {
