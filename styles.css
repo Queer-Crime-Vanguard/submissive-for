@@ -35,43 +35,51 @@ body {
 #highlight-box {
     display: inline-block;
     position: fixed;
-    bottom: 1.5em;
-    height: 3em;
+    bottom: 2em;
+    height: 2.4em;
     min-width: 20em;
     max-width: 26em;
     border-radius: 1.5em;
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.65);
+    border: solid 0.3em rgba(255, 255, 255, 0);
+    transition: all 100ms linear;
     left: 50%;
     margin-left: -10em;
-    text-align: center;
+}
+
+@keyframes lure {
+    20% {border-color: rgba(255, 255, 255, 0)}
+    35% {border-color: rgba(248, 255, 0, 0.45)}
+    50% {border-color: rgba(255, 255, 255, 0)}
+}
+
+#highlight-box.activated {
+    animation: lure 3.5s infinite;
+}
+
+#highlight-box.activated:hover {
+    animation: none;
+    border-color: rgba(180, 255, 0, 0.45);
 }
 
 #highlight-box .bubble {
+    display: inline-block;
+    position: absolute;
     text-align: center;
     font-weight: 500;
     font-size: 90%;
-    border: 0.2em solid rgba(255, 255, 255, 0.5);
-    border-radius: 1em;
     padding: 0.5em;
-    top: 50%;
-    transition: all linear 100ms;
-}
-
-#highlight-box .bubble:hover {
-    text-align: center;
-    font-weight: 500;
-    font-size: 90%;
-    border: 0.2em solid rgba(223, 255, 0, 0.5);
-    border-radius: 1em;
-    padding: 0.5em;
-    top: 50%;
+    min-width: 16em;
+    transform: translate(-50%, 50%);
+    bottom: 50%;
+    left: 50%;
 }
 
 
 #dialogue {
     width: 100%;
     position: absolute;
-    bottom: 3em;
+    bottom: 3.5em;
     display: flex;
     align-items: flex-end;
     align-content: flex-end;

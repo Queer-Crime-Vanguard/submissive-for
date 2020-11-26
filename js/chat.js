@@ -6,17 +6,21 @@ const autoplayDelay = 350;
 
 function prepareHighlight() {
     var nextLine = getNextLine();
-    document.querySelector('#highlight-box').appendChild(nextLine.cloneNode(true).children[0]);
+    bubble = nextLine.cloneNode(true).children[0];
+    highlight_box = document.querySelector('#highlight-box')
+    highlight_box.addEventListener('onclick', () => {processHighlight()});
+    highlight_box.appendChild(bubble);
+    highlight_box.classList.add('activated');
 }
 
-function nextline() {
+function nextline(force_instant) {
     var currentLine = getNextLine();
     if (currentLine) {
-        var delay = showNextBubble(currentLine);
+        var delay = showNextBubble(currentLine, force_instant);
         setTimeout(() => {var nextLine = getNextLine();
                           if (nextLine && nextLine.classList.contains('left') && !nextLine.classList.contains('auto')) {
                               prepareHighlight();
-                          } else {nextline();} },
+                          } else {nextline(false);} },
                    delay+autoplayDelay);
     } else {
         finishScene();
@@ -27,14 +31,15 @@ function nextline() {
 function processHighlight() {
     highlight_box = document.querySelector('#highlight-box');
     highlight_box.removeChild(highlight_box.children[0]);
-    nextline();
+    highlight_box.classList.remove("activated");
+    nextline(true);
 }
 
-function showNextBubble(lineNode) {
+function showNextBubble(lineNode, force_instant) {
     meta = lineNode.querySelector('linemeta');
     
     islong = lineNode.classList.contains('long');
-    isinstant = lineNode.classList.contains('instant');
+    isinstant = lineNode.classList.contains('instant') || force_instant;
 
     bubble = lineNode.querySelector('.bubble');
     
