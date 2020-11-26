@@ -3,6 +3,7 @@ function getNextLine() {
 }
 
 const autoplayDelay = 350;
+const pauseDelay = 2000;
 
 function prepareHighlight() {
     var nextLine = getNextLine();
@@ -16,6 +17,11 @@ function prepareHighlight() {
 function nextline(force_instant) {
     var currentLine = getNextLine();
     if (currentLine) {
+        if (currentLine.classList.contains('pause')) {
+            currentLine.classList.add('shown');
+            setTimeout(() => {nextline(false);}, pauseDelay);
+            return
+        }
         var delay = showNextBubble(currentLine, force_instant);
         setTimeout(() => {var nextLine = getNextLine();
                           if (nextLine && nextLine.classList.contains('left') && !nextLine.classList.contains('auto')) {
