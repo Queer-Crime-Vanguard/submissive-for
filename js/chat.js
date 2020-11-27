@@ -3,15 +3,18 @@ function getNextLine() {
 }
 
 const autoplayDelay = 350;
-const pauseDelay = 2000;
+const pauseEmotionDelay = 1600;
+const pauseDelay = 4000;
 
-function prepareHighlight() {
-    var nextLine = getNextLine();
-    bubble = nextLine.cloneNode(true).children[0];
+function prepareHighlight(bubble, activate) {
     highlight_box = document.querySelector('#highlight-box')
     highlight_box.addEventListener('onclick', () => {processHighlight()});
     highlight_box.appendChild(bubble);
-    highlight_box.classList.add('activated');
+    if (activate) {highlight_box.classList.add('activated');}
+}
+
+function initiateHighlight() {
+    prepareHighlight(getNextLine().children[0].cloneNode(true), true);
 }
 
 function nextline(force_instant) {
@@ -19,26 +22,35 @@ function nextline(force_instant) {
     if (currentLine) {
         if (currentLine.classList.contains('pause')) {
             currentLine.classList.add('shown');
-            setTimeout(() => {nextline(false);}, pauseDelay);
+            var bubble = document.createElement('div');
+            bubble.classList.add('bubble');
+            bubble.appendChild(document.querySelector('components .wave').cloneNode(true));
+            prepareHighlight(bubble, false);
+            setTimeout(() => {
+                updateEmotion(currentLine.classList.contains('left'), emoindex(currentLine.querySelector('linemeta'))); 
+            }, pauseEmotionDelay)
+            setTimeout(() => {
+                processHighlight(false);
+            }, pauseDelay);
             return
         }
         var delay = showNextBubble(currentLine, force_instant);
         setTimeout(() => {var nextLine = getNextLine();
-                          if (nextLine && nextLine.classList.contains('left') && !nextLine.classList.contains('auto')) {
-                              prepareHighlight();
+                          if (nextLine && nextLine.classList.contains('highlight')) {
+                              prepareHighlight(nextLine.children[0].cloneNode(true), true);
                           } else {nextline(false);} },
-                   delay+autoplayDelay);
+                   1.5*delay+autoplayDelay);
     } else {
         finishScene();
     }
     // startBgMusic();
 }
 
-function processHighlight() {
+function processHighlight(by_click) {
     highlight_box = document.querySelector('#highlight-box');
     highlight_box.removeChild(highlight_box.children[0]);
     highlight_box.classList.remove("activated");
-    nextline(true);
+    nextline(by_click);
 }
 
 function showNextBubble(lineNode, force_instant) {
