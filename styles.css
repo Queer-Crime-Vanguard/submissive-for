@@ -164,17 +164,17 @@ components * {
 
 .wave {
 	position: relative;
-
+    width: 3em;
 	margin-left: 0.15em;
     margin-right: 0;
 }
 
 .wave .dot {
 		display:inline-block;
-		width:0.25em;
-		height:0.25em;
+		width:0.3em;
+		height:0.3em;
 		border-radius:50%;
-		margin-right:0.15em;
+		margin-right: 0.3em;
 		background:#303131;
 		animation: wave 1.3s linear infinite;
 }
@@ -184,11 +184,25 @@ components * {
 
 @keyframes wave {
 	0%, 60%, 100% {
-		transform: initial;
+		width: 0.35em;
+        height: 0.35em;
+        margin-right: 0.3em;
+        opacity: 1;
 	}
 
+    75% {
+        opacity: 0;
+    }
+
+    85% {
+        opacity: 0;
+    }
+
 	30% {
-		transform: translateY(-0.5em);
+        width: 0.55em;
+        height: 0.55em;
+        margin-right: 0.1em;
+        opacity: 1;
 	}
 }
 
