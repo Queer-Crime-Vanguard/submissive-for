@@ -8,7 +8,9 @@ const pauseDelay = 4000;
 
 function prepareHighlight(bubble, activate) {
     highlight_box = document.querySelector('#highlight-box')
-    highlight_box.addEventListener('click', () => {processHighlight(true)});
+    highlight_box.addEventListener('click', () => {
+        processHighlight(true);
+        startBgMusic();});
     highlight_box.appendChild(bubble);
     if (activate) {highlight_box.classList.add('activated');}
 }

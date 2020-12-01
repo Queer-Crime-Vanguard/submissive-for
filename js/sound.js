@@ -1,4 +1,5 @@
-var bgmusic = new Audio('assets/music/winter_tales.mp3');
+var bgmusic = new Audio('assets/music/the_legendary_theme.ogg');
+bgmusic.volume = 0.5;
 
 function startBgMusic() {
     bgmusic.play();
