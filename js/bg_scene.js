@@ -5,11 +5,6 @@ var emotions = {};
 
 var redraw = true;
 
-function udpateParams() {
-    var height = window.innerHeight;
-    var width = window.innerWidth;
-}
-
 function preloadImages() {
     imgl.src = document.querySelector('.emotions img.left').src;
     imgr.src = document.querySelector('.emotions img.right').src;
@@ -36,9 +31,6 @@ var stepOffset = 0;
 var c = document.createElement('canvas');
 var cl = document.createElement('canvas');
 var cr = document.createElement('canvas');
-
-var height = window.innerHeight;
-var width = window.innerWidth;
 
 function drawFrame() {
     cr.width = (width-dividerThickness)/2 + step + stepOffset;
@@ -68,10 +60,7 @@ function drawFrame() {
     clx.clip();
 }
 
-var moveX = 0;
-var moveY = 0;
-
-const drag = 40;
+const drag = 30;
 
 function draw() {
     var scale = Math.max(height/imgr.height, width/imgr.width);
@@ -90,12 +79,6 @@ function draw() {
     ctx.drawImage(cr, width-cr.width, 0);
 }
 
-function moveBg(e) {
-    var rect = e.currentTarget.getBoundingClientRect();
-    moveX = (e.clientX-rect.left)/width-0.5;
-    moveY = (e.clientY-rect.top)/height-0.5;
-}
-
 
 function setBg() {
     
@@ -106,13 +89,10 @@ function setBg() {
     document.body.style.height = window.innerHeight;
 
     document.body.appendChild(c);
-
-    document.body.addEventListener("mousemove", moveBg);
     
 }
 
 function finishScene() {
-    document.body.removeEventListener("mousemove", moveBg);
     redraw = false;
     bg_canvas = document.querySelector('canvas.scene');
     bg_canvas.classList.add('blured');
