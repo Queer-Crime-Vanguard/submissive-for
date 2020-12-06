@@ -18,6 +18,27 @@ body {
   }
 }
 
+#reflection-box {
+    font-size: 120%;
+    font-style: italic;
+    position: absolute;
+    max-width: 18em;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 1em;
+    padding: 0.1em 1em;
+    top: 15%;
+    left: 50%;
+}
+
+.reflection {
+    display: none;
+}
+
+.reflection.visible {
+    display: inline-block;
+}
+
 #dialogue-box {
     position: absolute;
     margin-left: auto;
