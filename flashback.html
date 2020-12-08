@@ -1,0 +1,32 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>HandsOff Example</title>
+  <meta name="description" content="HandsOff game page">
+  <meta name="author" content="HandsOff">
+</head>
+
+<body onload="updateWindowParams(); setBg(); setTrack(); showReflection()">
+  
+  <link rel="stylesheet" href="styles.css">
+  <script type="text/javascript" src="js/reflection.js"></script>
+  <script type="text/javascript" src="js/track.js"></script>
+  <script type="text/javascript" src="js/solid_bg.js"></script>
+  
+  <div id="reflection-box" onclick="showReflection()" style="left: 0; right: 55%;">
+    <div class="reflection">
+    <p>…недавно одна моя подруга рассказала мне, что, когда она училась в университете, ее профессор несколько раз провожал ее до дома, пытался поцеловать и писал по ночам сообщения, а она не знала, как это прекратить.</p>
+    </div>
+  </div>
+  <components>
+    <div id="background" class="animation" interval="300">
+      <img src="assets/backgrounds/kitchen_1.png">
+      <img src="assets/backgrounds/kitchen_2.png">
+      <img src="assets/backgrounds/kitchen_3.png">
+    </div>
+  </components>
+</body>
+</html>
