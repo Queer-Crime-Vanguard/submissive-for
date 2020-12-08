@@ -29,6 +29,8 @@ body {
     padding: 0.1em 1em;
     top: 15%;
     left: 50%;
+    max-height: 70%;
+    overflow: auto;
 }
 
 .reflection {
@@ -38,6 +40,30 @@ body {
 .reflection.visible {
     display: inline-block;
 }
+
+.goto-next {
+	text-align: center;
+}
+
+.goto-next svg {
+	transition: transform 200ms ease-out;
+}
+
+.goto-next svg:hover {
+    animation: jumping 1s linear infinite;
+    transform: rotate(90deg);
+}
+
+@keyframes jumping {
+	33% {
+		transform: rotate(90deg) translateX(-0.5em);
+	}
+
+	66% {
+		transform: rotate(90deg) translateX(0.5em);
+	}
+}
+
 
 #dialogue-box {
     position: absolute;
