@@ -1,0 +1,66 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Splash Screen</title>
+  <meta name="description" content="HandsOff game page">
+  <meta name="author" content="HandsOff">
+</head>
+
+<body onload="setTrack();">
+  
+  <link rel="stylesheet" href="styles.css">
+
+<style>
+body {
+    background: linear-gradient(319deg, #ef25eb, #51b1cb, #ffcc56);
+    background-size: 400% 400%;
+
+    -webkit-animation: plasma 6s ease infinite;
+    -moz-animation: plasma 6s ease infinite;
+    animation: plasma 6s ease infinite;
+}
+
+@-webkit-keyframes plasma {
+    0%{background-position:7% 0%}
+    50%{background-position:94% 100%}
+    100%{background-position:7% 0%}
+}
+@-moz-keyframes plasma {
+    0%{background-position:7% 0%}
+    50%{background-position:94% 100%}
+    100%{background-position:7% 0%}
+}
+@keyframes plasma {
+    0%{background-position:7% 0%}
+    50%{background-position:94% 100%}
+    100%{background-position:7% 0%}
+}
+
+#logo {
+    position: absolute;
+    display: block;
+    max-height: 24em;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#logo.interactive {
+    transition: transform 250ms ease-out;
+}
+
+#logo.interactive:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+}
+    
+  </style>
+  
+  <div id="logo-container">
+    <img id="logo" class="interactive" src="assets/logo.png">
+  </div>
+
+</body>
+</html>
