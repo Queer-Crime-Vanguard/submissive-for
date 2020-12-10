@@ -1,0 +1,27 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>HandsOff Example</title>
+  <meta name="description" content="HandsOff game page">
+  <meta name="author" content="HandsOff">
+</head>
+
+<body onload="updateWindowParams(); setBg(); preloadImages(); setTrack();">
+  
+  <link rel="stylesheet" href="styles.css">
+  <script type="text/javascript" src="js/finish_scene.js"></script>
+  <script type="text/javascript" src="js/track.js"></script>
+  <script type="text/javascript" src="js/solid_bg.js"></script>
+  
+  <img src="assets/vk_page.png" style="position:absolute; top: 1em; right: 1em; max-width: 45%;" onclick="finishScene()">
+  
+  <components>
+    <div id="background">
+      <img src="assets/sprites/j_neutral.jpg">
+    </div>
+  </components>
+</body>
+</html>
