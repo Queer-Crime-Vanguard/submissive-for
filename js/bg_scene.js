@@ -92,7 +92,7 @@ function setBg() {
     
 }
 
-function finishScene() {
+function blurScene() {
     redraw = false;
     bg_canvas = document.querySelector('canvas.scene');
     bg_canvas.classList.add('blured');
