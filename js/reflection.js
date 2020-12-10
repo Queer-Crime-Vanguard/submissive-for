@@ -5,5 +5,8 @@ function showReflection() {
     newref = document.querySelector(".reflection:not(.shown)")
     if (newref)
         {newref.classList.add("visible")}
-    else {document.querySelector("#reflection-box").style.display = "none";}
+    else {
+        document.querySelector("#reflection-box").style.display = "none";
+        finishScene();
+    }
 }
