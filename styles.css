@@ -269,3 +269,42 @@ canvas.scene.blured {
     transform: scale(1.1);
     filter: blur(25px);
 }
+
+#trigger-warning-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 28em;
+    background-color: rgba(255, 255, 255, 0.35);
+    padding: 0 1em;
+    border-radius: 0.3em;
+}
+
+#trigger-warning-box h3 {
+    
+}
+
+#trigger-warning-box .button {
+    margin: 1em 0;
+    font-weight: 500;
+    border: 0.15em solid black;
+    padding: 0.25em;
+}
+
+#trigger-warning-box .button .checkbox {
+    display: block;
+    width: 1em;
+    height: 1em;
+    border: 0.15em solid black;
+    float: left;
+    margin-top: 0.3em;
+    margin-left: 0.5em;
+    margin-right: 0.75em;
+    transition: background 300ms ease;
+}
+
+#trigger-warning-box .button .checkbox:hover {
+    background-color: black;
+}
+
