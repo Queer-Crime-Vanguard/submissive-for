@@ -1,0 +1,142 @@
+<!doctype html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>HandsOff Example</title>
+  <meta name="description" content="HandsOff game page">
+  <meta name="author" content="HandsOff">
+</head>
+
+<body onload="setTrack()">
+  
+  <link rel="stylesheet" href="styles.css">
+  <script type="text/javascript" src="js/sprite.js"></script>
+  <script type="text/javascript" src="js/track.js"></script>
+
+  <style>
+    body {
+        background-color: #8f5a2c;
+    }
+  </style>
+
+  <script>
+    let game_canvas = document.createElement('canvas');
+    
+    game_canvas.width = width; game_canvas.height = height;
+    let context = game_canvas.getContext('2d');
+
+    let alph_tiles_img = new Image();
+    alph_tiles_img.src = "assets/minigames/soup/alphabet.png";
+
+    const total_alph = 32;
+
+    const alph_width = 50;
+    const alph_height = 67;
+
+    const offset_x = 30;
+    const offset_y = 30;
+
+    const mouseRadius = 50;
+
+    const baseVelocity = 35;
+    const initialAmplitude = 4;
+    const smoothDec = (velocity) => {
+        let k = 0.02;
+        let dv = Math.max(velocity-baseVelocity, 0);
+        return (dv*k)*(dv*k);
+    }
+
+    const cursorRepulsion = 1.5;
+    
+    alph_tiles_img.onload = () => {
+        let letters = new Array();
+        for (let i = 0; i < total_alph; i += 1) {
+            let sprite = new Sprite(alph_tiles_img, 11, 3, total_alph);
+            let deg = 2*Math.PI*Math.random();
+            let dx = Math.cos(deg);
+            let dy = Math.sin(deg);
+            let velocity = baseVelocity + initialAmplitude * baseVelocity * Math.random();
+            sprite.setFrame(i);
+            letters.push({
+                'sprite': sprite,
+                'pos_x': width*Math.random(),
+                'pos_y': height*Math.random(),
+                'dir_x': dx,
+                'dir_y': dy,
+                'velocity': velocity
+            })
+        }
+        const updatePhysics = (delta) => {
+            for (let letter of letters) {
+
+                // decrease velocity (fluid motion)
+                letter.velocity -= smoothDec(letter.velocity)*delta
+                
+                // wall repulsion
+                if ( letter.pos_x < -offset_x || 
+                     letter.pos_x + alph_width > width + offset_x ) 
+                { letter.dir_x = -letter.dir_x; }
+                if ( letter.pos_y < -offset_y ||
+                     letter.pos_y + alph_height > height + offset_y )
+                { letter.dir_y = -letter.dir_y; }
+                
+                // add impulse with mouse
+                let center_x = letter.pos_x + alph_width/2;
+                let center_y = letter.pos_y + alph_height/2;
+
+                let dx = center_x-mouseOffsetX;
+                let dy = center_y-mouseOffsetY;
+                let dr = Math.sqrt(dx*dx + dy*dy);
+                let k = mouseRadius/dr;
+                if (k > 1) { // <=> cursos is in the range
+                    let rep_x = dx*(k-1)*cursorRepulsion;
+                    let rep_y = dy*(k-1)*cursorRepulsion;
+                    let v_x = letter.dir_x*letter.velocity + rep_x;
+                    let v_y = letter.dir_y*letter.velocity + rep_y;
+                    let nv = Math.sqrt(v_x*v_x + v_y*v_y);
+                    letter.dir_x = v_x / nv;
+                    letter.dir_y = v_y / nv;
+                    letter.velocity = nv;
+                }
+
+                // apply velocity to position
+                letter.pos_x += letter.dir_x*letter.velocity*delta;
+                letter.pos_y += letter.dir_y*letter.velocity*delta;
+                
+            }
+            
+        }
+        const drawFrame = (delta) => {
+            context.clearRect(0, 0, width, height);
+            for (let letter of letters) {
+                context.drawImage(letter.sprite.frame,
+                                  letter.pos_x, 
+                                  letter.pos_y, 
+                                  alph_width,
+                                  alph_height);
+            }
+        }
+
+        var prev_ts = null;
+        const step = (ts) => {
+            if (prev_ts) {
+                delta = (ts - prev_ts)/1000;
+            } else {
+                delta = 0;
+            }
+            prev_ts = ts;
+            updatePhysics(delta);
+            drawFrame(delta);
+            window.requestAnimationFrame(step);
+        }
+
+        window.requestAnimationFrame(step);
+    }
+    
+    document.body.appendChild(game_canvas);
+  </script>
+
+</body>
+</html>
