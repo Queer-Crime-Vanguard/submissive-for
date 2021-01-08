@@ -1,5 +1,4 @@
-var height = window.innerHeight;
-var width = window.innerWidth;
+var width, height;
 
 function updateWindowParams() {
     height = window.innerHeight;
@@ -21,6 +20,12 @@ function trackMouse(e) {
 }
 
 function setTrack() {
-    window.addEventListener("resize", updateWindowParams);
-    document.body.addEventListener("mousemove", trackMouse);
+    updateWindowParams();
+    window.dispatchEvent(new Event("loaded"))
+    window.dispatchEvent(new Event("size_update"))
+    window.addEventListener("resize", () => {
+        updateWindowParams();
+        window.dispatchEvent(new Event("size_update"))
+    });
+    document.body.addEventListener("mousemove", trackMouse)
 }
