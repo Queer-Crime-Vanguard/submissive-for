@@ -10,13 +10,18 @@ function prepareHighlight(bubble, activate) {
     highlight_box = document.querySelector('#highlight-box')
     highlight_box.addEventListener('click', () => {
         processHighlight(true);
-        startBgMusic();});
+        document.dispatchEvent(new Event('play_bg_music')); })
     highlight_box.appendChild(bubble);
     if (activate) {highlight_box.classList.add('activated');}
 }
 
 function initiateHighlight() {
     prepareHighlight(getNextLine().children[0].cloneNode(true), true);
+}
+
+function sendEmotion(isleft, emoindex) {
+    ev = new CustomEvent('update_emotion', {'detail': {'isleft': isleft, 'emotion_index': emoindex}})
+    document.dispatchEvent(ev);
 }
 
 function nextline(force_instant) {
@@ -29,7 +34,7 @@ function nextline(force_instant) {
             bubble.appendChild(document.querySelector('components .wave').cloneNode(true));
             prepareHighlight(bubble, false);
             setTimeout(() => {
-                updateEmotion(currentLine.classList.contains('left'), emoindex(currentLine.querySelector('linemeta'))); 
+                sendEmotion(currentLine.classList.contains('left'), emoindex(currentLine.querySelector('linemeta'))); 
             }, pauseEmotionDelay)
             setTimeout(() => {
                 processHighlight(false);
@@ -75,7 +80,7 @@ function showNextBubble(lineNode, force_instant) {
     if (isinstant) {
         setTimeout(() => {lineNode.classList.add("positioned");}, 20)
         setTimeout(() => {lineNode.classList.add("shown");
-                          updateEmotion(lineNode.classList.contains('left'), emoindex(meta));
+                          sendEmotion(lineNode.classList.contains('left'), emoindex(meta));
                          messageSound.play()}, positioningDelay)
         return positioningDelay;
     }
@@ -105,7 +110,7 @@ function showNextBubble(lineNode, force_instant) {
                microDelay)
     setTimeout(() => {lineNode.classList.add("shown");},
                positioningDelay)
-    setTimeout(() => {updateEmotion(lineNode.classList.contains('left'), emoindex(meta));
+    setTimeout(() => {sendEmotion(lineNode.classList.contains('left'), emoindex(meta));
                       bubble.style.width = width;
                       bubble.style.height = height;
                       lineNode.classList.remove("typing");

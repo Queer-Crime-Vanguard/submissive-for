@@ -170,6 +170,12 @@ function updateEmotion(left, emoIndex) {
     drawFrame();
 }
 
+
+document.addEventListener("update_emotion", (e) => {
+    updateEmotion(e.detail.isleft, e.detail.emotion_index);
+})
+
+
 function updateBG() {
     draw();
     if (redraw) {requestAnimationFrame(updateBG);}
