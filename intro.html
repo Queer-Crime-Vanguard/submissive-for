@@ -9,57 +9,68 @@
   <meta name="author" content="HandsOff">
 </head>
 
-<body onload="updateWindowParams(); setBg(); preloadImages(); setTrack(); showReflection()">
+<body onload="updateWindowParams(); setBg(); preloadImages(); setTrack(); initiateHighlight();">
   
   <link rel="stylesheet" href="styles.css">
-  <script type="text/javascript" src="js/reflection.js"></script>
   <script type="text/javascript" src="js/track.js"></script>
   <script type="text/javascript" src="js/solid_bg.js"></script>
   <script type="text/javascript" src="js/finish_scene.js"></script>
+  <script type="text/javascript" src="js/chat.js"></script>
+  <script type="text/javascript" src="js/sound.js"></script>
+    <script type="text/javascript" src="js/utils.js"></script>
   
-  <div id="reflection-box" onclick="showReflection()">
-    <div class="reflection">
-    <p>Меня зовут Сима. Недавно я закончила университет и сейчас работаю журналисткой в маленьком независимом медиа. Мы с коллегами освещаем те социальные проблемы, о которых не говорят крупные сми. </p>
-  <div class="goto-next">
-    	 <svg width="72px" height="72px" viewBox="0 0 24 24" style="fill: black">
-    		<path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path>
-		</svg>
-    </div>
-  </div>
-    <div class="reflection">
-      <p>
-        Недавно моя подруга Саша рассказала мне, что когда она училась в университете, профессор провожал до дома, пытался поцеловать и писал по ночам сообщения. Ей было неприятно внимание преподавателя, но она боялась его и не знала, как это прекратить. Последнее время я все чаще узнаю из социальных сетей и от моих знакомых подобные истории.
+  <div id="dialogue-box">
+    <div id="dialogue">
+      <div class="line left highlight"><div class="bubble"><div class="text"><p>привет!</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
+      <div class="line right"><div class="bubble"><div class="text"><p>Сима, привет!</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
+      <div class="line right"><div class="bubble"><div class="text"><p>я как раз хотела тебе написать</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
+      <div class="line right"><div class="bubble"><div class="text"><p>мне тут пишет опять тот академик, звал куда-то ночью приехать, мерзко комментировал мои фотографии (
+</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
+      <div class="line left"><div class="bubble"><div class="text"><p>ужас(</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
+      <div class="line right"><div class="bubble"><div class="text"><p>я его заблокировала</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
+      <div class="line left highlight"><div class="bubble"><div class="text"><p>и правильно</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
+      <div class="line left"><div class="bubble"><div class="text"><p>очень кринжово такие сообщения от солидных ученых получать. </p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
+      <div class="line left"><div class="bubble"><div class="text"><p>мне такие сообщения только какие-то чуваки непонятные присылали, и я думала, что это озабоченные маньяки </p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
+      <div class="line right"><div class="bubble"><div class="text"><p>да, думаю многие получали и привыкли, что это норм. 
+даже от преподов. </p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
+      <div class="line right"><div class="bubble"><div class="text"><p>мне рассказывала подруга с лингвистики про свой случай, как к ней лез ее преподаватель, там полная жесть. </p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
+      <div class="line left"><div class="bubble"><div class="text"><p>столько слышу таких историй от знакомых и читаю в соцсетях</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
+      <div class="line left"><div class="bubble"><div class="text"><p>думаю написать про это текст</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
+      <div class="line left"><div class="bubble"><div class="text"><p>сейчас работаю журналисткой в маленьком независимом медиа</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
+      <div class="line left"><div class="bubble"><div class="text"><p>мы освещаем те социальные проблемы, о которых не говорят крупные сми
+</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
+      <div class="line left"><div class="bubble"><div class="text"><p>домогательства в университете – это хорошая тема для статьи</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
+      <div class="line left"><div class="bubble"><div class="text"><p>как думаешь, она согласится со мной поговорить?</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
+      <div class="line right"><div class="bubble"><div class="text"><p>сейчас спрошу у нее.</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
+            <div class="line left highlight"><div class="bubble"><div class="text"><p>спасибо!</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
+      <div class="line right"><div class="bubble"><div class="text"><p>она ответила, что ты ей можешь написать. 
+но не думаю, что согласится прям на публикацию
+</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
+                  <div class="line left highlight"><div class="bubble"><div class="text"><p>большое спасибо</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
+      <div class="line right"><div class="bubble"><div class="text"><p>не за что. напиши ей в соцсети, вот ее страничка:</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
 
-      </p>
-    <div class="goto-next">
-    	 <svg width="72px" height="72px" viewBox="0 0 24 24" style="fill: black">
-    		<path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path>
-		</svg>
     </div>
-    </div>
-    <div class="reflection">
-      <p>
-        Мне хотелось бы сделать расследование о домогательствах в университетах, чтоб привлечь внимание к этой проблеме. Я поделилась своей идеей с Сашей, и она посоветовала написать ее знакомой студентке-лингвистке Оле. Может она что-то расскажет?..
-      </p>
-      <div class="goto-next">
-    	 	<svg width="72px" height="72px" viewBox="0 0 24 24" style="fill: black">
-    	       <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path>
-		    </svg>
-       </div>
-    </div>
-    <div class="reflection">
-    	<div class="goto-next turning">
-    	 	<svg width="72px" height="72px" viewBox="0 0 24 24" style="fill: black">
-    	       <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path>
-		    </svg>
-         </div>
-    </div>
+    <div id="highlight-box" ></div>
   </div>
   
   <components>
     <div id="background">
       <img src="assets/sprites/j_neutral.jpg">
     </div>
+  <div class="emotions">
+      <img src="assets/sprites/j_neutral.jpg" class="left" speaker="j" emotion ="neutral">
+      <img src="assets/sprites/i_neutral.jpg" class="right" speaker="i" emotion="neutral">
+      <img src="assets/sprites/j_malice.jpg" class="left" speaker="j" emotion ="malice">
+      <img src="assets/sprites/j_sad.jpg" class="left" speaker="j" emotion ="sad">
+      <img src="assets/sprites/j_happy.jpg" class="left" speaker="j" emotion ="happy">
+      <img src="assets/sprites/i_unsure.jpg" class="right" speaker="i" emotion="unsure">
+      <img src="assets/sprites/i_sad.jpg" class="right" speaker="i" emotion="sad">
+  </div>
+  <div class="wave">
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div>
   </components>
 </body>
 </html>
