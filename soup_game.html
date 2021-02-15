@@ -59,7 +59,7 @@
     const offset_x = 30;
     const offset_y = 30;
 
-    const mouseRadius = 50;
+    const wallRepulsionSoften = 0.7;
 
     const baseVelocity = 35;
     const initialAmplitude = 4;
@@ -69,7 +69,14 @@
         return (dv*k)*(dv*k);
     }
 
-    const cursorRepulsion = 1.5;
+    const spoonRepulsion = 5;
+
+    const spoonRadialSpeed = 0.3;
+
+    const alphabet = 'абвгдежзийклмнопрстуфхцшщъыьэюя';
+
+    const goodWords = ['забота', 'сон']
+    const badWords  = ['кусь']
     
     let main = () => {
         let letters = new Array();
@@ -91,7 +98,21 @@
                 'repulsed_y': false
             })
         }
+        
+        // spoon variables
+        let spoonDeg = 0;
+        let spoon_x, spoon_y;
+        
         const updatePhysics = (delta) => {
+
+            // update spoon Position
+            const spoonRadius = Math.min(width, height)*0.5*0.75;
+            const repulsionRadius = spoonRadius/2;
+            
+            spoonDeg += spoonRadialSpeed*delta;
+            spoon_x = (width/2)  + spoonRadius * Math.cos(spoonDeg);
+            spoon_y = (height/2) + spoonRadius * Math.sin(spoonDeg);
+
             for (let letter of letters) {
 
                 // decrease velocity (fluid motion)
@@ -104,6 +125,7 @@
                     if (!letter.repulsed_x)
                     {
                         letter.dir_x = -letter.dir_x;
+                        letter.velocity *= wallRepulsionSoften;
                         letter.repulsed_x = true;
                     }
                 } else {
@@ -114,24 +136,25 @@
                 { 
                     if (!letter.repulsed_y)
                     {
-                        letter.dir_y = -letter.dir_y; 
+                        letter.dir_y = -letter.dir_y;
+                        letter.velocity *= wallRepulsionSoften;
                         letter.repulsed_y = true;
                     }
                 } else {
                         letter.repulsed_y = false;
                 }
                 
-                // add impulse with mouse
                 let center_x = letter.pos_x + alph_width/2;
                 let center_y = letter.pos_y + alph_height/2;
-
-                let dx = center_x-mouseOffsetX;
-                let dy = center_y-mouseOffsetY;
-                let dr = Math.sqrt(dx*dx + dy*dy);
-                let k = mouseRadius/dr;
+                
+                // add impulse with spoon
+                let dx = center_x-spoon_x;
+                let dy = center_y-spoon_y;
+                let dr = dx*dx + dy*dy;
+                let k = Math.min(repulsionRadius*repulsionRadius/dr, 2);
                 if (k > 1) { // <=> cursos is in the range
-                    let rep_x = dx*(k-1)*cursorRepulsion;
-                    let rep_y = dy*(k-1)*cursorRepulsion;
+                    let rep_x = -Math.sin(spoonDeg)*(k-1)*spoonRepulsion;
+                    let rep_y = Math.cos(spoonDeg)*(k-1)*spoonRepulsion;
                     let v_x = letter.dir_x*letter.velocity + rep_x;
                     let v_y = letter.dir_y*letter.velocity + rep_y;
                     let nv = Math.sqrt(v_x*v_x + v_y*v_y);
@@ -165,6 +188,13 @@
                 }
                 */ 
             }
+            // spoon debug
+            /*
+            context.fillRect(spoon_x-2,
+                             spoon_y-2,
+                             5,
+                             5)
+           */ 
         }
 
         var prev_ts = null;
