@@ -17,14 +17,35 @@
 
   <style>
     body {
-        background-color: #8f5a2c;
+        margin: 0;
     }
+    
+    .background {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: -2;
+        background-image: url(assets/minigames/soup/bg.png);
+        background-size: auto;
+    }
+
+    .blackout {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background-color: rgba(0, 0, 100, 0.25);
+    }
+
   </style>
+
+  <div class="background"></div>
+  <div class="blackout"></div>
 
   <script>
     let game_canvas = document.createElement('canvas');
-    
-    game_canvas.width = width; game_canvas.height = height;
+    game_canvas.classList.add("minigame");
+
     let context = game_canvas.getContext('2d');
 
     let alph_tiles_img = new Image();
@@ -50,7 +71,7 @@
 
     const cursorRepulsion = 1.5;
     
-    alph_tiles_img.onload = () => {
+    let main = () => {
         let letters = new Array();
         for (let i = 0; i < total_alph; i += 1) {
             let sprite = new Sprite(alph_tiles_img, 11, 3, total_alph);
@@ -65,7 +86,9 @@
                 'pos_y': height*Math.random(),
                 'dir_x': dx,
                 'dir_y': dy,
-                'velocity': velocity
+                'velocity': velocity,
+                'repulsed_x': false,
+                'repulsed_y': false
             })
         }
         const updatePhysics = (delta) => {
@@ -77,10 +100,26 @@
                 // wall repulsion
                 if ( letter.pos_x < -offset_x || 
                      letter.pos_x + alph_width > width + offset_x ) 
-                { letter.dir_x = -letter.dir_x; }
+                { 
+                    if (!letter.repulsed_x)
+                    {
+                        letter.dir_x = -letter.dir_x;
+                        letter.repulsed_x = true;
+                    }
+                } else {
+                    letter.repulsed_x = false;
+                }
                 if ( letter.pos_y < -offset_y ||
                      letter.pos_y + alph_height > height + offset_y )
-                { letter.dir_y = -letter.dir_y; }
+                { 
+                    if (!letter.repulsed_y)
+                    {
+                        letter.dir_y = -letter.dir_y; 
+                        letter.repulsed_y = true;
+                    }
+                } else {
+                        letter.repulsed_y = false;
+                }
                 
                 // add impulse with mouse
                 let center_x = letter.pos_x + alph_width/2;
@@ -116,6 +155,15 @@
                                   letter.pos_y, 
                                   alph_width,
                                   alph_height);
+                // test repulsion
+                /* 
+                if (letter.repulsed_x || letter.repulsed_y) {
+                    context.strokeRect(letter.pos_x, 
+                                  letter.pos_y, 
+                                  alph_width,
+                                  alph_height)
+                }
+                */ 
             }
         }
 
@@ -134,7 +182,14 @@
 
         window.requestAnimationFrame(step);
     }
-    
+
+    window.addEventListener("size_update", () => {
+        game_canvas.width = width;
+        game_canvas.height = height;
+        alph_tiles_img.onload = main;
+        if (alph_tiles_img.complete) {main();}
+    })
+
     document.body.appendChild(game_canvas);
   </script>
 

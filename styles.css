@@ -308,3 +308,6 @@ canvas.scene.blured {
     background-color: black;
 }
 
+canvas.minigame {
+    margin: 0;
+}
