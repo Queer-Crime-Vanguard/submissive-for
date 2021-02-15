@@ -43,6 +43,13 @@
   <div class="blackout"></div>
 
   <script>
+
+    // small method for choosing random element of array
+    Array.prototype.sample = function(){
+        return this[Math.floor(Math.random()*this.length)];
+    }
+
+
     let game_canvas = document.createElement('canvas');
     game_canvas.classList.add("minigame");
 
@@ -73,14 +80,31 @@
 
     const spoonRadialSpeed = 0.3;
 
-    const alphabet = 'абвгдежзийклмнопрстуфхцшщъыьэюя';
+    // words utilites
+    
+    const alphabet = 'абвгдежзийклмнопрстуфхцчшщъыьэюя';
 
-    const goodWords = ['забота', 'сон']
+    const goodWords = ['забота', 'отдых', 'сон']
     const badWords  = ['кусь']
+
+    // UI
+
+    let goodWord;
+    let badWord;
+    let found_letters;
     
     let main = () => {
+        // choose words
+        goodWord = goodWords.sample();
+        badWord  = badWords.sample();
+        found_letters = [];
+
+        // generate letters
+
         let letters = new Array();
-        for (let i = 0; i < total_alph; i += 1) {
+
+        let generate_letter = (c) => {
+            let i = alphabet.indexOf(c);
             let sprite = new Sprite(alph_tiles_img, 11, 3, total_alph);
             let deg = 2*Math.PI*Math.random();
             let dx = Math.cos(deg);
@@ -88,6 +112,7 @@
             let velocity = baseVelocity + initialAmplitude * baseVelocity * Math.random();
             sprite.setFrame(i);
             letters.push({
+                'char': c,
                 'sprite': sprite,
                 'pos_x': width*Math.random(),
                 'pos_y': height*Math.random(),
@@ -98,8 +123,34 @@
                 'repulsed_y': false
             })
         }
+
+        for (c of goodWord) {
+            generate_letter(c)
+        }
+
+        // junk
+
+        let remaining_letters = [];
+
+        for (c of alphabet) {
+            if (!goodWord.includes(c)) {remaining_letters.push(c)}
+        }
+
+        for (let t = 0; t < 20; t += 1) {
+            generate_letter(remaining_letters.sample())
+        }
+
+        // interact with letter
+
+        let interact = (letter) => {
+            if (goodWord.includes(letter.char)) {
+                found_letters.push(letter.char)
+                console.log(found_letters);
+                letters.splice(letters.indexOf(letter), 1)
+            }
+        }
         
-        // spoon variables
+        // initiate spoon
         let spoonDeg = 0;
         let spoon_x, spoon_y;
         
@@ -163,6 +214,15 @@
                     letter.velocity = nv;
                 }
 
+                // interact on mouse
+                let mdx = center_x-mouseOffsetX;
+                let mdy = center_y-mouseOffsetY;
+
+                if (Math.abs(mdx) < offset_x &&
+                    Math.abs(mdy) < offset_y) {
+                    interact(letter);
+                }
+
                 // apply velocity to position
                 letter.pos_x += letter.dir_x*letter.velocity*delta;
                 letter.pos_y += letter.dir_y*letter.velocity*delta;
@@ -170,7 +230,8 @@
             }
             
         }
-        const drawFrame = (delta) => {
+
+        const drawFrame = () => {
             context.clearRect(0, 0, width, height);
             for (let letter of letters) {
                 context.drawImage(letter.sprite.frame,
@@ -178,6 +239,27 @@
                                   letter.pos_y, 
                                   alph_width,
                                   alph_height);
+                
+                context.font = '48px sans-serif';
+                let word_offset = 0;
+                for (let c of goodWord) {
+                    if (found_letters.includes(c)) {
+                        context.fillStyle = "green";
+                    } else {
+                        context.fillStyle = "white";
+                    }
+                    context.fillText(c,
+                                     10+word_offset,
+                                     48)
+                    word_offset += context.measureText(c).width + 5;
+                }
+
+                context.strokeStyle = "white";
+                context.strokeRect(mouseOffsetX-7,
+                                mouseOffsetY-7,
+                                15,
+                                15);
+
                 // test repulsion
                 /* 
                 if (letter.repulsed_x || letter.repulsed_y) {
@@ -206,7 +288,7 @@
             }
             prev_ts = ts;
             updatePhysics(delta);
-            drawFrame(delta);
+            drawFrame();
             window.requestAnimationFrame(step);
         }
 
@@ -221,6 +303,7 @@
     })
 
     document.body.appendChild(game_canvas);
+
   </script>
 
 </body>
