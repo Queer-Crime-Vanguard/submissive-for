@@ -145,7 +145,6 @@
         let interact = (letter) => {
             if (goodWord.includes(letter.char)) {
                 found_letters.push(letter.char)
-                console.log(found_letters);
                 letters.splice(letters.indexOf(letter), 1)
             }
         }
@@ -242,9 +241,12 @@
                 
                 context.font = '48px sans-serif';
                 let word_offset = 0;
+                let remaining_found_letters = [...found_letters];
                 for (let c of goodWord) {
-                    if (found_letters.includes(c)) {
+                    let i = remaining_found_letters.indexOf(c);
+                    if (i >= 0) {
                         context.fillStyle = "green";
+                        remaining_found_letters.splice(i, 1);
                     } else {
                         context.fillStyle = "white";
                     }
