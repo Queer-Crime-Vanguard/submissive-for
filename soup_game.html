@@ -42,6 +42,8 @@
   <div class="background"></div>
   <div class="blackout"></div>
 
+  <script src="https://unpkg.com/perlin-noise-3d"></script>
+
   <script>
 
     // small method for choosing random element of array
@@ -57,6 +59,9 @@
 
     let alph_tiles_img = new Image();
     alph_tiles_img.src = "assets/minigames/soup/alphabet.png";
+
+    let fly_sprite = new Image();
+    fly_sprite.src = "assets/minigames/soup/fly.png";
 
     const total_alph = 32;
 
@@ -128,12 +133,9 @@
                 home_pos_y,
                 'pos_x': home_pos_x,
                 'pos_y': home_pos_y,
-                dir_x,
-                dir_y,
-                velocity,
-                'repulsed_x': false,
-                'repulsed_y': false,
-                'disentangled': false
+                'deg_offset': Math.random()*2*Math.PI,
+                noise : new perlinNoise3d(),
+                'display': 'normal'
             })
         }
 
@@ -164,200 +166,60 @@
                 letters.splice(letters.indexOf(letter), 1)
             }
         }
-        
-        // initiate spoon
-        let spoonDeg = 0;
-        let spoon_x, spoon_y;
 
-        // total time
-        let total_time = 0;
+        const rad_amp = 50;
+        const rad_freq = 0.1;
 
-        // pulsar for moving
-        const spread = 3.5;
-        const intensity = 0.1;
-        const center_speed = 0.1;
-        let pulsar = (x, y) => {
-            waves = intensity*total_time;
-            walk = center_speed*total_time;
-            return -Math.sin(-spread*Math.sqrt((x-0.7*Math.cos(walk))**2+(y-0.7*Math.cos(walk))**2))
-        }
-        
-        const updatePhysics = (delta) => {
+        const deg_velocity_amp = 0.2;
+        const deg_velocity_freq = 0.1;
 
-            total_time += delta;
-
-            // update spoon Position
-            const spoonRadius = Math.min(width, height)*0.5*0.75;
-            const repulsionRadius = spoonRadius/2;
-            
-            spoonDeg += spoonRadialSpeed*delta;
-            spoon_x = (width/2)  + spoonRadius * Math.cos(spoonDeg);
-            spoon_y = (height/2) + spoonRadius * Math.sin(spoonDeg);
-
+        const noisyMove = (totalTime) => {
             for (let letter of letters) {
 
-                // decrease velocity (fluid motion)
-                letter.velocity -= smoothDec(letter.velocity)*delta
-                
-                // wall repulsion
-                if ( letter.pos_x < -offset_x || 
-                     letter.pos_x + alph_width > width + offset_x ) 
-                { 
-                    if (!letter.repulsed_x)
-                    {
-                        letter.dir_x = -letter.dir_x;
-                        letter.velocity *= wallRepulsionSoften;
-                        letter.repulsed_x = true;
-                    }
-                } else {
-                    letter.repulsed_x = false;
-                }
-                if ( letter.pos_y < -offset_y ||
-                     letter.pos_y + alph_height > height + offset_y )
-                { 
-                    if (!letter.repulsed_y)
-                    {
-                        letter.dir_y = -letter.dir_y;
-                        letter.velocity *= wallRepulsionSoften;
-                        letter.repulsed_y = true;
-                    }
-                } else {
-                        letter.repulsed_y = false;
-                }
-                
-                // interact on mouse
+                let rad = rad_amp*letter.noise.get(rad_freq*totalTime, 0);
+                let deg_velocity = deg_velocity_amp*(letter.noise.get(0, deg_velocity_freq*totalTime)-0.5);
 
-                let center_x = letter.pos_x + alph_width/2;
-                let center_y = letter.pos_y + alph_height/2;
-
-                let mdx = center_x-mouseOffsetX;
-                let mdy = center_y-mouseOffsetY;
-
-                if (Math.abs(mdx) < offset_x &&
-                    Math.abs(mdy) < offset_y) {
-                    letter.disentangled = true;
-                } else {
-                    letter.disentangled = false;
-                }
-
-                let pre_v_x = letter.dir_x*letter.velocity;
-                let pre_v_y = letter.dir_y*letter.velocity;
-
-                // home tension
-
-                const ht = 0.7;
-
-                let dx = letter.pos_x - letter.home_pos_x;
-                let dy = letter.pos_y - letter.home_pos_y;
-
-                let dr = Math.sqrt(dx*dx + dy*dy);
-
-                let t_dfx = -ht*dx*Math.sqrt(dr);
-                let t_dfy = -ht*dy*Math.sqrt(dr);
-
-                const hg = -700;
-
-                let drs = dr + 1;
-
-                let g_dfx = hg*dx/(drs*drs);
-                let g_dfy = hg*dy/(drs*drs);
-
-                let dvx = (t_dfx + g_dfx)*delta;
-                let dvy = (t_dfy + g_dfy)*delta;
-
-                // pulsar velocity
-
-                let npos_x = 2*letter.pos_x/width - 1;
-                let npos_y = 2*letter.pos_y/height - 1;
-
-                const step = 0.01;
-
-                let pv = pulsar(npos_x, npos_y);
-                let dpx = (pulsar(npos_x+step, npos_y) - pv)/step;
-                let dpy = (pulsar(npos_x, npos_y+step) - pv)/step;
-
-                const amp = 0;
-
-                // apply forces to velocity
-
-                if (letter.disentangled) {
-                    dvx = 0;
-                    dvy = 0;
-                }
-
-                let ss = (1-(1/drs));
-
-                let v_x = pre_v_x + dvx + dpx*delta;
-                let v_y = pre_v_y + dvy + dpx*delta;
-
-                let nv = Math.sqrt(v_x*v_x + v_y*v_y);
-                letter.dir_x = v_x / nv;
-                letter.dir_y = v_y / nv;
-                letter.velocity = nv;
-
-                const slow = 0.02;
-                const vel_amp = 30;
-
-                // apply velocity to position
-                letter.pos_x += vel_amp*2*Math.atan(slow*v_x)*delta / Math.PI;
-                letter.pos_y += vel_amp*2*Math.atan(slow*v_y)*delta / Math.PI;
-                
+                letter.pos_x = letter.home_pos_x + rad*Math.cos(deg_velocity*totalTime + letter.deg_offset);
+                letter.pos_y = letter.home_pos_y + rad*Math.sin(deg_velocity*totalTime + letter.deg_offset);
             }
-            
+        }
+
+        const amp = 50;
+        const freq = 0.2;
+
+        const noisyMoveSimple = (totalTime) => {
+            for (let letter of letters) {
+
+                letter.pos_x = letter.home_pos_x + amp*(letter.noise.get(freq*totalTime, 0)-0.5);
+                letter.pos_y = letter.home_pos_y + amp*(letter.noise.get(0, freq*totalTime)-0.5);
+            }
         }
 
         const drawFrame = () => {
             context.clearRect(0, 0, width, height);
             for (let letter of letters) {
-                context.drawImage(letter.sprite.frame,
+                switch (letter.display) {
+                    case 'normal':
+                        context.drawImage(letter.sprite.frame,
+                                    letter.pos_x, 
+                                    letter.pos_y, 
+                                    alph_width,
+                                    alph_height);
+                        break
+                    case 'fail':
+                        context.drawImage(fly_sprite,
                                   letter.pos_x, 
                                   letter.pos_y, 
                                   alph_width,
                                   alph_height);
+                        break
+                }
                 
-                context.font = '48px sans-serif';
-                let word_offset = 0;
-                let remaining_found_letters = [...found_letters];
-                for (let c of goodWord) {
-                    let i = remaining_found_letters.indexOf(c);
-                    if (i >= 0) {
-                        context.fillStyle = "green";
-                        remaining_found_letters.splice(i, 1);
-                    } else {
-                        context.fillStyle = "white";
-                    }
-                    context.fillText(c,
-                                     10+word_offset,
-                                     48)
-                    word_offset += context.measureText(c).width + 5;
-                }
-
-                context.strokeStyle = "white";
-                context.strokeRect(mouseOffsetX-7,
-                                mouseOffsetY-7,
-                                15,
-                                15);
-
-                // test repulsion
-                /* 
-                if (letter.repulsed_x || letter.repulsed_y) {
-                    context.strokeRect(letter.pos_x, 
-                                  letter.pos_y, 
-                                  alph_width,
-                                  alph_height)
-                }
-                */ 
             }
-            // spoon debug
-            /*
-            context.fillRect(spoon_x-2,
-                             spoon_y-2,
-                             5,
-                             5)
-           */ 
         }
 
-        var prev_ts = null;
+        let prev_ts = null;
+        
         const step = (ts) => {
             if (prev_ts) {
                 delta = (ts - prev_ts)/1000;
@@ -365,7 +227,8 @@
                 delta = 0;
             }
             prev_ts = ts;
-            updatePhysics(delta);
+            // updatePhysics(delta);
+            noisyMoveSimple(ts/1000);
             drawFrame();
             window.requestAnimationFrame(step);
         }
