@@ -117,15 +117,14 @@
         let generate_letter = (char, n) => {
             let i = alphabet.indexOf(char);
             let sprite = new Sprite(alph_tiles_img, 11, 3, total_alph);
-            let dir = Math.random()*2*Math.PI;
-            let dir_x = Math.cos(dir);
-            let dir_y = Math.sin(dir);
-            let velocity = 3*baseVelocity;
             sprite.setFrame(i);
+
+            // spiral positioning
             let r = spiral*((n+start_offset)/(total_letters+start_offset));
             let d = (n/total_letters)*2*Math.PI*spiral_turns;
-            home_pos_x = width/2 + r*Math.cos(d);
-            home_pos_y = height/2 + r*Math.sin(d);
+            let home_pos_x = width/2 + r*Math.cos(d);
+            let home_pos_y = height/2 + r*Math.sin(d);
+            
             letters.push({
                 char,
                 sprite,
