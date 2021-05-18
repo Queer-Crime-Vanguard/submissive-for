@@ -37,12 +37,38 @@
         background-color: rgba(0, 0, 100, 0.25);
     }
 
+    .word-panel {
+        position: fixed;
+        z-index: 10;
+        top: 2em;
+        left: 25%;
+        width: 50%;
+        height: 4rem;
+        background-color: rgba(255, 255, 255, 0.5);
+        border-radius: 4rem;
+        text-align: center;
+        font-family: 'Courier New', monospace;
+        font-size: 3rem;
+        pointer-events: none;
+    }
+
+    @keyframes win_glow {
+        from {background-color: rgba(255, 255, 255, 0.5);}
+        to {background-color: rgba(200, 255, 200, 0.5);}
+    }
+
+    .word-panel.win {
+        animation: win_glow 1s infinite;
+        animation-direction: alternate;
+    }
+
   </style>
 
   <div class="background"></div>
   <div class="blackout"></div>
 
   <script src="https://unpkg.com/perlin-noise-3d"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.17/Tone.js"></script>
 
   <script>
 
@@ -63,10 +89,22 @@
     let fly_sprite = new Image();
     fly_sprite.src = "assets/minigames/soup/fly.png";
 
+    let sound_wrong = new Audio("assets/sound/wrong.ogg");
+    sound_wrong.volume = 0.2;
+    let sound_fail = new Audio("assets/sound/buzz.ogg")
+
+    let sound_win = new Audio("assets/sound/win.ogg")
+
+    //create a synth and connect it to the main output (your speakers)
+    const synth = new Tone.Synth().toDestination();
+
     const total_alph = 32;
 
     const alph_width = 50;
     const alph_height = 67;
+
+    let fly_height = 0;
+    fly_sprite.onload = () => {fly_height = alph_width/(fly_sprite.width) * fly_sprite.height;}
 
     const offset_x = 30;
     const offset_y = 30;
@@ -90,36 +128,40 @@
     const alphabet = 'абвгдежзийклмнопрстуфхцчшщъыьэюя';
 
     const goodWords = ['забота', 'отдых', 'сон']
-    const badWords  = ['кусь']
 
-    // UI
+    // word mechanics
+
+    let letters = new Array();
+    let total_letters = 20;
 
     let goodWord;
-    let badWord;
     let found_letters;
+
+    let fail_meter;
+    let fail;
     
-    let main = () => {
+    let loadgame = () => {
+        letters = []
+        fail = 0;
+        fail_meter = 0;
+
         // choose words
         goodWord = goodWords.sample();
-        badWord  = badWords.sample();
         found_letters = [];
 
         // generate letters
 
-        let letters = new Array();
-
-        let total_letters = goodWord.length + 20;
-
         let spiral = Math.min(width, height)/2;
-        const spiral_turns = 4;
-        const start_offset = 25;
+        const spiral_turns = 6;
+        const start_offset = 10;
 
-        let generate_letter = (char, n) => {
+        let generate_letter = (char) => {
             let i = alphabet.indexOf(char);
             let sprite = new Sprite(alph_tiles_img, 11, 3, total_alph);
             sprite.setFrame(i);
 
             // spiral positioning
+            let n = letters.length;
             let r = spiral*((n+start_offset)/(total_letters+start_offset));
             let d = (n/total_letters)*2*Math.PI*spiral_turns;
             let home_pos_x = width/2 + r*Math.cos(d);
@@ -138,13 +180,15 @@
             })
         }
 
-        n = 0;
+        // collect all letters which would be generated
+
+        let all_chars = []
+
         for (c of goodWord) {
-            generate_letter(c, n)
-            n += 1;
+            all_chars.push(c)
         }
 
-        // junk
+        // add junk
 
         let remaining_letters = [];
 
@@ -152,17 +196,54 @@
             if (!goodWord.includes(c)) {remaining_letters.push(c)}
         }
 
-        for (let t = 0; t < 20; t += 1) {
-            generate_letter(remaining_letters.sample(), n)
-            n += 1;
+        for (let t = 0; t < total_letters-goodWord.length; t += 1) {
+            all_chars.push(remaining_letters.sample())
+        }
+
+        // shuffle and generate
+
+        for (let count = 0; count < total_letters; count += 1) {
+            rand_i = Math.floor(Math.random()*(total_letters-count));
+            character = all_chars.splice(rand_i, 1)[0];
+            generate_letter(character);
+        }
+
+    }
+
+    const start = () => {
+
+        const note = (i) => {
+            let nc = String.fromCharCode(97 + i%7);
+            let no = (Math.floor((i+5)/7)+4).toString();
+            return nc.toUpperCase()+no;
         }
 
         // interact with letter
 
         let interact = (letter) => {
             if (goodWord.includes(letter.char)) {
+                let i = goodWord.indexOf(letter.char);
+                console.log(note(i))
+                synth.triggerAttackRelease(note(i), "8n");
                 found_letters.push(letter.char)
-                letters.splice(letters.indexOf(letter), 1)
+                letter.display = 'success'
+                updateUI();
+                if (win) {
+                    congrat = () => {sound_win.play()}
+                    setTimeout(congrat, 700);
+                    setTimeout(restart_game, 1700);
+                }
+            } else {
+                letter.display = 'wrong'
+                fail_meter += 1
+                if (fail_meter >= 5) {
+                    sound_fail.play()
+                    fail = true;
+                    fail_meter = 0;
+                    setTimeout(restart_game, 1700);
+                } else {
+                    sound_wrong.play()
+                }
             }
         }
 
@@ -184,15 +265,25 @@
         }
 
         const amp = 50;
-        const freq = 0.2;
+        const normal_freq = 0.2;
+        const fail_freq = 5;
 
         const noisyMoveSimple = (totalTime) => {
+            let freq
+            if (fail) {
+                freq = fail_freq
+            } else {
+                freq = normal_freq
+            }
+
             for (let letter of letters) {
 
                 letter.pos_x = letter.home_pos_x + amp*(letter.noise.get(freq*totalTime, 0)-0.5);
                 letter.pos_y = letter.home_pos_y + amp*(letter.noise.get(0, freq*totalTime)-0.5);
             }
         }
+
+        // rendring
 
         const drawFrame = () => {
             context.clearRect(0, 0, width, height);
@@ -205,17 +296,19 @@
                                     alph_width,
                                     alph_height);
                         break
-                    case 'fail':
+                    case 'wrong':
                         context.drawImage(fly_sprite,
                                   letter.pos_x, 
-                                  letter.pos_y, 
+                                  letter.pos_y,
                                   alph_width,
-                                  alph_height);
+                                  fly_height);
                         break
                 }
                 
             }
         }
+
+        // update cycle
 
         let prev_ts = null;
         
@@ -233,14 +326,74 @@
         }
 
         window.requestAnimationFrame(step);
+        loadgame();
+        updateUI();
+
+        // catch clicks
+
+        touched = (letter, x, y) => 
+            (letter.pos_x < x && x < letter.pos_x + alph_width) &&
+            (letter.pos_y < y && y < letter.pos_y + alph_height)
+
+
+        game_canvas.addEventListener('click', (e) => {
+            let x = e.pageX
+            let y = e.pageY
+
+            for (let letter of letters) {
+                if (letter.display == 'normal' && touched(letter, x, y)) {
+                    interact(letter);
+                    break;
+                }
+            }
+        })
+
     }
+
+    const restart_game = () => {
+        loadgame();
+        updateUI();
+    }
+
+    // UI for word
+
+    word_panel = document.createElement('div');
+    word_panel.classList.add('word-panel');
+
+    document.body.appendChild(word_panel);
+
+    let win = false;
+
+    const updateUI = () => {
+        show = []
+        win = true;
+        for (c of goodWord) {
+            if (found_letters.includes(c)) {
+                show.push(c)
+            } else {
+                show.push('_')
+                win = false
+            }
+        }
+        
+        if (win) {
+                word_panel.classList.add("win")
+        } else {
+            word_panel.classList.remove('win')
+        }
+        word_panel.innerHTML = show.join(" ")
+    }
+
+    // resize canvas and game start
 
     window.addEventListener("size_update", () => {
         game_canvas.width = width;
         game_canvas.height = height;
-        alph_tiles_img.onload = main;
-        if (alph_tiles_img.complete) {main();}
+
+        start();
     })
+
+    // add canvas to DOM
 
     document.body.appendChild(game_canvas);
 
