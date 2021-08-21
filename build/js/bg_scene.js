@@ -93,8 +93,6 @@ function draw() {
 
     clx.drawImage(sprite_l, 0, 0);
     crx.drawImage(sprite_r, 0, 0);
-
-    console.log(sprite_l);
     
     ctx.drawImage(cl, 0, 0);
     ctx.drawImage(cr, width-cr.width, 0);
