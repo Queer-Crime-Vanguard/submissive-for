@@ -113,7 +113,7 @@ body {
     border-color: rgba(180, 255, 0, 0.45);
 }
 
-#highlight-box .bubble {
+#highlight-box .highlight {
     display: inline-block;
     position: absolute;
     text-align: center;

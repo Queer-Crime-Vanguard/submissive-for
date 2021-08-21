@@ -10,16 +10,8 @@ let source_width = 1;
 let source_height = 1;
 
 function preloadImages() {
-    background_l.src = document.querySelector('#emotions .background.left').src;
-    background_r.src = document.querySelector('#emotions .background.right').src;
-    sprite_l.src = document.querySelector('#emotions .sprite.left.initial').src;
-    sprite_r.src = document.querySelector('#emotions .sprite.right.initial').src;
-    for (let img_node of document.querySelector('#emotions').children) {
-        img = new Image();
-        img.src = img_node.src;
-        emotions[emoindex(img_node)] = img;
-        console.log('preload', img)
-    }
+    background_l.src = document.querySelector('#background .left').src;
+    background_r.src = document.querySelector('#background .right').src;
     background_l.onload = function () {
         source_width = background_l.width;
         source_height = background_l.height;
@@ -27,10 +19,10 @@ function preloadImages() {
     };
 }
 
-function getEmotion(emoname) {
+function getEmotion(emoindex) {
     img = new Image();
-    src = document.querySelector("#emotions img[emotion='"+emoname+"']").src;
-    img.src = src;
+    speaker_emotion = emoindex.split(":")
+    img.src = "assets/sprites/" + speaker_emotion[0] + "_" + speaker_emotion[1] + ".svg";
     return img;
 }
 
@@ -96,8 +88,13 @@ function draw() {
     let crx = cr.getContext('2d');
     clx.drawImage(background_l, -drag*moveX - drag - lOffset, -drag*moveY - drag, source_width*scale+drag, height+2*drag);
     crx.drawImage(background_r, cr.width-(background_r.width*scale)+drag*moveX + rOffset, drag*moveY-drag, source_width*scale+drag, height+2*drag);
-    clx.drawImage(sprite_l, -drag*moveX - drag - lOffset, -drag*moveY - drag, source_width*scale+drag, height+2*drag);
-    crx.drawImage(sprite_r, cr.width-(background_r.width*scale)+drag*moveX + rOffset, drag*moveY-drag, source_width*scale+drag, height+2*drag);
+    //clx.drawImage(sprite_l, -drag*moveX - drag - lOffset, -drag*moveY - drag, source_width*scale+drag, height+2*drag);
+    //crx.drawImage(sprite_r, cr.width-(background_r.width*scale)+drag*moveX + rOffset, drag*moveY-drag, source_width*scale+drag, height+2*drag);
+
+    clx.drawImage(sprite_l, 0, 0);
+    crx.drawImage(sprite_r, 0, 0);
+
+    console.log(sprite_l);
     
     ctx.drawImage(cl, 0, 0);
     ctx.drawImage(cr, width-cr.width, 0);
@@ -144,10 +141,11 @@ function animate(onProgress, duration) {
 }
 
 function updateEmotion(left, emoIndex) {
-    img = emotions[emoIndex];
+    img = getEmotion(emoIndex);
     console.log('emotion update', left, emoIndex, img);
     if (left) {
         sprite_l = img;
+        /*
         stepOffset = -stepOffsetAmp;
         animate((progress) => {
             const start = lOffset;
@@ -159,8 +157,10 @@ function updateEmotion(left, emoIndex) {
             const dest = side_offset;
             rOffset = start + (dest-start)*progress
         }, offset_delay);
+        */
     } else {
         sprite_r = img;
+        /*
         stepOffset = stepOffsetAmp;
         animate((progress) => {
             const start = lOffset;
@@ -172,6 +172,7 @@ function updateEmotion(left, emoIndex) {
             const dest = 0;
             rOffset = start + (dest-start)*progress
         }, offset_delay);
+        */
     }
     drawFrame();
 }

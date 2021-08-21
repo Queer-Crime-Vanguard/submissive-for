@@ -9,45 +9,93 @@
   <meta name="author" content="HandsOff">
 </head>
 
-<body onload="updateWindowParams(); setBg(); preloadImages(); setTrack(); initiateHighlight();">
-  
+<body onload="setBg(); preloadImages(); initiateHighlight(); setTrack()">
   <link rel="stylesheet" href="styles.css">
   <script type="text/javascript" src="js/track.js"></script>
-  <script type="text/javascript" src="js/solid_bg.js"></script>
-  <script type="text/javascript" src="js/finish_scene.js"></script>
-  <script type="text/javascript" src="js/chat.js"></script>
+  <script type="text/javascript" src="js/utils.js"></script>
   <script type="text/javascript" src="js/sound.js"></script>
-    <script type="text/javascript" src="js/utils.js"></script>
+  <script type="text/javascript" src="js/music.js"></script>
+  <script type="text/javascript" src="js/chat.js"></script>
+  <script type="text/javascript" src="js/bg_scene.js"></script>
+  <script type="text/javascript" src="js/finish_scene.js"></script>
   
   <div id="dialogue-box">
     <div id="dialogue">
-      <div class="line left highlight"><div class="bubble"><div class="text"><p>привет!</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
-      <div class="line right"><div class="bubble"><div class="text"><p>Сима, привет!</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
-      <div class="line right"><div class="bubble"><div class="text"><p>я как раз хотела тебе написать</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
-      <div class="line right"><div class="bubble"><div class="text"><p>мне тут пишет опять тот академик, звал куда-то ночью приехать, мерзко комментировал мои фотографии (
-</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
-      <div class="line left"><div class="bubble"><div class="text"><p>ужас(</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
-      <div class="line right"><div class="bubble"><div class="text"><p>я его заблокировала</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
-      <div class="line left highlight"><div class="bubble"><div class="text"><p>и правильно</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
-      <div class="line left"><div class="bubble"><div class="text"><p>очень кринжово такие сообщения от солидных ученых получать. </p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
-      <div class="line left"><div class="bubble"><div class="text"><p>мне такие сообщения только какие-то чуваки непонятные присылали, и я думала, что это озабоченные маньяки </p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
-      <div class="line right"><div class="bubble"><div class="text"><p>да, думаю многие получали и привыкли, что это норм. 
-даже от преподов. </p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
-      <div class="line right"><div class="bubble"><div class="text"><p>мне рассказывала подруга с лингвистики про свой случай, как к ней лез ее преподаватель, там полная жесть. </p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
-      <div class="line left"><div class="bubble"><div class="text"><p>столько слышу таких историй от знакомых и читаю в соцсетях</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
-      <div class="line left"><div class="bubble"><div class="text"><p>думаю написать про это текст</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
-      <div class="line left"><div class="bubble"><div class="text"><p>сейчас работаю журналисткой в маленьком независимом медиа</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
-      <div class="line left"><div class="bubble"><div class="text"><p>мы освещаем те социальные проблемы, о которых не говорят крупные сми
-</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
-      <div class="line left"><div class="bubble"><div class="text"><p>домогательства в университете – это хорошая тема для статьи</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
-      <div class="line left"><div class="bubble"><div class="text"><p>как думаешь, она согласится со мной поговорить?</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
-      <div class="line right"><div class="bubble"><div class="text"><p>сейчас спрошу у нее.</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
-            <div class="line left highlight"><div class="bubble"><div class="text"><p>спасибо!</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
-      <div class="line right"><div class="bubble"><div class="text"><p>она ответила, что ты ей можешь написать. 
-но не думаю, что согласится прям на публикацию
-</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
-                  <div class="line left highlight"><div class="bubble"><div class="text"><p>большое спасибо</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
-      <div class="line right"><div class="bubble"><div class="text"><p>не за что. напиши ей в соцсети, вот ее страничка:</p></div><linemeta speaker="j" emotion="neutral"></linemeta></div></div>
+      <div class="line right "><div class="highlight"><p>привет</p></div> <div class="bubble"><p>привет</p></div> <linemeta speaker="s" emotion="reading"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Привет!</p></div> <linemeta speaker="z" emotion="neutral"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>ты уже видела расследование про наш универ?</p></div> <linemeta speaker="s" emotion="neutral"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Про домогательства?</p></div> <linemeta speaker="z" emotion="neutral"></linemeta></div>
+      <div class="line right "><div class="highlight"><p>ага</p></div> <div class="bubble"><p>ага</p></div> <linemeta speaker="s" emotion="neutral"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Да...</p></div> <linemeta speaker="z" emotion="neutral_2"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Мне так жаль, что девушкам пришлось пережить этот опыт (</p></div> <linemeta speaker="z" emotion="sad_2"></linemeta></div>
+      <div class="line right "><div class="highlight"><p>а еще</p></div> <div class="bubble"><p>препод написал на своей странице, что это клевета</p></div> <linemeta speaker="s" emotion="pissed_2"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>читаю комментарии</p></div> <linemeta speaker="s" emotion="wonders"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>преподаватели на его стороне</p></div> <linemeta speaker="s" emotion="pissed"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>и даже многие студенты</p></div> <linemeta speaker="s" emotion="puzzled"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Я пока решила поберечь себя и не читать (</p></div> <linemeta speaker="z" emotion="sad"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Все так плохо?</p></div> <linemeta speaker="z" emotion="puzzled"></linemeta></div>
+      <div class="line right "><div class="highlight"><p>да</p></div> <div class="bubble"><p>да</p></div> <linemeta speaker="s" emotion="pissed"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>одни пишут, что девушки сговорились и решили его оклеветать</p></div> <linemeta speaker="s" emotion="pissed"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>другие - что студентки сами виноваты</p></div> <linemeta speaker="s" emotion="pissed"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>я в шоке от комментария знакомого преподавателя</p></div> <linemeta speaker="s" emotion="mad"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>он пишет про одну из студенток, что она откровенно одевалась</p></div> <linemeta speaker="s" emotion="mad"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>мол, сама напросилась</p></div> <linemeta speaker="s" emotion="mad"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Классический виктимблейминг (</p></div> <linemeta speaker="z" emotion="sad_2"></linemeta></div>
+      <div class="line left pause">  <linemeta speaker="z" emotion="None"></linemeta></div>
+      <div class="line right "><div class="highlight"><p>прости</p></div> <div class="bubble"><p>прости</p></div> <linemeta speaker="s" emotion="neutral"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>я так сходу написала про препода</p></div> <linemeta speaker="s" emotion="neutral"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>ты вообще как?</p></div> <linemeta speaker="s" emotion="neutral"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>как магистратура?</p></div> <linemeta speaker="s" emotion="neutral"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Я год готовилась, проходила тренинги</p></div> <linemeta speaker="z" emotion="neutral"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Поступила на психологию! Ура!</p></div> <linemeta speaker="z" emotion="happy"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Пока мне все нравится</p></div> <linemeta speaker="z" emotion="neutral"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Разбираем на семинарах то, что обсуждала с психотерапевткой</p></div> <linemeta speaker="z" emotion="neutral"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>круто, когда учеба напрямую связана с жизнью</p></div> <linemeta speaker="z" emotion="neutral"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>не то что с политологией…</p></div> <linemeta speaker="z" emotion="sad"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>правда, много общих предметов бесполезных</p></div> <linemeta speaker="z" emotion="sad"></linemeta></div>
+      <div class="line right "><div class="highlight"><p>понимаю</p></div> <div class="bubble"><p>понимаю</p></div> <linemeta speaker="s" emotion="relaxed"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>у нас на журфаке тоже было много бессмысленных пар ))</p></div> <linemeta speaker="s" emotion="relaxed"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>А ты как? Работаешь?</p></div> <linemeta speaker="z" emotion="neutral"></linemeta></div>
+      <div class="line right "><div class="highlight"><p>устроилась</p></div> <div class="bubble"><p>я только устроилась</p></div> <linemeta speaker="s" emotion="relaxed"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>работаю журналистом</p></div> <linemeta speaker="s" emotion="relaxed"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>в редакции мне пока давали пару текстов на корректуру</p></div> <linemeta speaker="s" emotion="relaxed"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>главред предложил написать о городских парках</p></div> <linemeta speaker="s" emotion="wonders"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>походу тему никто не захотел брать</p></div> <linemeta speaker="s" emotion="wonders"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>было мучительно (</p></div> <linemeta speaker="s" emotion="wonders"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Ой да, понимаю..</p></div> <linemeta speaker="z" emotion="sad"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Все прям как в универе</p></div> <linemeta speaker="z" emotion="sad_2"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>А ты могла бы им предложить свою тему статьи?</p></div> <linemeta speaker="z" emotion="puzzled"></linemeta></div>
+      <div class="line right "><div class="highlight"><p>может</p></div> <div class="bubble"><p>может, предложить статью про домогательства</p></div> <linemeta speaker="s" emotion="relaxed"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>я начала думать про это после того как прочитала про препода</p></div> <linemeta speaker="s" emotion="relaxed"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>я просто только сейчас начала все это осознавать</p></div> <linemeta speaker="s" emotion="relaxed"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>у нас на факультете была такая атмосфера</p></div> <linemeta speaker="s" emotion="puzzled"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>подкаты, нежелательные прикосновения, сальные шутки</p></div> <linemeta speaker="s" emotion="puzzled"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Как я тебя понимаю!</p></div> <linemeta speaker="z" emotion="sad_2"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Вообще, это очень важная проблема</p></div> <linemeta speaker="z" emotion="puzzled"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>О ней в России особо не пишут</p></div> <linemeta speaker="z" emotion="puzzled"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>насколько мне известно</p></div> <linemeta speaker="z" emotion="puzzled"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Думаю, стоит попробовать</p></div> <linemeta speaker="z" emotion="neutral"></linemeta></div>
+      <div class="line right "><div class="highlight"><p>здорово</p></div> <div class="bubble"><p>было б здорово</p></div> <linemeta speaker="s" emotion="neutral"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>но я переживаю</p></div> <linemeta speaker="s" emotion="puzzled"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>вряд ли кто-то захочет говорить на такие личные темы</p></div> <linemeta speaker="s" emotion="puzzled"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Я тебе могу помогать, если ты решишься!</p></div> <linemeta speaker="z" emotion="neutral_2"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Подсказывать, как этично общаться с пострадавшими</p></div> <linemeta speaker="z" emotion="neutral_2"></linemeta></div>
+      <div class="line left pause">  <linemeta speaker="z" emotion="None"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>я тут подумала</p></div> <linemeta speaker="z" emotion="neutral"></linemeta></div>
+      <div class="line left longtyping">  <linemeta speaker="z" emotion="None"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>А ты помнишь мою подругу Олю?</p></div> <linemeta speaker="z" emotion="puzzled"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>у нее как раз была неприятная история в универе</p></div> <linemeta speaker="z" emotion="sad_2"></linemeta></div>
+      <div class="line right "><div class="highlight"><p>ты знакомила</p></div> <div class="bubble"><p>да, ты нас знакомила</p></div> <linemeta speaker="s" emotion="neutral"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>она даже есть у меня в соцсетях</p></div> <linemeta speaker="s" emotion="neutral"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>думаешь, я могла бы ей написать?</p></div> <linemeta speaker="s" emotion="wonders"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Думаю, да</p></div> <linemeta speaker="z" emotion="neutral"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Оля была в ужасе от несправедливости ситуации</p></div> <linemeta speaker="z" emotion="neutral"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>этот человек продолжил работать в университете</p></div> <linemeta speaker="z" emotion="mad"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>другие преподы были в курсе</p></div> <linemeta speaker="z" emotion="mad"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>но не стали устраивать разбирательства</p></div> <linemeta speaker="z" emotion="mad"></linemeta></div>
+      <div class="line right "><div class="highlight"><p>спасибо</p></div> <div class="bubble"><p>спасибо!</p></div> <linemeta speaker="s" emotion="neutral"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>я бы попробовала</p></div> <linemeta speaker="s" emotion="neutral"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>напишу ей</p></div> <linemeta speaker="s" emotion="neutral"></linemeta></div>
 
     </div>
     <div id="highlight-box" ></div>
@@ -55,17 +103,9 @@
   
   <components>
     <div id="background">
-      <img src="assets/sprites/j_neutral.jpg">
+      <img src="assets/sprites_png/j_background.png" class="right">
+      <img src="assets/sprites_png/o_background.png" class="left">
     </div>
-  <div class="emotions">
-      <img src="assets/sprites/j_neutral.jpg" class="left" speaker="j" emotion ="neutral">
-      <img src="assets/sprites/i_neutral.jpg" class="right" speaker="i" emotion="neutral">
-      <img src="assets/sprites/j_malice.jpg" class="left" speaker="j" emotion ="malice">
-      <img src="assets/sprites/j_sad.jpg" class="left" speaker="j" emotion ="sad">
-      <img src="assets/sprites/j_happy.jpg" class="left" speaker="j" emotion ="happy">
-      <img src="assets/sprites/i_unsure.jpg" class="right" speaker="i" emotion="unsure">
-      <img src="assets/sprites/i_sad.jpg" class="right" speaker="i" emotion="sad">
-  </div>
   <div class="wave">
     <span class="dot"></span>
     <span class="dot"></span>

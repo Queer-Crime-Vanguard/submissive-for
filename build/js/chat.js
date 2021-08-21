@@ -6,17 +6,19 @@ const autoplayDelay = 350;
 const pauseEmotionDelay = 1600;
 const pauseDelay = 4000;
 
-function prepareHighlight(bubble, activate) {
-    highlight_box = document.querySelector('#highlight-box')
-    highlight_box.addEventListener('click', () => {
-        processHighlight(true);
-        document.dispatchEvent(new Event('play_bg_music')); })
-    highlight_box.appendChild(bubble);
+function prepareHighlight(highlight, activate) {
+    let highlight_box = document.querySelector('#highlight-box')
+    highlight_box.appendChild(highlight);
     if (activate) {highlight_box.classList.add('activated');}
 }
 
 function initiateHighlight() {
-    prepareHighlight(getNextLine().children[0].cloneNode(true), true);
+    let highlight_box = document.querySelector('#highlight-box');
+    highlight_box.addEventListener('click', () => {
+        processHighlight(true);
+        document.dispatchEvent(new Event('play_bg_music')); })
+    let highlight = getNextLine().querySelector(".highlight");
+    prepareHighlight(highlight, true);
 }
 
 function sendEmotion(isleft, emoindex) {
@@ -41,10 +43,11 @@ function nextline(force_instant) {
             }, pauseDelay);
             return
         }
-        var delay = showNextBubble(currentLine, force_instant);
-        setTimeout(() => {var nextLine = getNextLine();
-                          if (nextLine && nextLine.classList.contains('highlight')) {
-                              prepareHighlight(nextLine.children[0].cloneNode(true), true);
+        var delay = showBubble(currentLine, force_instant);
+        setTimeout(() => {let nextLine = getNextLine();
+                          let highlight = nextLine.querySelector(".highlight");
+                          if (nextLine && highlight) {
+                              prepareHighlight(highlight, true);
                           } else {nextline(false);} },
                    1.5*delay+autoplayDelay);
     } else {
@@ -53,19 +56,22 @@ function nextline(force_instant) {
 }
 
 function processHighlight(by_click) {
-    highlight_box = document.querySelector('#highlight-box');
+    let highlight_box = document.querySelector('#highlight-box');
     highlight_box.removeChild(highlight_box.children[0]);
     highlight_box.classList.remove("activated");
     nextline(by_click);
 }
 
-function showNextBubble(lineNode, force_instant) {
-    meta = lineNode.querySelector('linemeta');
-    
-    islong = lineNode.classList.contains('long');
-    isinstant = lineNode.classList.contains('instant') || force_instant;
+function showBubble(lineNode, force_instant) {
+    let meta = lineNode.querySelector('linemeta');
+    let highlight = lineNode.querySelector('.highlight');
 
-    bubble = lineNode.querySelector('.bubble');
+    if (highlight) {lineNode.removeChild(highlight);}
+     
+    let islong = lineNode.classList.contains('long');
+    let isinstant = lineNode.classList.contains('instant') || force_instant;
+
+    let bubble = lineNode.querySelector('.bubble');
     
     lineNode.classList.add("appeared");
     var bubble_style = window.getComputedStyle(bubble, null);
