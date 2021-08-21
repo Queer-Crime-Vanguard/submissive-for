@@ -1,0 +1,14 @@
+{
+    "speakers":
+        {
+            "Сима": {
+                "letter": "s",
+                "position": "right"
+            },
+
+            "Зоя": {
+                "letter": "z",
+                "position": "left"
+            }
+        }
+}
