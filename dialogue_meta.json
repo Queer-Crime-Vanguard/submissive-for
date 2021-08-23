@@ -9,6 +9,11 @@
             "Зоя": {
                 "letter": "z",
                 "position": "left"
+            },
+
+            "Оля": {
+                "letter": "o",
+                "position": "left"
             }
         }
 }
