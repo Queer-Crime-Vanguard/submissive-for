@@ -4,8 +4,6 @@ var sprite_l = new Image(),
 var background_l = new Image(),
     background_r = new Image()
 
-var emotions = {};
-
 let source_width = 1;
 let source_height = 1;
 
@@ -17,13 +15,23 @@ function preloadImages() {
         source_height = background_l.height;
         setBg();
     };
+
+    preloadEmotions();
 }
 
-function getEmotion(emoindex) {
-    img = new Image();
-    speaker_emotion = emoindex.split(":")
-    img.src = "assets/sprites/" + speaker_emotion[0] + "_" + speaker_emotion[1] + ".svg";
-    return img;
+let emotions = {};
+
+function preloadEmotions() {
+    document.querySelectorAll("#dialogue linemeta").forEach((meta) => {
+        img = new Image();
+        img.src = "assets/sprites/" + meta.getAttribute('speaker') + "_" + meta.getAttribute('emotion') + ".svg"
+        console.log('preload', img)
+        emotions[emoindex(meta)] = img;
+    })
+}
+
+function getEmotion(emoind) {
+    return emotions[emoind];
 }
 
 const dividerThickness = 4;

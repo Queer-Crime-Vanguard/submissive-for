@@ -1,5 +1,5 @@
 function getNextLine() {
-    return document.querySelector('.line:not(.shown)')
+    return document.querySelector('.line:not(.shown):not(.init)')
 }
 
 const autoplayDelay = 350;
@@ -25,6 +25,13 @@ function initiateHighlight() {
 function sendEmotion(isleft, emoindex) {
     ev = new CustomEvent('update_emotion', {'detail': {'isleft': isleft, 'emotion_index': emoindex}})
     document.dispatchEvent(ev);
+}
+
+function initializeDialogue() {
+    document.querySelectorAll('#dialogue .line.init').forEach((line) => {
+        sendEmotion(line.classList.contains('left'), emoindex(line.querySelector('linemeta')))
+    })
+    initiateHighlight();
 }
 
 function nextline(force_instant) {
