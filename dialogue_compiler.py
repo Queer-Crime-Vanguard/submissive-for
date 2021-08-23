@@ -11,8 +11,9 @@ def line_extract(line):
 
     is_bookmark = (message.find("@[") >= 0)
 
-    left_strip = hl_start - 1 - is_bookmark
-    right_strip = hl_end+1
+    if hl_start:
+        left_strip = hl_start - 1 - is_bookmark
+        right_strip = hl_end+1
 
     # higlight clean
     hl_clean_message = message[:left_strip] + message[right_strip:] if hl_start else message
