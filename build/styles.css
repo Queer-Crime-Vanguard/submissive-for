@@ -119,11 +119,18 @@ body {
     text-align: center;
     font-weight: 500;
     font-size: 90%;
-    padding: 0.5em;
     min-width: 16em;
     transform: translate(-50%, 50%);
     bottom: 50%;
     left: 50%;
+}
+
+#highlight-box .highlight.bookmark p::before {
+    content: "🔖";
+}
+
+#highlight-box.with_bookmark {
+    background-color: rgba(255, 255, 0, 0.65);
 }
 
 

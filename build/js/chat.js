@@ -6,10 +6,11 @@ const autoplayDelay = 350;
 const pauseEmotionDelay = 1600;
 const pauseDelay = 4000;
 
-function prepareHighlight(highlight, activate) {
+function prepareHighlight(highlight, activate, with_bookmark) {
     let highlight_box = document.querySelector('#highlight-box')
     highlight_box.appendChild(highlight);
     if (activate) {highlight_box.classList.add('activated');}
+    if (with_bookmark) {highlight_box.classList.add('with_bookmark');}
 }
 
 function initiateHighlight() {
@@ -18,7 +19,7 @@ function initiateHighlight() {
         processHighlight(true);
         document.dispatchEvent(new Event('play_bg_music')); })
     let highlight = getNextLine().querySelector(".highlight");
-    prepareHighlight(highlight, true);
+    prepareHighlight(highlight, true, false);
 }
 
 function sendEmotion(isleft, emoindex) {
@@ -32,31 +33,35 @@ function nextline(force_instant) {
 
         let bubble = currentLine.querySelector('.bubble');
         let delay = 0;
+
         if (bubble) {
             delay = showBubble(currentLine, bubble, force_instant);
-        } else if (currentLine.classList.contains('pause')) {
+        } else {
             currentLine.classList.add('shown');
 
-            delay = 1000;
-        } else if (currentLine.classList.contains('typing')) {
-            currentLine.classList.add('shown');
+            if (currentLine.classList.contains('pause')) {
+                delay = 1000;
+            }
+            
+            if (currentLine.classList.contains('typing')) {
 
-            bubble = document.createElement('div');
-            bubble.classList.add('bubble');
-            bubble.appendChild(document.querySelector('components .wave').cloneNode(true));
+                bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                bubble.appendChild(document.querySelector('components .wave').cloneNode(true));
 
-            prepareHighlight(bubble, false);
-            setTimeout(() => {
-                processHighlight(false);
-            }, pauseDelay);
-            return
+                prepareHighlight(bubble, false, false);
+                setTimeout(() => {
+                    processHighlight(false);
+                }, pauseDelay);
+                return
+            }
         }
 
         setTimeout(() => {let nextLine = getNextLine();
                           if (nextline) {
                             let highlight = nextLine.querySelector(".highlight");
                             if (highlight) {
-                                prepareHighlight(highlight, true);
+                                prepareHighlight(highlight, true, highlight.classList.contains('bookmark'));
                             } else {
                                 nextline(false);
                             }
@@ -71,6 +76,7 @@ function processHighlight(by_click) {
     let highlight_box = document.querySelector('#highlight-box');
     highlight_box.removeChild(highlight_box.children[0]);
     highlight_box.classList.remove("activated");
+    highlight_box.classList.remove("with_bookmark");
     nextline(by_click);
 }
 

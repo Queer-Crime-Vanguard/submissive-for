@@ -9,8 +9,13 @@ def line_extract(line):
         hl_end = message.find("]")
         hl_text = message[hl_start:hl_end]
 
+    is_bookmark = (message.find("@[") >= 0)
+
+    left_strip = hl_start - 1 - is_bookmark
+    right_strip = hl_end+1
+
     # higlight clean
-    hl_clean_message = message[:hl_start-1] + message[hl_end+1:] if hl_start else message
+    hl_clean_message = message[:left_strip] + message[right_strip:] if hl_start else message
     
     # extract tags
     tags = filter(lambda s: s.startswith("#"), hl_clean_message.split())
@@ -32,13 +37,14 @@ def line_extract(line):
     return {
         'speaker': speaker,
         'highlight': hl_text,
+        'is_bookmark': is_bookmark,
         'emotion': emotion,
         'actions': actions,
         'text': tag_clean_message
     }
 
 
-def line_build(meta, speaker, highlight, emotion, actions, text):
+def line_build(meta, speaker, highlight, is_bookmark, emotion, actions, text):
     
     # get detailied information about speaker using meta
     speaker_meta = meta['speakers'][speaker]
@@ -46,7 +52,7 @@ def line_build(meta, speaker, highlight, emotion, actions, text):
     position = speaker_meta['position']
 
     # highlight
-    html_hightlight = f'<div class="highlight"><p>{highlight}</p></div>' if highlight else ''
+    html_hightlight = f'<div class="highlight {"bookmark" if is_bookmark else ""}"><p>{highlight}</p></div>' if highlight else ''
 
     # bubble
     html_bubble = f'<div class="bubble"><p>{text}</p></div>' if text else ''
