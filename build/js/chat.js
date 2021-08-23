@@ -72,10 +72,10 @@ function nextline(force_instant) {
                             } else {
                                 nextline(false);
                             }
+                        } else {
+                            finishScene();
                         }},
                    1.5*delay+autoplayDelay);
-    } else {
-        finishScene();
     }
 }
 
