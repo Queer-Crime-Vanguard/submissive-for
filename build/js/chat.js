@@ -65,14 +65,14 @@ function nextline(force_instant) {
         }
 
         setTimeout(() => {let nextLine = getNextLine();
-                          if (nextline) {
+                        if (nextLine) {
                             let highlight = nextLine.querySelector(".highlight");
                             if (highlight) {
                                 prepareHighlight(highlight, true, highlight.classList.contains('bookmark'));
                             } else {
                                 nextline(false);
                             }
-                          }},
+                        }},
                    1.5*delay+autoplayDelay);
     } else {
         finishScene();
