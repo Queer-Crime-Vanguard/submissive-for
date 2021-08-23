@@ -29,26 +29,38 @@ function sendEmotion(isleft, emoindex) {
 function nextline(force_instant) {
     var currentLine = getNextLine();
     if (currentLine) {
-        if (currentLine.classList.contains('pause')) {
+
+        let bubble = currentLine.querySelector('.bubble');
+        let delay = 0;
+        if (bubble) {
+            delay = showBubble(currentLine, bubble, force_instant);
+        } else if (currentLine.classList.contains('pause')) {
             currentLine.classList.add('shown');
-            var bubble = document.createElement('div');
+
+            delay = 1000;
+        } else if (currentLine.classList.contains('typing')) {
+            currentLine.classList.add('shown');
+
+            bubble = document.createElement('div');
             bubble.classList.add('bubble');
             bubble.appendChild(document.querySelector('components .wave').cloneNode(true));
+
             prepareHighlight(bubble, false);
-            setTimeout(() => {
-                sendEmotion(currentLine.classList.contains('left'), emoindex(currentLine.querySelector('linemeta'))); 
-            }, pauseEmotionDelay)
             setTimeout(() => {
                 processHighlight(false);
             }, pauseDelay);
             return
         }
-        var delay = showBubble(currentLine, force_instant);
+
         setTimeout(() => {let nextLine = getNextLine();
-                          let highlight = nextLine.querySelector(".highlight");
-                          if (nextLine && highlight) {
-                              prepareHighlight(highlight, true);
-                          } else {nextline(false);} },
+                          if (nextline) {
+                            let highlight = nextLine.querySelector(".highlight");
+                            if (highlight) {
+                                prepareHighlight(highlight, true);
+                            } else {
+                                nextline(false);
+                            }
+                          }},
                    1.5*delay+autoplayDelay);
     } else {
         finishScene();
@@ -62,16 +74,14 @@ function processHighlight(by_click) {
     nextline(by_click);
 }
 
-function showBubble(lineNode, force_instant) {
+function showBubble(lineNode, bubble, force_instant) {
     let meta = lineNode.querySelector('linemeta');
     let highlight = lineNode.querySelector('.highlight');
 
     if (highlight) {lineNode.removeChild(highlight);}
      
-    let islong = lineNode.classList.contains('long');
+    let islong = lineNode.classList.contains('pause');
     let isinstant = lineNode.classList.contains('instant') || force_instant;
-
-    let bubble = lineNode.querySelector('.bubble');
     
     lineNode.classList.add("appeared");
     var bubble_style = window.getComputedStyle(bubble, null);
@@ -107,12 +117,12 @@ function showBubble(lineNode, force_instant) {
             }
         })}
     
+
     setTimeout(() => {lineNode.classList.add("positioned");
                       typingSound.play();
                       var typing_bubble_style = window.getComputedStyle(bubble, null);
                       bubble.style.width = typing_bubble_style.getPropertyValue("width");
-                      bubble.style.height = typing_bubble_style.getPropertyValue("height");
-                      console.log(bubble.style.width, bubble.style.height)},
+                      bubble.style.height = typing_bubble_style.getPropertyValue("height")},
                microDelay)
     setTimeout(() => {lineNode.classList.add("shown");},
                positioningDelay)
