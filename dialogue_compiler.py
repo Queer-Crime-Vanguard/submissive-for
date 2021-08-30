@@ -64,23 +64,33 @@ def line_build(meta, speaker, highlight, is_bookmark, emotion, actions, text):
     return f'<div class="line {position} {" ".join(actions)}">{html_hightlight} {html_bubble} {html_linemeta}</div>'
     
 
-def compile(lines, build_meta):
-    return "\n".join(
-        map(
-            lambda line: line_build(build_meta, **line_extract(line)), 
-        filter(
-            lambda line: not line.startswith("//"), # for comments
-        lines)))
+def template_compile(template, lines):
+    target = template.find('$CONTENT$')
+    cl = template[:target].rfind('\n') + 1
+    nl = template.find('\n', target) + 1
+    insert_line = template[cl:nl]
+    return template[:cl] + \
+           ''.join(map(lambda c: insert_line.replace('$CONTENT$', c), lines)) + \
+           template[nl:]
+    
+
+def build(meta, template, raw_lines):
+    lines_to_parse = filter(lambda line: not line.startswith("//"), raw_lines)
+    built_lines = map(lambda line: line_build(meta, **line_extract(line)), lines_to_parse)
+    return template_compile(template, built_lines)
 
 
-def main(meta_json, input_fn, output_fn):
-
+def main(meta_json, template_fn, input_fn, output_fn):
     import json
-    with open(meta_json) as metaf:
-        meta = json.load(metaf)
+
+    with open(meta_json) as meta_f:
+        meta = json.load(meta_f)
+
+    with open(template_fn) as template_f:
+        template = template_f.read()
 
     with open(input_fn) as input_f:
-        result = compile(input_f.readlines(), meta)
+        result = build(meta, template, input_f.readlines())
 
     with open(output_fn, 'w') as output_f:
         output_f.write(result)
@@ -88,4 +98,4 @@ def main(meta_json, input_fn, output_fn):
 
 if __name__ == '__main__':
     import sys
-    main(*sys.argv[1:4])
+    main(*sys.argv[1:5])
