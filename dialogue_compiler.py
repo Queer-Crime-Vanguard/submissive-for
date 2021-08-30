@@ -98,6 +98,7 @@ def main(config: str, template: str, input: str, output: str):
     * You could use action-hashtags for special actvities `Alice: #!typing`
     * You could use highlight markup for suggesting phrases `Alice: [how r u] How are you doing?`
     * You could use bookmarks markup `Bob: @[mood]`
+    * You could write comments `// some comment`
 
     '''
 
