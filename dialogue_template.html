@@ -1,0 +1,41 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>HandsOff Example</title>
+  <meta name="description" content="HandsOff game page">
+  <meta name="author" content="HandsOff">
+</head>
+
+<body onload="setBg(); preloadImages(); initializeDialogue(); setTrack()">
+  <link rel="stylesheet" href="styles.css">
+  <script type="text/javascript" src="js/track.js"></script>
+  <script type="text/javascript" src="js/utils.js"></script>
+  <script type="text/javascript" src="js/sound.js"></script>
+  <script type="text/javascript" src="js/music.js"></script>
+  <script type="text/javascript" src="js/chat.js"></script>
+  <script type="text/javascript" src="js/bg_scene.js"></script>
+  <script type="text/javascript" src="js/finish_scene.js"></script>
+  
+  <div id="dialogue-box">
+    <div id="dialogue">
+      $CONTENT$
+    </div>
+    <div id="highlight-box" ></div>
+  </div>
+  
+  <components>
+    <div id="background">
+      <img src="assets/sprites_png/j_background.png" class="right">
+      <img src="assets/sprites_png/o_background.png" class="left">
+    </div>
+  <div class="wave">
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div>
+  </components>
+</body>
+</html>
