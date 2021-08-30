@@ -80,22 +80,43 @@ def build(meta, template, raw_lines):
     return template_compile(template, built_lines)
 
 
-def main(meta_json, template_fn, input_fn, output_fn):
+def main(config: str, template: str, input: str, output: str):
+    '''
+    Parse handsoff markup file and compile it to html dialogue
+
+    :param str config: json configuration of dialogues
+    :param str template: html template of output
+    :param str i: input plain-text file with markup
+    :param str o: name for output file (.html extenstion is recommend)
+
+    ***********
+    MARKUP INFO
+    ***********
+
+    * Each line should go in a format `Speaker: Text`, for example `Alice: Hello!`
+    * You could use hashtags to point emotions `Bob: Hello, Alice! #surprised`
+    * You could use action-hashtags for special actvities `Alice: #!typing`
+    * You could use highlight markup for suggesting phrases `Alice: [how r u] How are you doing?`
+    * You could use bookmarks markup `Bob: @[mood]`
+
+    '''
+
     import json
 
-    with open(meta_json) as meta_f:
+    with open(config) as meta_f:
         meta = json.load(meta_f)
 
-    with open(template_fn) as template_f:
-        template = template_f.read()
+    with open(template) as template_f:
+        template_content = template_f.read()
 
-    with open(input_fn) as input_f:
-        result = build(meta, template, input_f.readlines())
+    with open(input) as i_f:
+        result = build(meta, template_content, i_f.readlines())
 
-    with open(output_fn, 'w') as output_f:
-        output_f.write(result)
+    with open(output, 'w') as o_f:
+        o_f.write(result)
 
 
 if __name__ == '__main__':
-    import sys
-    main(*sys.argv[1:5])
+    from fire import Fire
+
+    Fire(main)
