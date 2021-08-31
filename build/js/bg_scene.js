@@ -97,6 +97,16 @@ function draw() {
     
     let clx = cl.getContext('2d');
     let crx = cr.getContext('2d');
+
+
+    let bubble_box = document.querySelector('#bubble-box')
+    let bubble_height = parseInt(window.getComputedStyle(bubble_box).getPropertyValue('height'), 10);
+
+    let t = -bubble_box.scrollTop/(bubble_box.scrollHeight-bubble_height+1);
+    
+    let moveX = t - 0.5
+    let moveY = t - 0.5
+
     clx.drawImage(background_l, -drag*moveX - drag - lOffset, -drag*moveY - drag, source_width*scale+drag, height+2*drag);
     crx.drawImage(background_r, cr.width-(background_r.width*scale)+drag*moveX + rOffset, drag*moveY-drag, source_width*scale+drag, height+2*drag);
     //clx.drawImage(sprite_l, -drag*moveX - drag - lOffset, -drag*moveY - drag, source_width*scale+drag, height+2*drag);
