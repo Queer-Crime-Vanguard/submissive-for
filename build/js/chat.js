@@ -1,5 +1,5 @@
 function getNextLine() {
-    return document.querySelector('.line:not(.shown):not(.init)')
+    return document.querySelector('#dialogue .line:not(.shown):not(.init)')
 }
 
 const autoplayDelay = 350;
@@ -42,7 +42,7 @@ function nextline(force_instant) {
         let delay = 0;
 
         if (bubble) {
-            delay = showBubble(currentLine, bubble, force_instant);
+            delay = showBubble(currentLine, force_instant);
         } else {
             currentLine.classList.add('shown');
 
@@ -87,9 +87,14 @@ function processHighlight(by_click) {
     nextline(by_click);
 }
 
-function showBubble(lineNode, bubble, force_instant) {
+function showBubble(currentLine, force_instant) {
+    let lineNode = currentLine.cloneNode(true);
+    let bubble = lineNode.querySelector('.bubble');
     let meta = lineNode.querySelector('linemeta');
     let highlight = lineNode.querySelector('.highlight');
+
+    let bubble_box = document.querySelector('#bubble-box');
+    bubble_box.insertBefore(lineNode, bubble_box.firstChild);
 
     if (highlight) {lineNode.removeChild(highlight);}
      
@@ -100,12 +105,15 @@ function showBubble(lineNode, bubble, force_instant) {
     var bubble_style = window.getComputedStyle(bubble, null);
     var width = bubble_style.getPropertyValue("width");
     var height = bubble_style.getPropertyValue("height");
+    console.log(width, height);
 
     const microDelay = 20;
     const positioningDelay = 500;
     const typingDuration = islong ? 1700 : 600;
     const textAppearDelay = 250;
     
+    currentLine.classList.add('shown')
+
     if (isinstant) {
         setTimeout(() => {lineNode.classList.add("positioned");}, 20)
         setTimeout(() => {lineNode.classList.add("shown");
@@ -129,24 +137,31 @@ function showBubble(lineNode, bubble, force_instant) {
                 playAgain = false
             }
         })}
-    
+
+    dialogue.scrollTop = dialogue.scrollHeight;
 
     setTimeout(() => {lineNode.classList.add("positioned");
                       typingSound.play();
                       var typing_bubble_style = window.getComputedStyle(bubble, null);
                       bubble.style.width = typing_bubble_style.getPropertyValue("width");
-                      bubble.style.height = typing_bubble_style.getPropertyValue("height")},
-               microDelay)
-    setTimeout(() => {lineNode.classList.add("shown");},
-               positioningDelay)
+                      bubble.style.height = typing_bubble_style.getPropertyValue("height");
+                      }, microDelay)
+    
+    setTimeout(() => {
+        lineNode.classList.add("shown");
+    }, positioningDelay)
+    
     setTimeout(() => {sendEmotion(lineNode.classList.contains('left'), emoindex(meta));
                       bubble.style.width = width;
                       bubble.style.height = height;
                       lineNode.classList.remove("typing");
-                      messageSound.play()},
-               positioningDelay + typingDuration)
-    setTimeout(() => {lineNode.classList.remove("texthide")}, 
-               positioningDelay+typingDuration+textAppearDelay)
+                      messageSound.play()
+    }, positioningDelay + typingDuration)
+    
+    setTimeout(() => {
+        lineNode.classList.remove("texthide");
+        bubble.scrollIntoView();
+    }, positioningDelay+typingDuration+textAppearDelay)
 
     return positioningDelay+typingDuration+textAppearDelay;
 }
