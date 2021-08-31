@@ -7,27 +7,30 @@ var background_l = new Image(),
 let source_width = 1;
 let source_height = 1;
 
-function preloadImages() {
-    background_l.src = document.querySelector('#background .left').src;
-    background_r.src = document.querySelector('#background .right').src;
-    background_l.onload = function () {
-        source_width = background_l.width;
-        source_height = background_l.height;
-        setBg();
-    };
-
-    preloadEmotions();
-}
 
 let emotions = {};
 
-function preloadEmotions() {
-    document.querySelectorAll("#dialogue linemeta").forEach((meta) => {
+function preloadEmotions(metas) {
+    metas.forEach((meta) => {
         img = new Image();
         img.src = "assets/sprites/" + meta.getAttribute('speaker') + "_" + meta.getAttribute('emotion') + ".svg"
         console.log('preload', img)
         emotions[emoindex(meta)] = img;
     })
+}
+
+function preloadBackground(left, speaker) {
+    url = "assets/backgrounds/" + speaker + "_background.svg";
+    if (left) {
+        background_l.src = url
+        background_l.onload = () => {
+            source_width = background_l.width;
+            source_height = background_l.height;
+            console.log('source size', source_width, source_height)
+        }
+    } else {
+        background_r.src = url
+    }
 }
 
 function getEmotion(emoind) {
@@ -83,7 +86,7 @@ function drawFrame() {
 const drag = 20;
 
 function draw() {
-    var scale = (height+2*drag)/background_r.height;
+    var scale = (height+2*drag)/background_l.height;
 
     let ctx = c.getContext('2d');
     

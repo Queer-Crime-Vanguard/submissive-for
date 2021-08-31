@@ -28,8 +28,11 @@ function sendEmotion(isleft, emoindex) {
 }
 
 function initializeDialogue() {
+    preloadEmotions(document.querySelectorAll("#dialogue linemeta"))
     document.querySelectorAll('#dialogue .line.init').forEach((line) => {
-        sendEmotion(line.classList.contains('left'), emoindex(line.querySelector('linemeta')))
+        let meta = line.querySelector('linemeta');
+        preloadBackground(line.classList.contains('left'), meta.getAttribute('speaker'))
+        sendEmotion(line.classList.contains('left'), emoindex(meta))
     })
     initiateHighlight();
 }
