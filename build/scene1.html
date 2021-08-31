@@ -9,7 +9,7 @@
   <meta name="author" content="HandsOff">
 </head>
 
-<body onload="setBg(); preloadImages(); initializeDialogue(); setTrack()"></body>
+<body onload="setBg(); initializeDialogue(); setTrack()"></body>
   <link rel="stylesheet" href="styles.css">
   <script type="text/javascript" src="js/track.js"></script>
   <script type="text/javascript" src="js/utils.js"></script>
@@ -20,6 +20,9 @@
   <script type="text/javascript" src="js/finish_scene.js"></script>
   
   <div id="dialogue-box">
+	<div id="bubble-box">
+		<div class="placeholder"></div>
+	</div>
     <div id="dialogue">
 		<div class="line right init">  <linemeta speaker="s" emotion="reading"></linemeta></div>
 		<div class="line left init">  <linemeta speaker="o" emotion="neutral"></linemeta></div>
