@@ -22,11 +22,6 @@ function initiateHighlight() {
     prepareHighlight(highlight, true, false);
 }
 
-function sendEmotion(isleft, emoindex) {
-    ev = new CustomEvent('update_emotion', {'detail': {'isleft': isleft, 'emotion_index': emoindex}})
-    document.dispatchEvent(ev);
-}
-
 function initializeDialogue() {
     preloadEmotions(document.querySelectorAll("#dialogue linemeta"))
     document.querySelectorAll('#dialogue .line.init').forEach((line) => {
