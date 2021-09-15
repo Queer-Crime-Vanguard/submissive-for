@@ -289,10 +289,6 @@ canvas.scene.blured {
     border-radius: 0.3em;
 }
 
-#trigger-warning-box h3 {
-    
-}
-
 #trigger-warning-box .button {
     margin: 1em 0;
     font-weight: 500;
@@ -318,4 +314,31 @@ canvas.scene.blured {
 
 canvas.minigame {
     margin: 0;
+}
+
+.bookmark-reference-flow {
+    display: flex;
+    flex-direction: column;
+    max-width: 28em;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 1em;
+    right: 1em;
+    text-align: center;
+}
+
+bookmark-reference {
+    margin-top: 1em;
+    border-radius: 1.2em;
+    transition: box-shadow 300ms linear;
+}
+
+
+bookmark-reference span {
+    display: inline;
+}
+  
+bookmark-reference.click-block {
+    box-shadow: inset 0px 0px 10px 2px rgba(223, 68, 240, 0.5);
 }
