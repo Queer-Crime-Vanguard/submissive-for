@@ -7,7 +7,6 @@ var background_l = new Image(),
 let source_width = 1;
 let source_height = 1;
 
-
 let emotions = {};
 
 function preloadEmotions(metas) {
@@ -23,18 +22,24 @@ function preloadBackground(left, speaker) {
     url = "assets/backgrounds/" + speaker + "_background.svg";
     if (left) {
         background_l.src = url
-        background_l.onload = () => {
-            source_width = background_l.width;
-            source_height = background_l.height;
-            console.log('source size', source_width, source_height)
-        }
     } else {
         background_r.src = url
+        background_r.onload = () => {
+            source_width = background_r.width;
+            source_height = background_r.height;
+            console.log('source size', source_width, source_height)
+        }
     }
 }
 
 function getEmotion(emoind) {
-    return emotions[emoind];
+    if (emoind in emotions) {
+        return emotions[emoind];
+    } else {
+        img = new Image();
+        img.src = "assets/sprites/" + emoind.split(':')[0] + "_" + emoind.split(':')[1] + ".svg"
+        return img
+    }
 }
 
 const dividerThickness = 4;
@@ -53,7 +58,9 @@ var c = document.createElement('canvas');
 var cl = document.createElement('canvas');
 var cr = document.createElement('canvas');
 
-function drawFrame() {
+let drawLeft = true;
+
+function updateFrame() {
     c.classList.add('scene');
     c.width = width;
     c.height = height;
@@ -70,24 +77,45 @@ function drawFrame() {
     crx.closePath();
     crx.clip();
 
-    cl.width = (width-dividerThickness)/2 + step - stepOffset;
-    cl.height = height;
-    
-    let clx = cl.getContext('2d');
-    clx.beginPath();
-    clx.moveTo(0, 0);
-    clx.lineTo(cl.width, 0);
-    clx.lineTo(cl.width-2*step, height);
-    clx.lineTo(0, height);
-    clx.closePath();
-    clx.clip();
+    if (drawLeft) {
+        cl.width = (width-dividerThickness)/2 + step - stepOffset;
+        cl.height = height;
+        
+        let clx = cl.getContext('2d');
+        clx.beginPath();
+        clx.moveTo(0, 0);
+        clx.lineTo(cl.width, 0);
+        clx.lineTo(cl.width-2*step, height);
+        clx.lineTo(0, height);
+        clx.closePath();
+        clx.clip();
+    }
 }
 
 const drag = 20;
 
-function draw() {
-    var scale = (height+2*drag)/background_l.height;
+// scroll parallaxing 
+/*
+    let bubble_box = document.querySelector('#bubble-box')
+    let bubble_height = parseInt(window.getComputedStyle(bubble_box).getPropertyValue('height'), 10);
 
+    let t = -bubble_box.scrollTop/(bubble_box.scrollHeight-bubble_height+1);
+    
+    let moveX = t - 0.5
+    let moveY = t - 0.5
+*/
+
+let scale = (sp_height) => {return (height+2*drag)/sp_height}
+
+function draw1() {
+    let ctx = c.getContext('2d');   
+
+    ctx.drawImage(background_r, width-(background_r.width*scale(background_r.height))+drag*moveX, drag*moveY-drag, source_width*scale(background_r.height)+drag, height+2*drag);
+    ctx.drawImage(sprite_r, cr.width*2-(sprite_r.width*scale(sprite_r.height))+drag*moveX + rOffset, drag*moveY-drag, sprite_r.width*scale(sprite_r.height)+drag, height+2*drag);
+}
+
+
+function draw2() {
     let ctx = c.getContext('2d');
     
     ctx.beginPath();
@@ -98,38 +126,34 @@ function draw() {
     let clx = cl.getContext('2d');
     let crx = cr.getContext('2d');
 
-
-    let bubble_box = document.querySelector('#bubble-box')
-    let bubble_height = parseInt(window.getComputedStyle(bubble_box).getPropertyValue('height'), 10);
-
-    let t = -bubble_box.scrollTop/(bubble_box.scrollHeight-bubble_height+1);
-    
-    let moveX = t - 0.5
-    let moveY = t - 0.5
-
-    clx.drawImage(background_l, -drag*moveX - drag - lOffset, -drag*moveY - drag, source_width*scale+drag, height+2*drag);
-    crx.drawImage(background_r, cr.width-(background_r.width*scale)+drag*moveX + rOffset, drag*moveY-drag, source_width*scale+drag, height+2*drag);
-    //clx.drawImage(sprite_l, -drag*moveX - drag - lOffset, -drag*moveY - drag, source_width*scale+drag, height+2*drag);
-    //crx.drawImage(sprite_r, cr.width-(background_r.width*scale)+drag*moveX + rOffset, drag*moveY-drag, source_width*scale+drag, height+2*drag);
-
-    clx.drawImage(sprite_l, 0, 0);
-    crx.drawImage(sprite_r, 0, 0);
+    clx.drawImage(background_l, -drag*moveX - drag - lOffset, -drag*moveY - drag, source_width*scale(background_l.height)+drag, height+2*drag);
+    crx.drawImage(background_r, cr.width-(background_r.width*scale(background_r.height))+drag*moveX + rOffset, drag*moveY-drag, source_width*scale(background_r.height)+drag, height+2*drag);
+    clx.drawImage(sprite_l, -drag*moveX - drag - lOffset, -drag*moveY - drag, sprite_l.width*scale(sprite_l.height)+drag, height+2*drag);
+    crx.drawImage(sprite_r, cr.width-(sprite_r.width*scale(background_r.height))+drag*moveX + rOffset, drag*moveY-drag, sprite_r.width*scale(sprite_r.height)+drag, height+2*drag);
     
     ctx.drawImage(cl, 0, 0);
     ctx.drawImage(cr, width-cr.width, 0);
 }
 
+let draw = null;
 
-function initBg() {
+function initBg(left) {
     
     document.body.style.width = width;
     document.body.style.height = height;
 
-    stepOffsetAmp = document.getElementById("dialogue-box").offsetWidth*0.3
+    //stepOffsetAmp = document.getElementById("dialogue-box").offsetWidth*0.3
 
     document.body.appendChild(c);
 
-    drawFrame();
+    drawLeft = left;
+
+    updateFrame();
+    if (left) {
+        draw = draw2
+    } else {
+        draw = draw1
+    }
     updateBG();
     
 }
@@ -193,7 +217,6 @@ function updateEmotion(left, emoIndex) {
         }, offset_delay);
         */
     }
-    drawFrame();
 }
 
 
@@ -207,8 +230,8 @@ function updateBG() {
     requestAnimationFrame(updateBG);
 }
 
-function setBg() {
-    window.addEventListener("loaded", initBg);
-    window.addEventListener("size_update", drawFrame);
+function setBg(left = true) {
+    window.addEventListener("loaded", () => {initBg(left)});
+    window.addEventListener("size_update", updateFrame);
 }
 
