@@ -1,8 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 25.2.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 2562 1441" style="enable-background:new 0 0 2562 1441;" xml:space="preserve">
-<style type="text/css">
+<ns0:svg xmlns:ns0="http://www.w3.org/2000/svg" version="1.1" id="Layer_2" x="0px" y="0px" viewBox="0 0 2562 1441" style="enable-background:new 0 0 2562 1441;" xml:space="preserve" width="2562.0" height="1441.0">
+<ns0:style type="text/css">
 	.st0{fill:#FED7D0;}
 	.st1{fill:#404B62;stroke:#404B62;stroke-width:2.2793;stroke-miterlimit:10;}
 	.st2{fill:#AD3255;}
@@ -15,32 +12,29 @@
 	.st9{fill:#677490;}
 	.st10{fill:#E8E8E8;}
 	.st11{fill:#404B62;}
-</style>
-<rect class="st0" width="2562" height="1441"/>
-<rect x="1962" y="473" class="st1" width="190.3" height="140"/>
-<rect x="2262" y="643" class="st2" width="300" height="580"/>
-<circle class="st3" cx="2393.5" cy="741.5" r="16.5"/>
-<circle class="st3" cx="2393.5" cy="887.8" r="16.5"/>
-<circle class="st3" cx="2393.5" cy="1034.2" r="16.5"/>
-<circle class="st3" cx="2393.5" cy="1180.5" r="16.5"/>
-<polygon class="st4" points="2562,819 2562,808 2307,808 2307,677 2562,677 2562,636 2262,636 2262,677 2296,677 2296,808 2296,819 
-	2296,956 2296,967 2296,1102 2296,1113 2296,1212 2307,1212 2307,1113 2562,1113 2562,1102 2307,1102 2307,967 2562,967 2562,956 
-	2307,956 2307,819 "/>
-<rect x="2221" y="591" class="st2" width="341" height="50"/>
-<path class="st5" d="M2432,406c-41,22-452,20-468-10c41-50,27-333,27-333h441C2432,63,2473,384,2432,406z"/>
-<path class="st6" d="M2379,372c-165.5,11.4-322.3-7.2-398.6-18.8c-4.1,19.3-9.5,34.3-16.4,42.8c16,30,427,32,468,10
-	C2389,416,2379,372,2379,372z"/>
-<path class="st7" d="M2024,522c-16,14-181,4-199-10c42-61,20-255,20-255h188C2033,257,2057,493,2024,522z"/>
-<circle class="st8" cx="1866.5" cy="273.5" r="8.5"/>
-<circle class="st8" cx="2016.5" cy="273.5" r="8.5"/>
-<circle class="st8" cx="2413.5" cy="373.5" r="8.5"/>
-<circle class="st8" cx="2011.5" cy="82.5" r="8.5"/>
-<circle class="st8" cx="2413.5" cy="82.5" r="8.5"/>
-<path class="st9" d="M2562,557h-278.6c-11.8,0-21.4-9.6-21.4-21.4v0c0-14.7,11.9-26.6,26.6-26.6H2562V557z"/>
-<path class="st4" d="M2338.3,509c0,0-20.7,24.6,0,48h31.8c0,0-16.9-21.1,0-48H2338.3z"/>
-<path class="st3" d="M2562,509h-253l0,0c0-6.6,5.4-12,12-12h241V509z"/>
-<path class="st3" d="M2562,465h-253l0,0c0-6.6,5.4-12,12-12h241V465z"/>
-<rect x="2321" y="465" class="st10" width="241" height="32"/>
-<rect x="0" y="1206" class="st3" width="2562" height="235"/>
-<path class="st11" d="M2562,591h-267.3c-1.9,0-3.4-1.8-3.1-3.7l4.9-27.8c0.3-1.5,1.6-2.6,3.1-2.6H2562V591z"/>
-</svg>
+</ns0:style>
+<ns0:rect class="st0" width="2562" height="1441" />
+<ns0:rect x="1962" y="473" class="st1" width="190.3" height="140" />
+<ns0:rect x="2262" y="643" class="st2" width="300" height="580" />
+<ns0:circle class="st3" cx="2393.5" cy="741.5" r="16.5" />
+<ns0:circle class="st3" cx="2393.5" cy="887.8" r="16.5" />
+<ns0:circle class="st3" cx="2393.5" cy="1034.2" r="16.5" />
+<ns0:circle class="st3" cx="2393.5" cy="1180.5" r="16.5" />
+<ns0:polygon class="st4" points="2562,819 2562,808 2307,808 2307,677 2562,677 2562,636 2262,636 2262,677 2296,677 2296,808 2296,819   2296,956 2296,967 2296,1102 2296,1113 2296,1212 2307,1212 2307,1113 2562,1113 2562,1102 2307,1102 2307,967 2562,967 2562,956   2307,956 2307,819 " />
+<ns0:rect x="2221" y="591" class="st2" width="341" height="50" />
+<ns0:path class="st5" d="M2432,406c-41,22-452,20-468-10c41-50,27-333,27-333h441C2432,63,2473,384,2432,406z" />
+<ns0:path class="st6" d="M2379,372c-165.5,11.4-322.3-7.2-398.6-18.8c-4.1,19.3-9.5,34.3-16.4,42.8c16,30,427,32,468,10  C2389,416,2379,372,2379,372z" />
+<ns0:path class="st7" d="M2024,522c-16,14-181,4-199-10c42-61,20-255,20-255h188C2033,257,2057,493,2024,522z" />
+<ns0:circle class="st8" cx="1866.5" cy="273.5" r="8.5" />
+<ns0:circle class="st8" cx="2016.5" cy="273.5" r="8.5" />
+<ns0:circle class="st8" cx="2413.5" cy="373.5" r="8.5" />
+<ns0:circle class="st8" cx="2011.5" cy="82.5" r="8.5" />
+<ns0:circle class="st8" cx="2413.5" cy="82.5" r="8.5" />
+<ns0:path class="st9" d="M2562,557h-278.6c-11.8,0-21.4-9.6-21.4-21.4v0c0-14.7,11.9-26.6,26.6-26.6H2562V557z" />
+<ns0:path class="st4" d="M2338.3,509c0,0-20.7,24.6,0,48h31.8c0,0-16.9-21.1,0-48H2338.3z" />
+<ns0:path class="st3" d="M2562,509h-253l0,0c0-6.6,5.4-12,12-12h241V509z" />
+<ns0:path class="st3" d="M2562,465h-253l0,0c0-6.6,5.4-12,12-12h241V465z" />
+<ns0:rect x="2321" y="465" class="st10" width="241" height="32" />
+<ns0:rect x="0" y="1206" class="st3" width="2562" height="235" />
+<ns0:path class="st11" d="M2562,591h-267.3c-1.9,0-3.4-1.8-3.1-3.7l4.9-27.8c0.3-1.5,1.6-2.6,3.1-2.6H2562V591z" />
+</ns0:svg>
