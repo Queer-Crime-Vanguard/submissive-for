@@ -91,6 +91,7 @@ function processHighlight(by_click) {
     let highlight_box = document.querySelector('#highlight-box');
     if (!highlight_box.classList.contains('activated')) {return}
     highlight_box.removeChild(highlight_box.children[0]);
+    if (highlight_box.classList.contains('with_bookmark')) {sound('absorb3').play()}
     highlight_box.classList.remove("activated");
     highlight_box.classList.remove("with_bookmark");
     nextline(by_click);
@@ -126,7 +127,7 @@ function showBubble(currentLine, force_instant) {
         setTimeout(() => {lineNode.classList.add("positioned");}, 20)
         setTimeout(() => {lineNode.classList.add("shown");
                           sendEmotion(lineNode.classList.contains('left'), emoindex(meta));
-                         messageSound.play()}, positioningDelay)
+                         sound('notif').play()}, positioningDelay)
         return positioningDelay;
     }
     
@@ -139,9 +140,9 @@ function showBubble(currentLine, force_instant) {
     
     if (islong) {
         var playAgain = true;
-        typingSound.addEventListener("ended", () => {
+        sound('typing').addEventListener("ended", () => {
             if (playAgain) {
-                typingSound.play()
+                sound('typing').play()
                 playAgain = false
             }
         })}
@@ -149,7 +150,7 @@ function showBubble(currentLine, force_instant) {
     dialogue.scrollTop = dialogue.scrollHeight;
 
     setTimeout(() => {lineNode.classList.add("positioned");
-                      typingSound.play();
+                      sound('typing').play()
                       var typing_bubble_style = window.getComputedStyle(bubble, null);
                       bubble.style.width = typing_bubble_style.getPropertyValue("width");
                       bubble.style.height = typing_bubble_style.getPropertyValue("height");
@@ -163,7 +164,7 @@ function showBubble(currentLine, force_instant) {
                       bubble.style.width = width;
                       bubble.style.height = height;
                       lineNode.classList.remove("typing");
-                      messageSound.play()
+                      sound('notif').play()
     }, positioningDelay + typingDuration)
     
     setTimeout(() => {
