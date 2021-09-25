@@ -28,6 +28,15 @@ class Reference extends HTMLElement {
   }
 }
 
+function updateRefs() {
+    let focused = refs.some((r) => {return r.classList.contains('focus')})
+    refs.forEach((r) => {
+        if (!r.classList.contains('open')) {
+
+        }
+    })
+}
+
 
 function randint(b) {
     return Math.floor(Math.random()*b)
