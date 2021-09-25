@@ -1,5 +1,14 @@
-var typingSound = new Audio('assets/sound/typing.ogg');
-typingSound.volume = 0.5;
+let sound_cache = {}
 
-var messageSound = new Audio('assets/sound/notif.ogg');
-messageSound.volume = 0.5;
+function sound(name) {
+    let cached = sound_cache[name]
+    let res = null;
+    if (cached == null) {
+        res = new Audio('assets/sound/'+name+'.ogg')
+        res.volume = 0.5
+        sound_cache[name] = res
+    } else {
+        res = cached
+    }
+    return res
+}
