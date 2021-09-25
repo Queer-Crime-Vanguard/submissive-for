@@ -1,7 +1,7 @@
 {
     "speakers":
         {
-            "Сима": {
+            "Наиля": {
                 "letter": "s",
                 "position": "right"
             },
@@ -11,7 +11,7 @@
                 "position": "left"
             },
 
-            "Оля": {
+            "Леля": {
                 "letter": "o",
                 "position": "left"
             }
