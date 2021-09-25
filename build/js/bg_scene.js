@@ -129,10 +129,12 @@ function draw2() {
     clx.drawImage(background_l, -drag*moveX - drag - lOffset, -drag*moveY - drag, source_width*scale(background_l.height)+drag, height+2*drag);
     crx.drawImage(background_r, cr.width-(background_r.width*scale(background_r.height))+drag*moveX + rOffset, drag*moveY-drag, source_width*scale(background_r.height)+drag, height+2*drag);
     clx.drawImage(sprite_l, -drag*moveX - drag - lOffset, -drag*moveY - drag, sprite_l.width*scale(sprite_l.height)+drag, height+2*drag);
-    crx.drawImage(sprite_r, cr.width-(sprite_r.width*scale(background_r.height))+drag*moveX + rOffset, drag*moveY-drag, sprite_r.width*scale(sprite_r.height)+drag, height+2*drag);
-    
+    //crx.drawImage(sprite_r, cr.width - c.width + drag*moveX + rOffset, drag*moveY-drag, source_width*scale(sprite_r.height)+drag, height+2*drag);
+
     ctx.drawImage(cl, 0, 0);
     ctx.drawImage(cr, width-cr.width, 0);
+
+    ctx.drawImage(sprite_r, drag*moveX + rOffset - source_width*scale(sprite_r.height)-drag + width, drag*moveY-drag, source_width*scale(sprite_r.height)+drag, height+2*drag)
 }
 
 let draw = null;
