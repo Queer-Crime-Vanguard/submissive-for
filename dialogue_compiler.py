@@ -22,12 +22,22 @@ def line_extract(line):
     tags = filter(lambda s: s.startswith("#"), hl_clean_message.split())
     
     actions = list()
+    actions_params = dict()
     emotion = None
 
     for tag in tags:
         if tag.startswith("#!"):
-            actions.append(tag.lstrip("#!"))
+            # split action and param
+            s = tag.lstrip("#!").split(':', maxsplit=1)
+            # extract action
+            action = s.pop(0)
+            # add action if needed
+            if not action in actions:
+                actions.append(action)
+            # update params
+            if s: actions_params[action] = s[0]
         else:
+            # parse emotion
             emotion = tag.lstrip("#")
 
     # tag clean
@@ -41,16 +51,21 @@ def line_extract(line):
         'is_bookmark': is_bookmark,
         'emotion': emotion,
         'actions': actions,
+        'actions_params': actions_params,
         'text': tag_clean_message
     }
 
 
-def line_build(meta, speaker, highlight, is_bookmark, emotion, actions, text):
+def line_build(meta, speaker, highlight, is_bookmark, emotion, actions, actions_params, text):
     
     # get detailied information about speaker using meta
-    speaker_meta = meta['speakers'][speaker]
-    letter = speaker_meta['letter']
-    position = speaker_meta['position']
+    speaker_meta = meta['speakers'].get(speaker)
+    if speaker_meta:
+        letter = speaker_meta['letter']
+        position = speaker_meta['position']
+    else:
+        letter = None
+        position = None
 
     # highlight
     html_hightlight = f'<div class="highlight {"bookmark" if is_bookmark else ""}"><p>{highlight}</p></div>' if highlight else ''
@@ -58,8 +73,14 @@ def line_build(meta, speaker, highlight, is_bookmark, emotion, actions, text):
     # bubble
     html_bubble = f'<div class="bubble"><p>{text}</p></div>' if text else ''
 
-    # linemeta
-    html_linemeta = f'<linemeta speaker="{letter}" emotion="{emotion}"></linemeta>'
+    # linemeta--
+    metadata = {'speaker': letter, 'emotion': emotion}
+    metadata.update(actions_params)
+    actual_metadata = {k:v for k, v in metadata.items() if v}
+    md_string = " ".join([f'{k}="{v}"' for k, v in actual_metadata.items()])
+
+    html_linemeta = f'<linemeta {md_string}></linemeta>'
+ 
 
     return f'<div class="line {position} {" ".join(actions)}">{html_hightlight} {html_bubble} {html_linemeta}</div>'
     

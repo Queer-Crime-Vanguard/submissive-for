@@ -60,6 +60,11 @@ function nextline(force_instant) {
                 }, pauseDelay);
                 return
             }
+
+            if (currentLine.classList.contains('vibe')) {
+                let meta = currentLine.querySelector('linemeta')
+                sendVibe(meta.getAttribute('vibe'))
+            }
         }
 
         setTimeout(() => {let nextLine = getNextLine();
@@ -103,7 +108,6 @@ function showBubble(currentLine, force_instant) {
     var bubble_style = window.getComputedStyle(bubble, null);
     var width = bubble_style.getPropertyValue("width");
     var height = bubble_style.getPropertyValue("height");
-    console.log(width, height);
 
     const microDelay = 20;
     const positioningDelay = 500;
