@@ -127,10 +127,16 @@ body {
 
 #highlight-box .highlight.bookmark p::before {
     content: "🔖";
+    margin-right: 1rem;
 }
 
 #highlight-box.with_bookmark {
     background-color: rgba(255, 255, 0, 0.65);
+}
+
+#highlight-box .bookmark p {
+    font-size: 1.2rem;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 
