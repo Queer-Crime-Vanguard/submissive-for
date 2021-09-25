@@ -30,9 +30,12 @@ function initiateHighlight() {
 function initializeDialogue() {
     preloadEmotions(document.querySelectorAll("#dialogue linemeta"))
     document.querySelectorAll('#dialogue .line.init').forEach((line) => {
-        let meta = line.querySelector('linemeta');
-        preloadBackground(line.classList.contains('left'), meta.getAttribute('speaker'))
-        sendEmotion(line.classList.contains('left'), emoindex(meta))
+        let meta = line.querySelector('linemeta')
+        let left = line.classList.contains('left')
+        let speaker = meta.getAttribute('speaker')
+        preloadBackground(left, speaker)
+        addForeground(left, speaker, meta.getAttribute('foreground'))
+        sendEmotion(left, emoindex(meta))
     })
     initiateHighlight();
 }
