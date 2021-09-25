@@ -15,9 +15,14 @@ function prepareHighlight(highlight, activate, with_bookmark) {
 
 function initiateHighlight() {
     let highlight_box = document.querySelector('#highlight-box');
-    highlight_box.addEventListener('click', () => {
+    process_hl = () => {
         processHighlight(true);
-        document.dispatchEvent(new Event('play_bg_music')); })
+        document.dispatchEvent(new Event('play_bg_music'))
+    }
+    highlight_box.addEventListener('click', process_hl)
+    document.body.onkeyup = (e) => {
+        if (e.code == 'Space') {process_hl()}
+    }
     let highlight = getNextLine().querySelector(".highlight");
     prepareHighlight(highlight, true, false);
 }
@@ -84,6 +89,7 @@ function nextline(force_instant) {
 
 function processHighlight(by_click) {
     let highlight_box = document.querySelector('#highlight-box');
+    if (!highlight_box.classList.contains('activated')) {return}
     highlight_box.removeChild(highlight_box.children[0]);
     highlight_box.classList.remove("activated");
     highlight_box.classList.remove("with_bookmark");
