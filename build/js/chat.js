@@ -116,8 +116,8 @@ function showBubble(currentLine, force_instant) {
     
     lineNode.classList.add("appeared");
     var bubble_style = window.getComputedStyle(bubble, null);
-    var width = bubble_style.getPropertyValue("width");
-    var height = bubble_style.getPropertyValue("height");
+    let b_width = bubble_style.getPropertyValue("width");
+    let b_height = bubble_style.getPropertyValue("height");
 
     const microDelay = 20;
     const positioningDelay = 500;
@@ -164,13 +164,15 @@ function showBubble(currentLine, force_instant) {
     }, positioningDelay)
     
     setTimeout(() => {sendEmotion(lineNode.classList.contains('left'), emoindex(meta));
-                      bubble.style.width = width;
-                      bubble.style.height = height;
+                      bubble.style.width = b_width;
+                      bubble.style.height = b_height;
                       lineNode.classList.remove("typing");
                       sound('notif').play()
     }, positioningDelay + typingDuration)
     
     setTimeout(() => {
+        bubble.style.width = null
+        bubble.style.height = null
         lineNode.classList.remove("texthide");
         bubble.scrollIntoView();
     }, positioningDelay+typingDuration+textAppearDelay)
