@@ -1,5 +1,5 @@
-Наиля: #!init #reading 
-Зоя: #!init #neutral 
+Наиля: #!init #reading #!foreground:laptop
+Зоя: #!init #neutral #!foreground:cups_laptop
 Наиля: [привет] Зоя, привет #reading
 Зоя: Привет, Наиля! #neutral
 Наиля: ты уже видела расследование про наш универ? #neutral
