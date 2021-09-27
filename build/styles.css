@@ -92,7 +92,7 @@ body {
     max-width: 26em;
     border-radius: 1.5em;
     background-color: rgba(255, 255, 255, 0.65);
-    border: solid 0.3em rgba(255, 255, 255, 0);
+    border: solid 0.2em rgba(255, 255, 255, 0);
     transition: all 100ms linear;
     left: 50%;
     margin-left: -10em;
@@ -110,15 +110,15 @@ body {
 
 #highlight-box.activated:hover {
     animation: none;
-    border-color: rgba(180, 255, 0, 0.45);
+    border-color: rgba(203, 252, 69, 0.541);
 }
 
 #highlight-box .highlight {
     display: inline-block;
     position: absolute;
     text-align: center;
-    font-weight: 500;
-    font-size: 90%;
+    font-weight: 300;
+    font-size: 100%;
     min-width: 16em;
     transform: translate(-50%, 50%);
     bottom: 50%;
@@ -132,6 +132,11 @@ body {
 
 #highlight-box.with_bookmark {
     background-color: rgba(255, 255, 0, 0.65);
+}
+
+#highlight-box.with_bookmark:hover {
+    animation: none;
+    border-color: rgba(255, 11, 243, 0.363);
 }
 
 #highlight-box .bookmark p {
@@ -198,6 +203,12 @@ linemeta {
     display: none;
 }
 
+:root {
+    /*--left-bubble-color: #eefafe;*/
+    --left-bubble-color: #fef9ee;
+    --right-bubble-color: #ffe7ec;
+}
+
 .bubble {
     color: black;
     display: inline-block;
@@ -206,6 +217,7 @@ linemeta {
     text-align: left;
     overflow: hidden;
     transition: all 150ms linear;
+    background-color: white;
 }
 
 .bubble p {
@@ -214,13 +226,13 @@ linemeta {
 }
 
 .left .bubble {
-    border-radius: 0.75em 0.75em 0.75em 0;
-    background-color: white;
+    border-radius: 0.7em 0.7em 0.7em 0;
+    background-color: var(--left-bubble-color);
 }
 
 .right .bubble {
-    border-radius: 0.75em 0.75em 0 0.75em;
-    background-color: lightcyan;
+    border-radius: 0.7em 0.7em 0 0.7em;
+    background-color: var(--right-bubble-color);
 }
 
 components * {
