@@ -204,7 +204,7 @@ linemeta {
     padding: 0.75em 0.75em;
     max-width: 16em;
     text-align: left;
-    overflow: auto;
+    overflow: hidden;
     transition: all 150ms linear;
 }
 
