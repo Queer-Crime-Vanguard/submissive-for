@@ -27,6 +27,15 @@ function initiateHighlight() {
     prepareHighlight(highlight, true, false);
 }
 
+function setBubbleColor(left, color) {
+    if (color == null) {return}
+    let pref = left ? 'left' : 'right'
+
+    let root = document.documentElement
+    root.style.setProperty('--' + pref + '-bubble-color', "#"+color)
+    console.log(color)
+}
+
 function initializeDialogue() {
     preloadEmotions(document.querySelectorAll("#dialogue linemeta"))
     document.querySelectorAll('#dialogue .line.init').forEach((line) => {
@@ -34,11 +43,13 @@ function initializeDialogue() {
         let left = line.classList.contains('left')
         let speaker = meta.getAttribute('speaker')
         preloadBackground(left, speaker)
+        setBubbleColor(left, meta.getAttribute('bubble_color'))
         addForeground(left, speaker, meta.getAttribute('foreground'))
         sendEmotion(left, emoindex(meta))
     })
     initiateHighlight();
 }
+
 
 function nextline(force_instant) {
     var currentLine = getNextLine();
