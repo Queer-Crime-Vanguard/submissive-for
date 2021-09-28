@@ -63,6 +63,8 @@ def line_build(meta, speaker, highlight, is_bookmark, emotion, actions, actions_
     if speaker_meta:
         letter = speaker_meta['letter']
         position = speaker_meta['position']
+    elif speaker.rstrip():
+        raise NameError(f"There is no such `{speaker}` speaker in meta")
     else:
         letter = None
         position = None
@@ -96,7 +98,7 @@ def template_compile(template, lines):
     
 
 def build(meta, template, raw_lines):
-    lines_to_parse = filter(lambda line: not line.startswith("//"), raw_lines)
+    lines_to_parse = filter(lambda line: not line.lstrip().startswith("//"), raw_lines)
     built_lines = map(lambda line: line_build(meta, **line_extract(line)), lines_to_parse)
     return template_compile(template, built_lines)
 
@@ -132,7 +134,11 @@ def main(config: str, template: str, input: str, output: str):
         template_content = template_f.read()
 
     with open(input) as i_f:
-        result = build(meta, template_content, i_f.readlines())
+        try:
+            result = build(meta, template_content, i_f.readlines())
+        except Exception as e:
+            print(f'An error occured during the build process: {e}')
+            return
 
     with open(output, 'w') as o_f:
         o_f.write(result)
