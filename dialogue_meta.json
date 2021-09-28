@@ -1,7 +1,7 @@
 {
     "speakers":
         {
-            "Наиля": {
+            "Лия": {
                 "letter": "s",
                 "position": "right"
             },
@@ -11,8 +11,12 @@
                 "position": "left"
             },
 
-            "Леля": {
+            "Оля": {
                 "letter": "o",
+                "position": "left"
+            },
+            "Леля": {
+                "letter": "l",
                 "position": "left"
             }
         }
