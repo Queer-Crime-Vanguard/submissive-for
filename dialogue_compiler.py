@@ -136,15 +136,30 @@ def main(config: str, template: str, input: str, output: str):
     with open(template) as template_f:
         template_content = template_f.read()
 
-    with open(input) as i_f:
-        try:
-            result = build(meta, template_content, i_f.readlines())
-        except Exception as e:
-            print(f'An error occured during the build process: {e}')
-            return
+    import os
+    import os.path
 
-    with open(output, 'w') as o_f:
-        o_f.write(result)
+    def process(fn, ofn):
+        with open(fn) as i_f:
+            try:
+                result = build(meta, template_content, i_f.readlines())
+            except Exception as e:
+                print(f'An error occured during the build process of `{fn}`: {e}')
+                return
+            else:
+                print(f'`{ofn}` succesfully built')
+        
+        with open(ofn, 'w') as o_f:
+            o_f.write(result)
+
+    if os.path.isdir(input):
+        target = list(filter(lambda fn: fn.endswith('.txt'), os.listdir(input)))
+        print(f'Processing `{input}`. Found {len(target)} txt files')
+        for fn in target:
+            process(os.path.join(input, fn), os.path.join(output, fn.rsplit('.', 1)[0] + ".html"))
+    else:
+        process(input, output)
+
 
 
 if __name__ == '__main__':
