@@ -57,6 +57,6 @@
 Оля: Думаю, мне станет легче #pissed
 Оля: а кого-то это убережет от повторения моего опыта #pissed
 Оля: вот моя история #mem
-Оля: <figure><img src="assets/backgrounds/kitchen_1.png""> <figcaption><b>Моя история.doc</b></figcaption></figure> #mem
+Оля: <figure><img src="assets/backgrounds/kitchen_1.png"> <figcaption><b>Моя история.doc</b></figcaption></figure> #mem
 Лия: [сейчас] сейчас прочту #neutral
 Лия: спасибо тебе #neutral
