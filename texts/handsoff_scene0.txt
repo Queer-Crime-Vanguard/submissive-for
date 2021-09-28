@@ -1,6 +1,6 @@
 Лия: #!init #reading #!foreground:laptop
 Зоя: #!init #neutral #!foreground:cups_laptop
-Наиля: [привет] Зоя, привет #reading
+Лия: [привет] Зоя, привет #reading
 Зоя: Привет, Лия! #neutral
 Лия: ты уже видела расследование про наш универ? #neutral
 Зоя: Про домогательства? #puzzled
