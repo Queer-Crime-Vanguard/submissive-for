@@ -1,4 +1,4 @@
-Лия: #!init #reading 
+Лия: #!init #reading #!foreground:laptop
 Оля: #!init #neutral 
 Лия: [привет] Оля, привет! #reading
 Лия: Помнишь меня? #neutral

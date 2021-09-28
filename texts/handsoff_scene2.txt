@@ -1,7 +1,7 @@
-Лия: #!init #shocked
-Зоя: #!init #neutral 
-: #!vibe:nervous
+Лия: #!init #shocked #!foreground:laptop
+Зоя: #!init #neutral #!foreground:cups_laptop
 Лия: [тут?] ты тут? #shocked
+: #!vibe:nervous
 Зоя: Да! #neutral
 Лия: [хочу поделиться] хочу поделиться #shocked
 Зоя: Давай #neutral_2
