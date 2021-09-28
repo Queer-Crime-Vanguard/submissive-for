@@ -12,3 +12,5 @@ function sound(name) {
     }
     return res
 }
+
+['typing', 'notif', 'powerup', 'consume', 'absorb3'].forEach((n) => {sound(n)})

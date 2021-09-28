@@ -15,22 +15,41 @@ function prepareHighlight(highlight, activate, with_bookmark) {
 
 function initiateHighlight() {
     let highlight_box = document.querySelector('#highlight-box');
-    highlight_box.addEventListener('click', () => {
+    process_hl = () => {
         processHighlight(true);
-        document.dispatchEvent(new Event('play_bg_music')); })
+        document.dispatchEvent(new Event('play_bg_music'))
+    }
+    highlight_box.addEventListener('click', process_hl)
+    document.body.onkeyup = (e) => {
+        if (e.code == 'Space') {process_hl()}
+    }
     let highlight = getNextLine().querySelector(".highlight");
     prepareHighlight(highlight, true, false);
+}
+
+function setBubbleColor(left, color) {
+    if (color == null) {return}
+    let pref = left ? 'left' : 'right'
+
+    let root = document.documentElement
+    root.style.setProperty('--' + pref + '-bubble-color', "#"+color)
+    console.log(color)
 }
 
 function initializeDialogue() {
     preloadEmotions(document.querySelectorAll("#dialogue linemeta"))
     document.querySelectorAll('#dialogue .line.init').forEach((line) => {
-        let meta = line.querySelector('linemeta');
-        preloadBackground(line.classList.contains('left'), meta.getAttribute('speaker'))
-        sendEmotion(line.classList.contains('left'), emoindex(meta))
+        let meta = line.querySelector('linemeta')
+        let left = line.classList.contains('left')
+        let speaker = meta.getAttribute('speaker')
+        preloadBackground(left, speaker)
+        setBubbleColor(left, meta.getAttribute('bubble_color'))
+        addForeground(left, speaker, meta.getAttribute('foreground'))
+        sendEmotion(left, emoindex(meta))
     })
     initiateHighlight();
 }
+
 
 function nextline(force_instant) {
     var currentLine = getNextLine();
@@ -84,7 +103,9 @@ function nextline(force_instant) {
 
 function processHighlight(by_click) {
     let highlight_box = document.querySelector('#highlight-box');
+    if (!highlight_box.classList.contains('activated')) {return}
     highlight_box.removeChild(highlight_box.children[0]);
+    if (highlight_box.classList.contains('with_bookmark')) {sound('absorb3').play()}
     highlight_box.classList.remove("activated");
     highlight_box.classList.remove("with_bookmark");
     nextline(by_click);
@@ -106,8 +127,8 @@ function showBubble(currentLine, force_instant) {
     
     lineNode.classList.add("appeared");
     var bubble_style = window.getComputedStyle(bubble, null);
-    var width = bubble_style.getPropertyValue("width");
-    var height = bubble_style.getPropertyValue("height");
+    let b_width = bubble_style.getPropertyValue("width");
+    let b_height = bubble_style.getPropertyValue("height");
 
     const microDelay = 20;
     const positioningDelay = 500;
@@ -120,7 +141,7 @@ function showBubble(currentLine, force_instant) {
         setTimeout(() => {lineNode.classList.add("positioned");}, 20)
         setTimeout(() => {lineNode.classList.add("shown");
                           sendEmotion(lineNode.classList.contains('left'), emoindex(meta));
-                         messageSound.play()}, positioningDelay)
+                         sound('notif').play()}, positioningDelay)
         return positioningDelay;
     }
     
@@ -133,9 +154,9 @@ function showBubble(currentLine, force_instant) {
     
     if (islong) {
         var playAgain = true;
-        typingSound.addEventListener("ended", () => {
+        sound('typing').addEventListener("ended", () => {
             if (playAgain) {
-                typingSound.play()
+                sound('typing').play()
                 playAgain = false
             }
         })}
@@ -143,7 +164,7 @@ function showBubble(currentLine, force_instant) {
     dialogue.scrollTop = dialogue.scrollHeight;
 
     setTimeout(() => {lineNode.classList.add("positioned");
-                      typingSound.play();
+                      sound('typing').play()
                       var typing_bubble_style = window.getComputedStyle(bubble, null);
                       bubble.style.width = typing_bubble_style.getPropertyValue("width");
                       bubble.style.height = typing_bubble_style.getPropertyValue("height");
@@ -154,13 +175,15 @@ function showBubble(currentLine, force_instant) {
     }, positioningDelay)
     
     setTimeout(() => {sendEmotion(lineNode.classList.contains('left'), emoindex(meta));
-                      bubble.style.width = width;
-                      bubble.style.height = height;
+                      bubble.style.width = b_width;
+                      bubble.style.height = b_height;
                       lineNode.classList.remove("typing");
-                      messageSound.play()
+                      sound('notif').play()
     }, positioningDelay + typingDuration)
     
     setTimeout(() => {
+        bubble.style.width = null
+        bubble.style.height = null
         lineNode.classList.remove("texthide");
         bubble.scrollIntoView();
     }, positioningDelay+typingDuration+textAppearDelay)

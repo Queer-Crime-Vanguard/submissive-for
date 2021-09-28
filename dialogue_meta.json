@@ -3,12 +3,14 @@
         {
             "Лия": {
                 "letter": "s",
-                "position": "right"
+                "position": "right",
+                "bubble_color": "ffe7ec"
             },
 
             "Зоя": {
                 "letter": "z",
-                "position": "left"
+                "position": "left",
+                "bubble_color": "fef9ee"
             },
 
             "Оля": {

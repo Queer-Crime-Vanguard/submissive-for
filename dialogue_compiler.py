@@ -63,9 +63,13 @@ def line_build(meta, speaker, highlight, is_bookmark, emotion, actions, actions_
     if speaker_meta:
         letter = speaker_meta['letter']
         position = speaker_meta['position']
+        bubble_color = speaker_meta.get('bubble_color')
+    elif speaker.rstrip():
+        raise NameError(f"There is no such `{speaker}` speaker in meta")
     else:
         letter = None
         position = None
+        bubble_color = None
 
     # highlight
     html_hightlight = f'<div class="highlight {"bookmark" if is_bookmark else ""}"><p>{highlight}</p></div>' if highlight else ''
@@ -76,6 +80,7 @@ def line_build(meta, speaker, highlight, is_bookmark, emotion, actions, actions_
     # linemeta--
     metadata = {'speaker': letter, 'emotion': emotion}
     metadata.update(actions_params)
+    if 'init' in actions and bubble_color: metadata['bubble_color'] = bubble_color
     actual_metadata = {k:v for k, v in metadata.items() if v}
     md_string = " ".join([f'{k}="{v}"' for k, v in actual_metadata.items()])
 
@@ -96,7 +101,7 @@ def template_compile(template, lines):
     
 
 def build(meta, template, raw_lines):
-    lines_to_parse = filter(lambda line: not line.startswith("//"), raw_lines)
+    lines_to_parse = filter(lambda line: not line.lstrip().startswith("//"), raw_lines)
     built_lines = map(lambda line: line_build(meta, **line_extract(line)), lines_to_parse)
     return template_compile(template, built_lines)
 
@@ -132,7 +137,11 @@ def main(config: str, template: str, input: str, output: str):
         template_content = template_f.read()
 
     with open(input) as i_f:
-        result = build(meta, template_content, i_f.readlines())
+        try:
+            result = build(meta, template_content, i_f.readlines())
+        except Exception as e:
+            print(f'An error occured during the build process: {e}')
+            return
 
     with open(output, 'w') as o_f:
         o_f.write(result)
