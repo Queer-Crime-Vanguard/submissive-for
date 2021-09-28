@@ -63,11 +63,13 @@ def line_build(meta, speaker, highlight, is_bookmark, emotion, actions, actions_
     if speaker_meta:
         letter = speaker_meta['letter']
         position = speaker_meta['position']
+        bubble_color = speaker_meta.get('bubble_color')
     elif speaker.rstrip():
         raise NameError(f"There is no such `{speaker}` speaker in meta")
     else:
         letter = None
         position = None
+        bubble_color = None
 
     # highlight
     html_hightlight = f'<div class="highlight {"bookmark" if is_bookmark else ""}"><p>{highlight}</p></div>' if highlight else ''
@@ -78,6 +80,7 @@ def line_build(meta, speaker, highlight, is_bookmark, emotion, actions, actions_
     # linemeta--
     metadata = {'speaker': letter, 'emotion': emotion}
     metadata.update(actions_params)
+    if 'init' in actions and bubble_color: metadata['bubble_color'] = bubble_color
     actual_metadata = {k:v for k, v in metadata.items() if v}
     md_string = " ".join([f'{k}="{v}"' for k, v in actual_metadata.items()])
 
