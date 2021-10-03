@@ -1,11 +1,16 @@
+html, body {
+    user-select: none;
+    overflow-x: hidden;
+}
+
 body {
+    width: 100%;
     font-family: sans-serif;
     font-weight: 300;
     font-size: 14pt;
     background: canvas(scene);
     background-repeat: no-repeat;
     background-position: 200px 200px;
-    overflow: hidden;
 }
 
 @media (orientation: portrait) {
