@@ -17,52 +17,51 @@
   <script type="text/javascript" src="js/finish_scene.js"></script>
 
 <style>
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
 body {
-    background: linear-gradient(319deg, #ef25eb, #51b1cb, #ffcc56);
+    background: radial-gradient(white 0%,#dbd968 25%, #d783e2 35%, #64b7ce 40%, #fc8853 75%);
     background-size: 400% 400%;
-
-    -webkit-animation: plasma 6s ease infinite;
-    -moz-animation: plasma 6s ease infinite;
-    animation: plasma 6s ease infinite;
+    background-repeat: no-repeat;
+    animation: plasma 28s cubic-bezier(0.45, 0.1, 0.55, 0.9) infinite;
 }
 
-@-webkit-keyframes plasma {
-    0%{background-position:7% 0%}
-    50%{background-position:94% 100%}
-    100%{background-position:7% 0%}
-}
-@-moz-keyframes plasma {
-    0%{background-position:7% 0%}
-    50%{background-position:94% 100%}
-    100%{background-position:7% 0%}
-}
 @keyframes plasma {
-    0%{background-position:7% 0%}
-    50%{background-position:94% 100%}
-    100%{background-position:7% 0%}
+    0%{background-position:30% 100%}
+    50%{background-position:100% 70%}
+    100%{background-position:30% 100%}
 }
 
 #logo {
     position: absolute;
     display: block;
     max-height: 24em;
+    color: white;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
 }
 
 #logo.interactive {
     transition: transform 250ms ease-out;
+    transform: translate(-50%, -50%);
 }
 
 #logo.interactive:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+#logo.interactive:active {
+    mix-blend-mode: difference;
     transform: translate(-50%, -50%) scale(1.1);
 }
     
   </style>
   
   <div id="logo-container">
-    <img id="logo" class="interactive" src="assets/logo.png" onclick="finishScene();">
+    <img id="logo" class="interactive" src="assets/logo.svg" onclick="finishScene();">
   </div>
 
 </body>
