@@ -1,0 +1,87 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Splash Screen</title>
+  <meta name="description" content="HandsOff game page">
+  <meta name="author" content="HandsOff">
+  <link rel="icon" href="handsoff_logo_favicon.png" type="image/x-icon"/>
+  <link rel="shortcut icon" href="handsoff_logo_favicon.png" type="image/x-icon"/>
+</head>
+
+<body onload="loadSceneList()">
+  
+  <link rel="stylesheet" href="styles.css">
+  <script type="text/javascript" src="js/assembly.js"></script>
+  <script type="text/javascript" src="js/finish_scene.js"></script>
+  <script type="text/javascript" src="js/track.js"></script>
+  <script type="text/javascript" src="js/utils.js"></script>
+  <script type="text/javascript" src="js/sound.js"></script>
+  <script type="text/javascript" src="js/music.js"></script>
+  <script type="text/javascript" src="js/chat.js"></script>
+  <script type="text/javascript" src="js/bg_scene.js"></script>
+
+<style>
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+body {
+    background: radial-gradient(white 0%,#fffd77 25%, #d783e2 35%, #73d9f5 40%, #ff8e5a 75%);
+    background-size: 400% 400%;
+    background-repeat: no-repeat;
+    animation: plasma 28s cubic-bezier(0.45, 0.1, 0.55, 0.9) infinite;
+}
+
+@keyframes plasma {
+    0%{background-position:30% 100%}
+    50%{background-position:100% 70%}
+    100%{background-position:30% 100%}
+}
+
+#logo {
+    position: absolute;
+    display: block;
+    max-height: 24em;
+    color: white;
+    top: 50%;
+    left: 50%;
+}
+
+#logo.interactive {
+    transition: transform 250ms ease-out;
+    transform: translate(-50%, -50%);
+}
+
+#logo.interactive:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+#logo.interactive:active {
+    mix-blend-mode: difference;
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+#assembly-list {
+    display: none;
+}
+
+</style>
+
+<ul id="assembly-list">
+    <li>trigger_warning.html</li>
+    <li>intro.html</li>
+    <li>scene1.html</li>
+</ul>
+
+<div id="slide-container">
+    <div id="logo-container" class="slide">
+        <img id="logo" class="interactive" src="assets/logo_white.svg" onclick="nextScene()">
+    </div>
+</div>
+
+</body>
+</html>
