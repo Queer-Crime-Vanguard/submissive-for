@@ -118,13 +118,24 @@ const drag = 20;
     let moveY = t - 0.5
 */
 
-let scale = (sp_height) => {return (height+2*drag)/sp_height}
+const scale_eps = 0.02
+let scale = (sp_height) => {return (height+2*drag)/sp_height + scale_eps}
 
 function draw1(totalTime) {
-    let ctx = c.getContext('2d');   
+    let ctx = c.getContext('2d')
+    
+    let crx = cr.getContext('2d')
 
-    ctx.drawImage(background_r, width-(background_r.width*scale(background_r.height))+drag*moveX, drag*moveY-drag, source_width*scale(background_r.height)+drag, height+2*drag);
-    ctx.drawImage(sprite_r, cr.width*2-(sprite_r.width*scale(sprite_r.height))+drag*moveX + rOffset, drag*moveY-drag, sprite_r.width*scale(sprite_r.height)+drag, height+2*drag);
+    // backgrounds
+    ctx.drawImage(background_r, drag*moveX*0.5 + width-(background_r.width*scale(background_r.height)) + rOffset, -drag, source_width*scale(background_r.height)+drag, height+2*drag);
+
+    // sprites
+    ctx.drawImage(sprite_r, drag*moveX + rOffset - source_width*scale(sprite_r.height)-drag + width, drag*moveY*0.5-drag, source_width*scale(sprite_r.height)+drag, height+2*drag)
+
+    // foregrounds
+    foreground_r.forEach((f) => {
+        ctx.drawImage(f, drag*moveX*1.3 + width-(background_r.width*scale(background_r.height)) + rOffset, -drag, source_width*scale(background_r.height)+drag, height+2*drag);
+    })
 }
 
 const drag_intensity = 0.001;
