@@ -90,6 +90,7 @@ body {
 
 #highlight-box {
     display: inline-block;
+    text-align: center;
     position: fixed;
     bottom: 2em;
     height: 2.4em;
@@ -121,7 +122,6 @@ body {
 #highlight-box .highlight {
     display: inline-block;
     position: absolute;
-    text-align: center;
     font-weight: 300;
     font-size: 100%;
     min-width: 16em;
@@ -238,6 +238,10 @@ linemeta {
 .right .bubble {
     border-radius: 0.7em 0.7em 0 0.7em;
     background-color: var(--right-bubble-color);
+}
+
+#highlight-box .bubble {
+    background: none;
 }
 
 components * {

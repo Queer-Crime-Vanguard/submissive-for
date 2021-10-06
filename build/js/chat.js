@@ -4,7 +4,7 @@ function getNextLine() {
 
 const autoplayDelay = 350;
 const pauseEmotionDelay = 1600;
-const pauseDelay = 4000;
+const pauseDelay = 2000;
 
 function prepareHighlight(highlight, activate, with_bookmark) {
     let highlight_box = document.querySelector('#highlight-box')
@@ -69,15 +69,17 @@ function nextline(force_instant) {
             
             if (currentLine.classList.contains('typing')) {
 
-                bubble = document.createElement('div');
-                bubble.classList.add('bubble');
-                bubble.appendChild(document.querySelector('components .wave').cloneNode(true));
+                delay = pauseDelay;
 
-                prepareHighlight(bubble, false, false);
+                typing_bubble = document.createElement('div');
+                typing_bubble.classList.add('bubble');
+                typing_bubble.appendChild(document.querySelector('components .wave').cloneNode(true));
+
+                prepareHighlight(typing_bubble, false, false);
+
                 setTimeout(() => {
-                    processHighlight(false);
-                }, pauseDelay);
-                return
+                    processHighlight(false, false);
+                }, pauseDelay)
             }
 
             if (currentLine.classList.contains('vibe')) {
@@ -101,14 +103,14 @@ function nextline(force_instant) {
     }
 }
 
-function processHighlight(by_click) {
+function processHighlight(by_click, go_nextline=true) {
     let highlight_box = document.querySelector('#highlight-box');
-    if (!highlight_box.classList.contains('activated')) {return}
+    if (by_click && !highlight_box.classList.contains('activated')) {return}
     highlight_box.removeChild(highlight_box.children[0]);
     if (highlight_box.classList.contains('with_bookmark')) {sound('absorb3').play()}
     highlight_box.classList.remove("activated");
     highlight_box.classList.remove("with_bookmark");
-    nextline(by_click);
+    if (go_nextline) {return nextline(by_click)}
 }
 
 function showBubble(currentLine, force_instant) {
