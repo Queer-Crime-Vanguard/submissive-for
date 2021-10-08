@@ -103,11 +103,33 @@ function nextline(force_instant) {
     }
 }
 
+function animate_flyaway(node, duration=500) {
+    let rect = node.getBoundingClientRect()
+    box = node.cloneNode(deep=true)
+    box.style.position = 'absolute'
+    box.style.width = rect.right - rect.left
+    box.style.height = rect.bottom - rect.tops
+    box.style.left = rect.left
+    box.style.top = rect.top
+    box.style.transition = "all " + duration + "ms" + " ease-out"
+    box.style.opacity = "1"
+    box.style.transform = "translateX(0)"
+    document.body.appendChild(box)
+    setTimeout(() => {
+        box.style.transform = "translateX(20em)"
+        box.style.opacity = "0"
+    }, 10)
+    setTimeout(() => {document.body.removeChild(box)}, duration)
+}
+
 function processHighlight(by_click, go_nextline=true) {
     let highlight_box = document.querySelector('#highlight-box');
     if (by_click && !highlight_box.classList.contains('activated')) {return}
     highlight_box.removeChild(highlight_box.children[0]);
-    if (highlight_box.classList.contains('with_bookmark')) {sound('absorb3').play()}
+    if (highlight_box.classList.contains('with_bookmark')) {
+        animate_flyaway(highlight_box)
+        sound('absorb3').play()
+    }
     highlight_box.classList.remove("activated");
     highlight_box.classList.remove("with_bookmark");
     if (go_nextline) {return nextline(by_click)}
