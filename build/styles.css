@@ -89,8 +89,15 @@ body {
 }
 
 #dialogue-box.single {
+    max-width: 35em;
     transform: translate(-10em, 0);
     background: none;
+    top: 0;
+    bottom: 0;
+}
+
+#dialogue-box.single > #bubble-box {
+    overflow-y: hidden;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Exo:wght@700&display=swap');
@@ -100,7 +107,8 @@ body {
     font-weight: 500;
     font-size: 1.5em;
     border-radius: 0.7em;
-    margin-top: 1em;
+    margin-top: 0.3em;
+    color: #AD3255;
 }
 
 #dialogue-box.single #highlight-box {
