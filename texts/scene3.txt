@@ -1,6 +1,6 @@
 Лия: #!init #shocked #!foreground:laptop
 Леля: #!init #neutral
-Лия: Привет, Леля! как ты? #reading
+Лия: [Привет] Привет, Леля! как ты? #reading
 Лия: чем сейчас занимаешься? #neutral
 Леля: Привет #neutral
 Леля: давно не слышала ничего от тебя #neutral
