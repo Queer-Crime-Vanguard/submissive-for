@@ -15,11 +15,13 @@
 
             "Оля": {
                 "letter": "o",
-                "position": "left"
+                "position": "left",
+                "bubble_color": "d8fef9"
             },
             "Леля": {
                 "letter": "l",
-                "position": "left"
+                "position": "left",
+                "bubble_color": "dbe9ff"
             }
         }
 }
