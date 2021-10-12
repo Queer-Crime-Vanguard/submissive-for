@@ -9,22 +9,19 @@ const pauseDelay = 2000;
 function prepareHighlight(highlight, activate, with_bookmark) {
     let highlight_box = document.querySelector('#highlight-box')
     highlight_box.appendChild(highlight);
-    if (activate) {highlight_box.classList.add('activated');}
+    if (activate) {highlight_box.classList.add('activated')}
     if (with_bookmark) {highlight_box.classList.add('with_bookmark');}
 }
 
 function initiateHighlight() {
-    let highlight_box = document.querySelector('#highlight-box');
-    process_hl = () => {
-        processHighlight(true);
-        document.dispatchEvent(new Event('play_bg_music'))
-    }
+    let highlight_box = document.querySelector('#highlight-box')
+    process_hl = () => processHighlight(true)
     highlight_box.addEventListener('click', process_hl)
     document.body.onkeyup = (e) => {
         if (e.code == 'Space') {process_hl()}
     }
-    let highlight = getNextLine().querySelector(".highlight");
-    prepareHighlight(highlight, true, false);
+    let highlight = getNextLine().querySelector(".highlight")
+    prepareHighlight(highlight, true, false)
 }
 
 function setBubbleColor(left, color) {

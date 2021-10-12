@@ -205,6 +205,7 @@ function varyValue(value, dest, delay) {
     setTimeout(() => {clearInterval(timer); value = dest;}, delay);
 }
 
+/*
 function animate(onProgress, duration) {
 
   let start = performance.now();
@@ -222,6 +223,7 @@ function animate(onProgress, duration) {
 
   });
 }
+*/
 
 function updateEmotion(left, emoIndex) {
     img = getEmotion(emoIndex);
@@ -266,7 +268,7 @@ document.addEventListener("update_emotion", (e) => {
 
 function updateBG(totalTime) {
     draw(totalTime);
-    requestAnimationFrame(updateBG);
+    areq = requestAnimationFrame(updateBG);
 }
 
 function setBg(left = true) {
