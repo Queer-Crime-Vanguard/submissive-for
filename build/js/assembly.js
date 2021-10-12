@@ -22,14 +22,18 @@ function insertScene(page_source) {
     body.classList.add("slide")
     let slide_container = document.getElementById("slide-container")
     let slide = slide_container.querySelector('.slide')
+
+    /* remove */
     slide_container.removeChild(slide)
-    slide_container.appendChild(body)
-    if (body.classList.contains('audio')) {document.dispatchEvent(new Event('stop_playing'))}
-    if (body.classList.contains('animation')) {window.cancelAnimationFrame(areq)}
     if (body.classList.contains('background')) {
         let bg = slide_container.querySelector('.background')
         if (bg) {slide_container.removeChild(bg)}
     }
+    if (body.classList.contains('audio')) {document.dispatchEvent(new Event('stop_playing'))}
+    if (body.classList.contains('animation')) {window.cancelAnimationFrame(areq)}
+
+    /* insert new */
+    slide_container.appendChild(body)
     eval(body.getAttribute('onload'))
 }
 
