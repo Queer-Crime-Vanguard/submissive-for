@@ -18,8 +18,6 @@ let vibes_audio = {
 
 let current_vibe = 'basic';
 
-let started = false;
-
 let music_audio = {}
 
 function playMusic(name) {
@@ -33,17 +31,14 @@ function playMusic(name) {
 }
 
 function startVibe() {
-    if (!started) {
-        mus_vibes.forEach(
-            (vibe) => {
-                let a = vibes_audio[vibe]
-                a.play()
-                if (vibe == current_vibe) {a.volume = 1}
-                current_playing.push(a)
-            }
-        )
-        started = true;
-    }
+    mus_vibes.forEach(
+        (vibe) => {
+            let a = vibes_audio[vibe]
+            a.play()
+            if (vibe == current_vibe) {a.volume = 1}
+            current_playing.push(a)
+        }
+    )
 }
 
 const crossFadeLength = 3000;
