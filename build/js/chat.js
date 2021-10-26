@@ -5,6 +5,7 @@ function getNextLine() {
 const autoplayDelay = 350;
 const pauseEmotionDelay = 1600;
 const pauseDelay = 2000;
+const finishSceneDelay = 1000;
 
 function prepareHighlight(highlight, activate, with_bookmark) {
     let highlight_box = document.querySelector('#highlight-box')
@@ -94,7 +95,7 @@ function nextline(force_instant) {
                                 nextline(false);
                             }
                         } else {
-                            finishScene();
+                            setTimeout(finishScene, finishSceneDelay)
                         }},
                    1.5*delay+autoplayDelay);
     }
