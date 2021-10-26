@@ -130,7 +130,7 @@ function draw1(totalTime) {
     ctx.drawImage(background_r, drag*moveX*0.5 + width-(background_r.width*scale(background_r.height)) + rOffset, -drag, source_width*scale(background_r.height)+drag, height+2*drag);
 
     // sprites
-    ctx.drawImage(sprite_r, drag*moveX + rOffset - source_width*scale(sprite_r.height)-drag + width, drag*moveY*0.5-drag, source_width*scale(sprite_r.height)+drag, height+2*drag)
+    ctx.drawImage(sprite_r, drag*moveX + rOffset - source_width*scale(sprite_r.height)-drag + width, drag*moveY*0.2-drag, source_width*scale(sprite_r.height)+drag, height+2*drag)
 
     // foregrounds
     foreground_r.forEach((f) => {
@@ -151,8 +151,8 @@ function draw2(totalTime) {
     crx.drawImage(background_r, drag*moveX*0.5 + cr.width-(background_r.width*scale(background_r.height)) + rOffset, -drag, source_width*scale(background_r.height)+drag, height+2*drag);
 
     // sprites
-    clx.drawImage(sprite_l, -drag*moveX - drag - lOffset, -drag*moveY*0.5 - drag, sprite_l.width*scale(sprite_l.height)+drag, height+2*drag);
-    crx.drawImage(sprite_r, drag*moveX + rOffset - source_width*scale(sprite_r.height)-drag + cr.width, drag*moveY*0.5-drag, source_width*scale(sprite_r.height)+drag, height+2*drag)
+    clx.drawImage(sprite_l, -drag*moveX - drag - lOffset, -drag*moveY*0.2 - drag, sprite_l.width*scale(sprite_l.height)+drag, height+2*drag);
+    crx.drawImage(sprite_r, drag*moveX + rOffset - source_width*scale(sprite_r.height)-drag + cr.width, drag*moveY*0.2-drag, source_width*scale(sprite_r.height)+drag, height+2*drag)
 
     // foregrounds
     foreground_l.forEach((f) => {

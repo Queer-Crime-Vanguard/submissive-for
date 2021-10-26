@@ -359,7 +359,7 @@ canvas.scene.blured {
     margin-top: 0.3em;
     margin-left: 0.5em;
     margin-right: 0.75em;
-    transition: background 300ms ease;
+    transition: background 150ms ease-in-out;
 }
 
 #trigger-warning-box .button .checkbox:hover {
