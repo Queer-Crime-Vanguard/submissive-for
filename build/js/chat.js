@@ -14,12 +14,13 @@ function prepareHighlight(highlight, activate, with_bookmark) {
     if (with_bookmark) {highlight_box.classList.add('with_bookmark');}
 }
 
+let chatProceed = () => processHighlight(true)
+
 function initiateHighlight() {
     let highlight_box = document.querySelector('#highlight-box')
-    process_hl = () => processHighlight(true)
-    highlight_box.addEventListener('click', process_hl)
+    highlight_box.addEventListener('click', chatProceed)
     document.body.onkeyup = (e) => {
-        if (e.code == 'Space') {process_hl()}
+        if (e.code == 'Space') {chatProceed()}
     }
     let highlight = getNextLine().querySelector(".highlight")
     prepareHighlight(highlight, true, false)
