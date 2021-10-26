@@ -119,13 +119,15 @@ body {
     display: inline-block;
     text-align: center;
     position: fixed;
+    font-weight: 300;
+    font-size: 100%;
     bottom: 2em;
     height: 2.4em;
     min-width: 20em;
     max-width: 26em;
     border-radius: 1.5em;
     background-color: rgba(255, 255, 255, 0.65);
-    border: solid 0.2em rgba(255, 255, 255, 0);
+    /*border: solid 3px rgba(255, 255, 255, 0);*/
     transition: all 100ms linear;
     left: 50%;
     margin-left: -10em;
@@ -137,24 +139,56 @@ body {
     50% {border-color: rgba(255, 255, 255, 0)}
 }
 
-#highlight-box.activated {
+#highlight-box .highlight {
+    display: inline-block;
+    position: absolute;
+    min-width: 20em;
+    max-width: 26em;
+    border-radius: 1.5em;
+    border: solid 3px rgba(255, 255, 255, 0);
+    transform: translate(-50%, 50%);
+    bottom: 50%;
+    left: 50%;
+    height: calc(2.4em - 6px);
+}
+
+#highlight-box .highlight:not(.options) {
+    width: calc(100% - 10px);
+}
+
+#highlight-box.activated > .highlight:not(.options) {
     animation: lure 3.5s infinite;
 }
 
-#highlight-box.activated:hover {
+#highlight-box.activated > .highlight:not(.options):hover {
     animation: none;
     border-color: rgba(203, 252, 69, 0.541);
 }
 
-#highlight-box .highlight {
+#highlight-box .option {
     display: inline-block;
-    position: absolute;
-    font-weight: 300;
-    font-size: 100%;
-    min-width: 16em;
-    transform: translate(-50%, 50%);
-    bottom: 50%;
-    left: 50%;
+    width: calc(50% - 4px);
+    height: calc(2.4em - 6px);
+    transform: translateY(-2px);
+    border: solid 3px rgba(255, 255, 255, 0);
+}
+
+#highlight-box .option:hover {
+    border-color: rgba(203, 252, 69, 0.541);
+}
+
+#highlight-box p {
+    line-height: 0.5em;
+}
+
+#highlight-box .option.left {
+    border-radius: 1.5em 0 0 1.5em;
+    border-right: solid 1px white;
+}
+
+#highlight-box .option.right {
+    border-radius: 0 1.5em 1.5em 0;
+    border-left: solid 1px white;
 }
 
 #highlight-box .highlight.bookmark p::before {
