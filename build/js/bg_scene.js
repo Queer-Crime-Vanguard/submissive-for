@@ -194,7 +194,7 @@ function initBg(left) {
     } else {
         draw = draw1
     }
-    updateBG();
+    updateBG(0);
     
 }
 
@@ -267,12 +267,18 @@ document.addEventListener("update_emotion", (e) => {
 })
 
 function updateBG(totalTime) {
+    console.log('updateBG', totalTime, draw)
     draw(totalTime);
     areq = requestAnimationFrame(updateBG);
 }
 
-function setBg(left = true) {
-    window.addEventListener("loaded", () => {initBg(left)});
+function setBg(left = true, solid = false) {
+    window.addEventListener("loaded", () => {
+        if (solid) {
+            initSolidBg()
+        } else {
+            initBg(left)
+        }})
     window.addEventListener("size_update", updateFrame);
 }
 
