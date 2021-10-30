@@ -24,8 +24,6 @@ function drawSolid(totalTime) {
     let frameIndex = frameNum % totalFrames
     let currentFrame = frameArray[frameIndex]
 
-    console.log(totalTime, frameNum, frameIndex, currentFrame)
-
     var scale = Math.max((height+2*drag)/currentFrame.height, (width+2*drag)/currentFrame.width);
 
     var ctx = c.getContext('2d');

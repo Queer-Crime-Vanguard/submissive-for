@@ -127,6 +127,7 @@ function draw1(totalTime) {
     let crx = cr.getContext('2d')
 
     // backgrounds
+    ctx.drawImage(background_r, width-(background_r.width*scale(background_r.height)), -drag, source_width*scale(background_r.height)+drag, height+2*drag);
     ctx.drawImage(background_r, drag*moveX*0.5 + width-(background_r.width*scale(background_r.height)) + rOffset, -drag, source_width*scale(background_r.height)+drag, height+2*drag);
 
     // sprites
@@ -267,7 +268,6 @@ document.addEventListener("update_emotion", (e) => {
 })
 
 function updateBG(totalTime) {
-    console.log('updateBG', totalTime, draw)
     draw(totalTime);
     areq = requestAnimationFrame(updateBG);
 }
