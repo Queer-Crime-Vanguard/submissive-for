@@ -1,3 +1,16 @@
+class ExtRef extends HTMLAnchorElement {
+    constructor() {
+      // Always call super first in constructor
+      super();
+  
+      this.setAttribute('target', '_blank')
+      this.setAttribute('href', this.innerText)
+    }
+  }
+  
+// Define the new element
+customElements.define('ext-ref', ExtRef, {extends: 'a'});
+
 function getNextLine() {
     return document.querySelector('#dialogue .line:not(.shown):not(.init)')
 }
