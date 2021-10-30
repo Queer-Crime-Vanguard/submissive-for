@@ -3,7 +3,7 @@
 Лия: [привет] Зоя, привет #reading
 Зоя: Привет, Лия! #neutral
 Лия: ты уже видела расследование про домогательства? #puzzled
-Лия: <a href="https://doxajournal.ru/uni/harassment/msu_faculty_of_philology">https://doxajournal.ru/uni/harassment/msu_faculty_of_philology</a> #pissed_2
+Лия: <a is="ext-ref">https://doxajournal.ru/uni/harassment/msu_faculty_of_philology</a> #pissed_2
 Зоя: На филфаке? #puzzled
 Зоя: А, да, оно #sad_2
 Лия: [ага] ага #puzzled

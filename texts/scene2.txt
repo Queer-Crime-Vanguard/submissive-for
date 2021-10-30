@@ -96,7 +96,7 @@
 Зоя: Могу посоветовать тебе гайд #puzzled
 Зоя: Как аккуратно говорить на такие темы #neutral_2
 Лия: [ну давай] ну давай #shocked
-Зоя: <a href="https://doxajournal.ru/uni/harassment_guide_serenko">https://doxajournal.ru/uni/harassment_guide_serenko</a> #neutral_2
+Зоя:  <a is="ext-ref">https://doxajournal.ru/uni/harassment_guide_serenko</a> #neutral_2
 : #!vibe:calm
 Лия: [почитаю] почитаю #neutral
 Лия: а ведь мы с ней были подругами на 1-2 курсах #wonders
