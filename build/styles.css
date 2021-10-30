@@ -258,6 +258,10 @@ linemeta {
     margin-bottom: 0;
 }
 
+.bubble a {
+    color: rgb(0, 145, 145);
+}
+
 .left .bubble {
     border-radius: 0.7em 0.7em 0.7em 0;
     background-color: var(--left-bubble-color);
