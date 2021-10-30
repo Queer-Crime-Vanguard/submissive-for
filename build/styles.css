@@ -253,6 +253,7 @@ linemeta {
 }
 
 .bubble p {
+    overflow-wrap: break-word;
     margin-top: 0;
     margin-bottom: 0;
 }
