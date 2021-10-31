@@ -1,8 +1,7 @@
 // atomic
 
 function loadScene(name) {
-
-    fetch(name)
+    return fetch(name)
         .then((response) => {
             return response.text();
         })
@@ -46,7 +45,7 @@ function nextScene() {
     currentIndex += 1
     let new_scene = scenes[currentIndex]
     console.log('loading', new_scene)
-    loadScene(new_scene)
+    return loadScene(new_scene)
 }
 
 function loadSceneList() {
@@ -55,4 +54,6 @@ function loadSceneList() {
     })
 }
 
-document.body.addEventListener('finish_scene', nextScene)
+document.body.addEventListener('finish_scene', () => {
+    nextScene().then(endPending)
+})

@@ -1,10 +1,8 @@
 var c = document.createElement('canvas');
 
-const drag = 30;
-
 var frameArray = [];
 var totalFrames = 0;
-var currentFrameIndex = -1;
+var currentFrameIndex = 0;
 var currentFrame = null;
 
 function preloadImages() {
@@ -19,15 +17,13 @@ function preloadImages() {
             totalFrames += 1;
             }
     );
-    if (totalFrames) {nextFrame()}
 }
 
-function nextFrame() {
-    currentFrameIndex = (currentFrameIndex + 1) % totalFrames;
-    currentFrame = frameArray[currentFrameIndex];
-}
+function drawSolid(totalTime) {
+    let frameNum = Math.floor(totalTime/frameInterval)
+    let frameIndex = frameNum % totalFrames
+    let currentFrame = frameArray[frameIndex]
 
-function draw() {
     var scale = Math.max((height+2*drag)/currentFrame.height, (width+2*drag)/currentFrame.width);
 
     var ctx = c.getContext('2d');
@@ -43,21 +39,17 @@ function draw() {
     ctx.drawImage(currentFrame, -drag*moveX - drag, -drag*moveY - drag, currentFrame.width*scale, height+2*drag);
 }
 
-function setBg() {
+function initSolidBg() {
+    draw = drawSolid
+
     preloadImages();
 
     c.classList.add("scene");
     
-    updateBG();
-    if (totalFrames > 1) {setInterval(nextFrame, frameInterval);}    
+    updateBG(0);
     document.body.style.width = window.innerWidth;
     document.body.style.height = window.innerHeight;
 
     document.body.appendChild(c);
     
-}
-
-function updateBG() {
-    draw();
-    requestAnimationFrame(updateBG);
 }

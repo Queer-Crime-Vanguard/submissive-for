@@ -1,0 +1,49 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>HandsOff Dialogue</title>
+  <meta name="description" content="HandsOff dialogue">
+  <meta name="author" content="HandsOff">
+</head>
+
+<body onload="setBg(); initializeDialogue(); setTrack(); startVibe()" class="audio animation background">
+  <link rel="stylesheet" href="styles.css">
+  <script type="text/javascript" src="js/track.js"></script>
+  <script type="text/javascript" src="js/utils.js"></script>
+  <script type="text/javascript" src="js/sound.js"></script>
+  <script type="text/javascript" src="js/music.js"></script>
+  <script type="text/javascript" src="js/chat.js"></script>
+  <script type="text/javascript" src="js/bg_scene.js"></script>
+  <script type="text/javascript" src="js/finish_scene.js"></script>
+  
+  <div id="dialogue-box">
+    <div id="bubble-box">
+      <div class="placeholder"></div>
+    </div>
+    <div id="dialogue">
+      <div class="line right init foreground">  <linemeta speaker="s" emotion="reading" foreground="laptop" bubble_color="ffe7ec"></linemeta></div>
+      <div class="line left init foreground">  <linemeta speaker="z" emotion="neutral" foreground="cups_laptop" bubble_color="fef9ee"></linemeta></div>
+      <div class="line right "><div class="highlight "><p>ну как?</p></div> <div class="bubble"><p>ну как?</p></div> <linemeta speaker="s" emotion="relaxed"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>она ответила?</p></div> <linemeta speaker="s" emotion="wonders"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>да, мы поговорили</p></div> <linemeta speaker="z" emotion="neutral"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Она согласна!</p></div> <linemeta speaker="z" emotion="neutral"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Пиши ей скорее</p></div> <linemeta speaker="z" emotion="happy"></linemeta></div>
+      <div class="line right "><div class="highlight "><p>ура</p></div> <div class="bubble"><p>ура</p></div> <linemeta speaker="s" emotion="neutral"></linemeta></div>
+      <div class="line right "><div class="highlight "><p>спасибо за идею</p></div> <div class="bubble"><p>спасибо за идею</p></div> <linemeta speaker="s" emotion="neutral"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>напишу ей сейчас</p></div> <linemeta speaker="s" emotion="neutral"></linemeta></div>
+    </div>
+    <div id="highlight-box" ></div>
+  </div>
+  
+  <components>
+    <div class="wave">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </components>
+</body>
+</html>
