@@ -1,11 +1,14 @@
 Лия: #!init #reading #!foreground:laptop
 Зоя: #!init #neutral #!foreground:cups_laptop
-Лия: [ну как?] ну как? #relaxed
-Лия: она ответила? #wonders
+Лия: [ну как?] #relaxed
+Лия: Оля ответила? #wonders
 Зоя: да, мы поговорили #neutral
 Зоя: Она согласна! #neutral
 Зоя: Пиши ей скорее #happy
-Лия: [ура] ура #neutral
-//Лия: [ох!] ох! #puzzled
-Лия: [спасибо за идею] спасибо за идею #neutral
+{-
+Лия: [ура] #neutral
+-
+Лия: [ох!] ох! #!type:sad #puzzled
+-}
+Лия: [спасибо за помощь] #neutral
 Лия: напишу ей сейчас #neutral
