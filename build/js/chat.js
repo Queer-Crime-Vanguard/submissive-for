@@ -11,8 +11,19 @@ class ExtRef extends HTMLAnchorElement {
 // Define the new element
 customElements.define('ext-ref', ExtRef, {extends: 'a'});
 
+let current_branch = null
+
 function getNextLine() {
-    return document.querySelector('#dialogue .line:not(.shown):not(.init)')
+    if (current_branch) {
+        let node = current_branch.querySelector('.line:not(.shown)')
+        if (node) {
+            return node
+        } else {
+            current_branch.parentNode.classList.add('shown')
+            current_branch = null
+        } 
+    }
+    return document.querySelector('#dialogue > *:not(.shown)')
 }
 
 const autoplayDelay = 350;
@@ -20,23 +31,61 @@ const pauseEmotionDelay = 1600;
 const pauseDelay = 2000;
 const finishSceneDelay = 1000;
 
-function prepareHighlight(highlight, activate, with_bookmark) {
+function prepareHighlight(highlights, activate, with_bookmark) {
     let highlight_box = document.querySelector('#highlight-box')
-    highlight_box.appendChild(highlight);
-    if (activate) {highlight_box.classList.add('activated')}
-    if (with_bookmark) {highlight_box.classList.add('with_bookmark');}
+    let container = document.createElement('div')
+    highlights.forEach((h) => {
+        let line = h.parentNode
+        h.setAttribute('emoindex', emoindex(line.querySelector('linemeta')))
+
+        let branch = line.parentNode
+        if (branch.tagName == 'BRANCH') {h.branch = branch}
+
+        if (h.classList.contains('bookmark')) {
+            h.addEventListener('click', (e) => proceedBookmark(highlight_box, h))
+        } else if (h.classList.contains('option')) {
+            h.addEventListener('click', (e) => proceedOption(h))
+        }
+
+        container.appendChild(h)
+
+    })
+    if (highlights.length > 1) {
+        container.classList.add('options')
+        container.children[0].classList.add('left')
+        container.children[1].classList.add('right')
+    }
+
+    highlight_box.appendChild(container);
+}
+
+function cleanHighlight() {
+    let highlight_box = document.querySelector('#highlight-box')
+    highlight_box.removeChild(highlight_box.children[0]);
+}
+
+function proceedBookmark(highlight_box, bm) {
+    animate_flyaway(highlight_box)
+    sound('absorb3').play()
+    nextline(true, false)
+    cleanHighlight()
+}
+
+function proceedOption(option) {
+    current_branch = option.branch
+    nextline(true)
+    cleanHighlight()
 }
 
 let chatProceed = () => processHighlight(true)
 
 function initiateHighlight() {
     let highlight_box = document.querySelector('#highlight-box')
-    highlight_box.addEventListener('click', chatProceed)
+    /*highlight_box.addEventListener('click', chatProceed)
     document.body.onkeyup = (e) => {
         if (e.code == 'Space') {chatProceed()}
-    }
-    let highlight = getNextLine().querySelector(".highlight")
-    prepareHighlight(highlight, true, false)
+    }*/
+    nextline()
 }
 
 function setBubbleColor(left, color) {
@@ -63,48 +112,48 @@ function initializeDialogue() {
 }
 
 
-function nextline(force_instant) {
-    var currentLine = getNextLine();
+function nextline(force_instant, show_bubble=true) {
+    let currentLine = getNextLine()
+
     if (currentLine) {
 
+        currentLine.classList.add('shown')
+
+        let delay = 0
+
+        if (currentLine.classList.contains('pause')) {
+            delay = 1000;
+        }
+        
+        if (currentLine.classList.contains('typing')) {
+            delay = pauseDelay;
+
+            typing_bubble = document.createElement('div');
+            typing_bubble.classList.add('bubble');
+            typing_bubble.appendChild(document.querySelector('components .wave').cloneNode(true));
+
+            prepareHighlight([typing_bubble], false, false);
+
+            setTimeout(() => {
+                cleanHighlight(false, false);
+            }, pauseDelay)
+        }
+
+        if (currentLine.classList.contains('vibe')) {
+            let meta = currentLine.querySelector('linemeta')
+            sendVibe(meta.getAttribute('vibe'))
+        }
+
         let bubble = currentLine.querySelector('.bubble');
-        let delay = 0;
-
-        if (bubble) {
+        if (show_bubble && bubble) {
             delay = showBubble(currentLine, force_instant);
-        } else {
-            currentLine.classList.add('shown');
-
-            if (currentLine.classList.contains('pause')) {
-                delay = 1000;
-            }
-            
-            if (currentLine.classList.contains('typing')) {
-
-                delay = pauseDelay;
-
-                typing_bubble = document.createElement('div');
-                typing_bubble.classList.add('bubble');
-                typing_bubble.appendChild(document.querySelector('components .wave').cloneNode(true));
-
-                prepareHighlight(typing_bubble, false, false);
-
-                setTimeout(() => {
-                    processHighlight(false, false);
-                }, pauseDelay)
-            }
-
-            if (currentLine.classList.contains('vibe')) {
-                let meta = currentLine.querySelector('linemeta')
-                sendVibe(meta.getAttribute('vibe'))
-            }
         }
 
         setTimeout(() => {let nextLine = getNextLine();
                         if (nextLine) {
-                            let highlight = nextLine.querySelector(".highlight");
-                            if (highlight) {
-                                prepareHighlight(highlight, true, highlight.classList.contains('bookmark'));
+                            let highlights = nextLine.querySelectorAll(".highlight");
+                            if (highlights.length) {
+                                prepareHighlight(highlights, true, false);
                             } else {
                                 nextline(false);
                             }
@@ -116,6 +165,7 @@ function nextline(force_instant) {
 }
 
 function animate_flyaway(node, duration=500) {
+    console.log(node.parentNode)
     let rect = node.getBoundingClientRect()
     box = node.cloneNode(deep=true)
     box.style.position = 'absolute'
@@ -132,19 +182,6 @@ function animate_flyaway(node, duration=500) {
         box.style.opacity = "0"
     }, 10)
     setTimeout(() => {document.body.removeChild(box)}, duration)
-}
-
-function processHighlight(by_click, go_nextline=true) {
-    let highlight_box = document.querySelector('#highlight-box');
-    if (by_click && !highlight_box.classList.contains('activated')) {return}
-    highlight_box.removeChild(highlight_box.children[0]);
-    if (highlight_box.classList.contains('with_bookmark')) {
-        animate_flyaway(highlight_box)
-        sound('absorb3').play()
-    }
-    highlight_box.classList.remove("activated");
-    highlight_box.classList.remove("with_bookmark");
-    if (go_nextline) {return nextline(by_click)}
 }
 
 function showBubble(currentLine, force_instant) {
@@ -170,8 +207,6 @@ function showBubble(currentLine, force_instant) {
     const positioningDelay = 500;
     const typingDuration = islong ? 1700 : 600;
     const textAppearDelay = 250;
-    
-    currentLine.classList.add('shown')
 
     if (isinstant) {
         setTimeout(() => {lineNode.classList.add("positioned");}, 20)
