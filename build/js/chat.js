@@ -26,14 +26,22 @@ function getNextLine() {
     return document.querySelector('#dialogue > *:not(.shown)')
 }
 
+let player_emotion = null
+function setEmotion(left, emoindex) {
+    if (!left) {player_emotion = emoindex}
+    sendEmotion(left, emoindex)
+}
+
 const autoplayDelay = 350;
 const pauseEmotionDelay = 1600;
 const pauseDelay = 2000;
 const finishSceneDelay = 1000;
 
-function prepareHighlight(highlights, activate, with_bookmark) {
+let optionsContainer = null;
+
+function prepareHighlight(highlights) {
     let highlight_box = document.querySelector('#highlight-box')
-    let container = document.createElement('div')
+    optionsContainer = document.createElement('div')
     highlights.forEach((h) => {
 
         if (h.classList.contains('option')) {
@@ -42,32 +50,67 @@ function prepareHighlight(highlights, activate, with_bookmark) {
 
             if (branch.tagName == 'BRANCH') {h.branch = branch}
 
-            option_emotion = emoindex(line.querySelector('linemeta'))
-            h.addEventListener('mouseover', (e) => sendEmotion(false, option_emotion))
-            h.addEventListener('mouseout', (e) => sendEmotion(false, player_emotion))
+            h.emotion = emoindex(line.querySelector('linemeta'))
+            h.addEventListener('mouseover', (e) => selectOption(h))
+            h.addEventListener('mouseout', (e) => selectOption(null))
             h.addEventListener('click', (e) => proceedOption(h))
         } else if (h.classList.contains('bookmark')) {
-            h.addEventListener('click', (e) => proceedBookmark(highlight_box, h))
+            h.addEventListener('click', (e) => proceedBookmark(highlight_box))
         } 
 
-        container.appendChild(h)
+        optionsContainer.appendChild(h)
 
     })
     if (highlights.length > 1) {
-        container.classList.add('options')
-        container.children[0].classList.add('left')
-        container.children[1].classList.add('right')
+        optionsContainer.classList.add('options')
+        optionsContainer.children[0].classList.add('left')
+        optionsContainer.children[1].classList.add('right')
     }
 
-    highlight_box.appendChild(container);
+    highlight_box.appendChild(optionsContainer);
 }
 
 function cleanHighlight() {
-    let highlight_box = document.querySelector('#highlight-box')
-    highlight_box.removeChild(highlight_box.children[0]);
+    optionsContainer.parentNode.removeChild(optionsContainer)
+    optionsContainer = null
 }
 
-function proceedBookmark(highlight_box, bm) {
+function selectOption(option_, by_index=false) {
+    let options = optionsContainer.querySelectorAll('.option')
+    options.forEach((o) => {
+        o.classList.remove('selected')
+    })
+
+    let option = null
+    
+    if (by_index) {
+        if (options.length == 1) {
+            option = options[option_-1]
+        } else {
+            option = options[option_]
+        }
+    } else {
+        option = option_
+    }
+
+    if (option) {
+        sendEmotion(false, option.emotion)
+        option.classList.add('selected')
+    } else {
+        sendEmotion(false, player_emotion)
+    }
+}
+
+function selectedOption() {
+    let options = optionsContainer.querySelectorAll('.option,.bookmark')
+    if (options.length == 1) {
+        return options[0]
+    } else {
+        return optionsContainer.querySelector('.option.selected')
+    }
+}
+
+function proceedBookmark(highlight_box) {
     animate_flyaway(highlight_box)
     sound('absorb3').play()
     nextline(true, false)
@@ -80,13 +123,27 @@ function proceedOption(option = null) {
     cleanHighlight()
 }
 
-let chatProceed = () => proceedOption()
+let chatProceed = activateHighlight
+
+function activateHighlight() {
+    if (optionsContainer.classList.contains('options')) {
+        let option = optionsContainer.querySelector('.option.selected')
+        if (option) {proceedOption(option)}
+    } else if (optionsContainer.querySelector('.bookmark')) {
+        proceedBookmark(optionsContainer.parentNode)
+    } else if (optionsContainer.querySelector('.option')) {
+        proceedOption()
+    }
+}
 
 function initiateHighlight() {
-    let highlight_box = document.querySelector('#highlight-box')
     /*highlight_box.addEventListener('click', chatProceed)*/
     document.body.onkeyup = (e) => {
-        if (e.code == 'Space') {chatProceed()}
+        if (optionsContainer) {
+            if (e.code == 'Space') {activateHighlight()}
+            if (e.code == 'ArrowLeft') {selectOption(0, true)}
+            if (e.code == 'ArrowRight') {selectOption(1, true)}
+        }
     }
     nextline()
 }
@@ -109,7 +166,7 @@ function initializeDialogue() {
         preloadBackground(left, speaker)
         setBubbleColor(left, meta.getAttribute('bubble_color'))
         addForeground(left, speaker, meta.getAttribute('foreground'))
-        sendEmotion(left, emoindex(meta))
+        setEmotion(left, emoindex(meta))
     })
     initiateHighlight();
 }
@@ -135,7 +192,7 @@ function nextline(force_instant, show_bubble=true) {
             typing_bubble.classList.add('bubble');
             typing_bubble.appendChild(document.querySelector('components .wave').cloneNode(true));
 
-            prepareHighlight([typing_bubble], false, false);
+            prepareHighlight([typing_bubble]);
 
             setTimeout(() => {
                 cleanHighlight(false, false);
@@ -156,7 +213,7 @@ function nextline(force_instant, show_bubble=true) {
                         if (nextLine) {
                             let highlights = nextLine.querySelectorAll(".highlight");
                             if (highlights.length) {
-                                prepareHighlight(highlights, true, false);
+                                prepareHighlight(highlights);
                             } else {
                                 nextline(false);
                             }
@@ -214,7 +271,7 @@ function showBubble(currentLine, force_instant) {
     if (isinstant) {
         setTimeout(() => {lineNode.classList.add("positioned");}, 20)
         setTimeout(() => {lineNode.classList.add("shown");
-                          sendEmotion(lineNode.classList.contains('left'), emoindex(meta));
+                          setEmotion(lineNode.classList.contains('left'), emoindex(meta));
                          sound('notif').play()}, positioningDelay)
         return positioningDelay;
     }
@@ -248,7 +305,7 @@ function showBubble(currentLine, force_instant) {
         lineNode.classList.add("shown");
     }, positioningDelay)
     
-    setTimeout(() => {sendEmotion(lineNode.classList.contains('left'), emoindex(meta));
+    setTimeout(() => {setEmotion(lineNode.classList.contains('left'), emoindex(meta));
                       bubble.style.width = b_width;
                       bubble.style.height = b_height;
                       lineNode.classList.remove("typing");

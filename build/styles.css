@@ -1,20 +1,13 @@
 html, body {
-    height: 100%;
     margin: 0%;
     padding: 0%;
     height: 100%;
     overflow: hidden;
     user-select: none;
-}
-
-body {
     width: 100%;
     font-family: sans-serif;
     font-weight: 300;
     font-size: 14pt;
-    background: canvas(scene);
-    background-repeat: no-repeat;
-    background-position: 200px 200px;
 }
 
 @media (orientation: portrait) {
@@ -152,7 +145,7 @@ body {
     border: solid 3px rgba(255, 255, 255, 0);
 }
 
-#highlight-box .option:hover {
+#highlight-box .option.selected {
     border-color: rgba(203, 252, 69, 0.7);
     animation: none !important;
     background-color: rgba(203, 252, 69, 0.1);
