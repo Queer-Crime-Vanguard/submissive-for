@@ -26,6 +26,12 @@ function getNextLine() {
     return document.querySelector('#dialogue > *:not(.shown)')
 }
 
+let player_emotion = null
+function setEmotion(left, emoindex) {
+    if (!left) {player_emotion = emoindex}
+    sendEmotion(left, emoindex)
+}
+
 const autoplayDelay = 350;
 const pauseEmotionDelay = 1600;
 const pauseDelay = 2000;
@@ -57,6 +63,18 @@ function prepareHighlight(highlights, activate, with_bookmark) {
     }
 
     highlight_box.appendChild(container);
+}
+
+function selectOption(option, options_container) {
+    options_container.querySelectorAll('.option').forEach((option) => {
+        
+    })
+    if (option) {
+        sendEmotion(false, option_emotion)
+        option.classList.add('selected')
+    } else {
+        sendEmotion(false, player_emotion)
+    }
 }
 
 function cleanHighlight() {
@@ -106,7 +124,7 @@ function initializeDialogue() {
         preloadBackground(left, speaker)
         setBubbleColor(left, meta.getAttribute('bubble_color'))
         addForeground(left, speaker, meta.getAttribute('foreground'))
-        sendEmotion(left, emoindex(meta))
+        setEmotion(left, emoindex(meta))
     })
     initiateHighlight();
 }
@@ -211,7 +229,7 @@ function showBubble(currentLine, force_instant) {
     if (isinstant) {
         setTimeout(() => {lineNode.classList.add("positioned");}, 20)
         setTimeout(() => {lineNode.classList.add("shown");
-                          sendEmotion(lineNode.classList.contains('left'), emoindex(meta));
+                          setEmotion(lineNode.classList.contains('left'), emoindex(meta));
                          sound('notif').play()}, positioningDelay)
         return positioningDelay;
     }
@@ -245,7 +263,7 @@ function showBubble(currentLine, force_instant) {
         lineNode.classList.add("shown");
     }, positioningDelay)
     
-    setTimeout(() => {sendEmotion(lineNode.classList.contains('left'), emoindex(meta));
+    setTimeout(() => {setEmotion(lineNode.classList.contains('left'), emoindex(meta));
                       bubble.style.width = b_width;
                       bubble.style.height = b_height;
                       lineNode.classList.remove("typing");
