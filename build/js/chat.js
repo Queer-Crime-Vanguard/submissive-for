@@ -71,20 +71,20 @@ function proceedBookmark(highlight_box, bm) {
     cleanHighlight()
 }
 
-function proceedOption(option) {
-    current_branch = option.branch
+function proceedOption(option = null) {
+    if (option) {current_branch = option.branch} 
     nextline(true)
     cleanHighlight()
 }
 
-let chatProceed = () => processHighlight(true)
+let chatProceed = () => proceedOption()
 
 function initiateHighlight() {
     let highlight_box = document.querySelector('#highlight-box')
-    /*highlight_box.addEventListener('click', chatProceed)
+    /*highlight_box.addEventListener('click', chatProceed)*/
     document.body.onkeyup = (e) => {
         if (e.code == 'Space') {chatProceed()}
-    }*/
+    }
     nextline()
 }
 
@@ -170,7 +170,7 @@ function animate_flyaway(node, duration=500) {
     box.style.position = 'absolute'
     box.style.width = rect.right - rect.left
     box.style.height = rect.bottom - rect.tops
-    box.style.margin = "0";
+    box.style.margin = "0"
     box.style.left = rect.x + "px"
     box.style.top = rect.y + "px"
     box.style.transition = "all " + duration + "ms" + " ease-out"
