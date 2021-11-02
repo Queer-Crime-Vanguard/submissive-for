@@ -126,14 +126,14 @@ def build(meta: Dict[str, str], template: str, raw_lines: Sequence[str]):
                 linedata = line_extract(line)
             except Exception as e:
                 e.parsing = True
-                e.line_number = i
+                e.line_number = i+1
                 raise e
             
             try:
                 built_line = line_build(meta, **linedata)
             except Exception as e:
                 e.parsing = False
-                e.line_number = i
+                e.line_number = i+1
                 raise e
 
         built_lines.append(built_line)

@@ -41,17 +41,20 @@ function prepareHighlight(highlights, activate, with_bookmark) {
     let highlight_box = document.querySelector('#highlight-box')
     let container = document.createElement('div')
     highlights.forEach((h) => {
-        let line = h.parentNode
-        h.setAttribute('emoindex', emoindex(line.querySelector('linemeta')))
 
-        let branch = line.parentNode
-        if (branch.tagName == 'BRANCH') {h.branch = branch}
+        if (h.classList.contains('option')) {
+            let line = h.parentNode
+            let branch = line.parentNode
 
-        if (h.classList.contains('bookmark')) {
-            h.addEventListener('click', (e) => proceedBookmark(highlight_box, h))
-        } else if (h.classList.contains('option')) {
+            if (branch.tagName == 'BRANCH') {h.branch = branch}
+
+            option_emotion = emoindex(line.querySelector('linemeta'))
+            h.addEventListener('mouseover', (e) => sendEmotion(false, option_emotion))
+            h.addEventListener('mouseout', (e) => sendEmotion(false, player_emotion))
             h.addEventListener('click', (e) => proceedOption(h))
-        }
+        } else if (h.classList.contains('bookmark')) {
+            h.addEventListener('click', (e) => proceedBookmark(highlight_box, h))
+        } 
 
         container.appendChild(h)
 
@@ -89,20 +92,20 @@ function proceedBookmark(highlight_box, bm) {
     cleanHighlight()
 }
 
-function proceedOption(option) {
-    current_branch = option.branch
+function proceedOption(option = null) {
+    if (option) {current_branch = option.branch} 
     nextline(true)
     cleanHighlight()
 }
 
-let chatProceed = () => processHighlight(true)
+let chatProceed = () => proceedOption()
 
 function initiateHighlight() {
     let highlight_box = document.querySelector('#highlight-box')
-    /*highlight_box.addEventListener('click', chatProceed)
+    /*highlight_box.addEventListener('click', chatProceed)*/
     document.body.onkeyup = (e) => {
         if (e.code == 'Space') {chatProceed()}
-    }*/
+    }
     nextline()
 }
 
@@ -183,14 +186,14 @@ function nextline(force_instant, show_bubble=true) {
 }
 
 function animate_flyaway(node, duration=500) {
-    console.log(node.parentNode)
     let rect = node.getBoundingClientRect()
     box = node.cloneNode(deep=true)
     box.style.position = 'absolute'
     box.style.width = rect.right - rect.left
     box.style.height = rect.bottom - rect.tops
-    box.style.left = rect.left
-    box.style.top = rect.top
+    box.style.margin = "0"
+    box.style.left = rect.x + "px"
+    box.style.top = rect.y + "px"
     box.style.transition = "all " + duration + "ms" + " ease-out"
     box.style.opacity = "1"
     box.style.transform = "translateX(0)"
