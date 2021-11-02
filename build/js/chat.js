@@ -35,17 +35,20 @@ function prepareHighlight(highlights, activate, with_bookmark) {
     let highlight_box = document.querySelector('#highlight-box')
     let container = document.createElement('div')
     highlights.forEach((h) => {
-        let line = h.parentNode
-        h.setAttribute('emoindex', emoindex(line.querySelector('linemeta')))
 
-        let branch = line.parentNode
-        if (branch.tagName == 'BRANCH') {h.branch = branch}
+        if (h.classList.contains('option')) {
+            let line = h.parentNode
+            let branch = line.parentNode
 
-        if (h.classList.contains('bookmark')) {
-            h.addEventListener('click', (e) => proceedBookmark(highlight_box, h))
-        } else if (h.classList.contains('option')) {
+            if (branch.tagName == 'BRANCH') {h.branch = branch}
+
+            option_emotion = emoindex(line.querySelector('linemeta'))
+            h.addEventListener('mouseover', (e) => sendEmotion(false, option_emotion))
+            h.addEventListener('mouseout', (e) => sendEmotion(false, player_emotion))
             h.addEventListener('click', (e) => proceedOption(h))
-        }
+        } else if (h.classList.contains('bookmark')) {
+            h.addEventListener('click', (e) => proceedBookmark(highlight_box, h))
+        } 
 
         container.appendChild(h)
 
