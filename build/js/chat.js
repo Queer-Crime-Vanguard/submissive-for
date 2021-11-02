@@ -165,14 +165,14 @@ function nextline(force_instant, show_bubble=true) {
 }
 
 function animate_flyaway(node, duration=500) {
-    console.log(node.parentNode)
     let rect = node.getBoundingClientRect()
     box = node.cloneNode(deep=true)
     box.style.position = 'absolute'
     box.style.width = rect.right - rect.left
     box.style.height = rect.bottom - rect.tops
-    box.style.left = rect.left
-    box.style.top = rect.top
+    box.style.margin = "0";
+    box.style.left = rect.x + "px"
+    box.style.top = rect.y + "px"
     box.style.transition = "all " + duration + "ms" + " ease-out"
     box.style.opacity = "1"
     box.style.transform = "translateX(0)"
