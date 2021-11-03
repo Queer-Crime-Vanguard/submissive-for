@@ -269,10 +269,14 @@ function showBubble(currentLine, force_instant) {
     const textAppearDelay = 250;
 
     if (isinstant) {
-        setTimeout(() => {lineNode.classList.add("positioned");}, 20)
-        setTimeout(() => {lineNode.classList.add("shown");
-                          setEmotion(lineNode.classList.contains('left'), emoindex(meta));
-                         sound('notif').play()}, positioningDelay)
+        setTimeout(() => {lineNode.classList.add("positioned")
+                          setEmotion(lineNode.classList.contains('left'), emoindex(meta))
+                          sound('notif').play()
+                         },
+                        microDelay)
+        setTimeout(() => {
+                         lineNode.classList.add("shown");
+                        }, positioningDelay)
         return positioningDelay;
     }
     
@@ -296,6 +300,7 @@ function showBubble(currentLine, force_instant) {
 
     setTimeout(() => {lineNode.classList.add("positioned");
                       sound('typing').play()
+                      setEmotion(lineNode.classList.contains('left'), emoindex(meta))
                       var typing_bubble_style = window.getComputedStyle(bubble, null);
                       bubble.style.width = typing_bubble_style.getPropertyValue("width");
                       bubble.style.height = typing_bubble_style.getPropertyValue("height");
@@ -305,8 +310,7 @@ function showBubble(currentLine, force_instant) {
         lineNode.classList.add("shown");
     }, positioningDelay)
     
-    setTimeout(() => {setEmotion(lineNode.classList.contains('left'), emoindex(meta));
-                      bubble.style.width = b_width;
+    setTimeout(() => {bubble.style.width = b_width;
                       bubble.style.height = b_height;
                       lineNode.classList.remove("typing");
                       sound('notif').play()
