@@ -11,7 +11,7 @@
   <link rel="shortcut icon" href="handsoff_logo_favicon.png" type="image/x-icon"/>
 </head>
 
-<body onload="startGradient(); loadSceneList(); playMusic('intro90')">
+<body onload="startGradient(); loadSceneList()">
   
   <link rel="stylesheet" href="styles.css">
   <script type="text/javascript" src="js/assembly.js"></script>
@@ -99,7 +99,7 @@
 
     function hitlogo() {
         finishScene()
-        setTimeout(() => {playMusic('intro90')}, 100)
+        /*setTimeout(() => {playMusic('intro90')}, 100)*/
     }
 
 class GradientAnimation {
