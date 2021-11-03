@@ -142,9 +142,34 @@
 
     let fail_meter;
     let fail;
+
+    letters = []
+
+    let positionate_letters = () => {
+        let n = 0
+
+        let spiral = Math.min(width, height)/2;
+
+        const spiral_turns = 6;
+        const start_offset = 10;
+
+
+        letters.forEach((l) => {
+            n += 1
+            let r = spiral*((n+start_offset)/(total_letters+start_offset));
+            let d = (n/total_letters)*2*Math.PI*spiral_turns;
+            let home_pos_x = width/2 + r*Math.cos(d);
+            let home_pos_y = height/2 + r*Math.sin(d);
+
+            l.home_pos_x = home_pos_x
+            l.pos_x = home_pos_x
+
+            l.home_pos_y = home_pos_y
+            l.pos_y = home_pos_y
+        })
+    }
     
     let loadgame = () => {
-        letters = []
         fail = 0;
         fail_meter = 0;
 
@@ -155,20 +180,16 @@
         // generate letters
 
         let spiral = Math.min(width, height)/2;
-        const spiral_turns = 6;
-        const start_offset = 10;
+
 
         let generate_letter = (char) => {
             let i = alphabet.indexOf(char);
             let sprite = new Sprite(alph_tiles_img, 11, 3, total_alph);
             sprite.setFrame(i);
 
-            // spiral positioning
-            let n = letters.length;
-            let r = spiral*((n+start_offset)/(total_letters+start_offset));
-            let d = (n/total_letters)*2*Math.PI*spiral_turns;
-            let home_pos_x = width/2 + r*Math.cos(d);
-            let home_pos_y = height/2 + r*Math.sin(d);
+            // start positioning
+            let home_pos_x = -100
+            let home_pos_y = -100
             
             letters.push({
                 char,
@@ -181,6 +202,8 @@
                 noise : new perlinNoise3d(),
                 'display': 'normal'
             })
+
+            positionate_letters()
         }
 
         // collect all letters which would be generated
@@ -395,7 +418,11 @@
 
         lottie.resize()
 
-        start();
+        positionate_letters()
+    })
+
+    window.addEventListener("load", () => {
+        start()
     })
 
     // add canvas to DOM
