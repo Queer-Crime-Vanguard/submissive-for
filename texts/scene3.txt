@@ -1,11 +1,11 @@
 Лия: #!init #shocked #!foreground:laptop
 Наиля: #!init #neutral
-Лия: [Привет!] Привет! #neutral
+Лия: [Привет!] #neutral
 Лия: запоздало тебя поздравляю с рождением ребенка #neutral
 Наиля: Привет! #neutral
 Наиля: Спасибо) #happy
 Наиля: давно не слышала ничего от тебя #neutral
-Лия: [как ты?] как ты? #neutral
+Лия: [как ты?] #neutral
 Наиля: да нормально #reading
 Лия: куда сейчас клонишься? #neutral
 : #!vibe:calm
