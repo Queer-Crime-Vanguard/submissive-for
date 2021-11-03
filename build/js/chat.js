@@ -269,12 +269,14 @@ function showBubble(currentLine, force_instant) {
     const textAppearDelay = 250;
 
     if (isinstant) {
-        setTimeout(() => {lineNode.classList.add("positioned");
-                          setEmotion(lineNode.classList.contains('left'), emoindex(meta));
+        setTimeout(() => {lineNode.classList.add("positioned")
+                          setEmotion(lineNode.classList.contains('left'), emoindex(meta))
+                          sound('notif').play()
                          },
                         microDelay)
-        setTimeout(() => {lineNode.classList.add("shown");
-                         sound('notif').play()}, positioningDelay)
+        setTimeout(() => {
+                         lineNode.classList.add("shown");
+                        }, positioningDelay)
         return positioningDelay;
     }
     
