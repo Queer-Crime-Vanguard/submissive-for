@@ -1,0 +1,44 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>HandsOff Example</title>
+  <meta name="description" content="HandsOff game page">
+  <meta name="author" content="HandsOff">
+</head>
+
+<body onload="setBg(false); initializeDialogue(); setTrack(); startVibe()" class="audio animation background" onclick="chatProceed()">
+  <link rel="stylesheet" href="styles.css">
+  <script type="text/javascript" src="js/track.js"></script>
+  <script type="text/javascript" src="js/utils.js"></script>
+  <script type="text/javascript" src="js/sound.js"></script>
+  <script type="text/javascript" src="js/music.js"></script>
+  <script type="text/javascript" src="js/chat.js"></script>
+  <script type="text/javascript" src="js/bg_scene.js"></script>
+  <script type="text/javascript" src="js/finish_scene.js"></script>
+  
+  <div id="dialogue-box" class="single">
+    <div id="bubble-box">
+      <div class="placeholder"></div>
+    </div>
+    <div id="dialogue">
+      <div class="line right init foreground">  <linemeta speaker="s" emotion="neutral" foreground="laptop" bubble_color="ffe7ec"></linemeta></div>
+      <div class="line left init">  <linemeta bubble_color="FFF9EF"></linemeta></div>
+      <div class="line left "><div class="highlight "><p></p></div> <div class="bubble"><p>Продолжение следует...</p></div> <linemeta speaker="s" emotion="neutral"></linemeta></div>
+      <div class="line left "><div class="highlight "><p></p></div> <div class="bubble"><p>Спасибо, что стали бета-тестером Игры!</p></div> <linemeta speaker="s" emotion="neutral"></linemeta></div>
+      <div class="line left "><div class="highlight "><p></p></div> <div class="bubble"><p>Все замечания и соображения пишите в телеграм создателям @nevinonevata.</p></div> <linemeta speaker="s" emotion="neutral"></linemeta></div>
+    </div>
+    <div id="highlight-box" ></div>
+  </div>
+  
+  <components>
+    <div class="wave">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </components>
+</body>
+</html>
