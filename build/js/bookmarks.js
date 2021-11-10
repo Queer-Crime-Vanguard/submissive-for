@@ -1,30 +1,39 @@
+let index = -1
 let refs = new Array()
+
+function addRef(ref) {
+    ref.classList.add('hidden')
+    refs.push(ref)
+    if (refs.length == 1) {showNext()}
+}
+
+function showNext() {
+    index += 1
+    let nextRef = refs[index]
+    if (nextRef)
+}
 
 class Reference extends HTMLElement {
     constructor() {
         super();
 
         setTimeout(() => {
-            console.log("pew")
             const template = document.body
-                .querySelector("template")
+                .querySelector("template#bookmark-reference")
                 .content;
+            addRef(this)
             const shadowRoot = this.attachShadow({mode: 'open'})
                 .appendChild(template.cloneNode(true));
         }, 100)
 
-        refs.push(this);
         
         this.addEventListener("click", () => {
-            if (this.classList.contains('open') || refs.some((e) => {return e.classList.contains('click-block')})) {
-                
-            } else {
+            if (this.classList.contains('open') || refs.some((e) => {return e.classList.contains('click-block')})) {} else {
                 this.classList.add('open')
                 this.shadowRoot.querySelector('.bookmark-reference').classList.add('open')
                 sparkle(this);
             }
         })
-        console.log("constructed")
   }
 }
 

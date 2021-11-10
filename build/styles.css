@@ -418,6 +418,10 @@ bookmark-reference {
     transition: box-shadow 300ms linear;
 }
 
+bookmark-reference.hidden {
+    display: none;
+}
+
 
 bookmark-reference span {
     display: inline;
