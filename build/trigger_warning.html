@@ -13,14 +13,21 @@
   
   <link rel="stylesheet" href="styles.css">
   <script type="text/javascript" src="js/finish_scene.js"></script>
+  <script type="text/javascript" src="js/tw.js"></script>
   
   <div id="trigger-warning-box">
     <h3>Предупреждение</h3>
     <p>Игра содержит тексты и изображения, связанные с темами ментальных заболеваний, а также сексуализированного и психологического насилия, которые могут иметь негативные последствия для эмоционального, физического здоровья и благополучия.</p>
     
     <div class="button">
-      <div class="checkbox" onclick="finishScene();"></div>
+      <div id="checkbox" onclick="checkAgreement();"></div>
       Я ознакомился_ась с информацией выше и готов_а начать игру
+    </div>
+
+    <div id="next" class="hidden">
+      <div class="button-next" onclick="finishScene();">
+        <p>→</p>
+      </div>
     </div>
   </div>
 

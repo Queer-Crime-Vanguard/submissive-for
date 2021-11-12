@@ -374,13 +374,63 @@ canvas.scene.blured {
 }
 
 #trigger-warning-box .button {
-    margin: 1em 0;
+    margin: 0.5em 0;
     font-weight: 500;
     border: 0.15em solid black;
     padding: 0.25em;
 }
 
-#trigger-warning-box .button .checkbox {
+#next.hidden {
+    opacity: 0;
+}
+
+#next {
+    opacity: 1;
+    transition: opacity 150ms ease-in-out;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.button-next {
+    margin: 0.5em 0;
+    font-weight: 500;
+    border: 0.15em solid black;
+    padding: 0.25em;
+    padding-top: 0;
+    padding-bottom: 0;
+    line-height: 0;
+    display: inline-block;
+    transition: all 150ms ease-in-out;
+    height: 2rem;
+    background-color: black;
+    border: 0.15em double black;
+    color: white;
+    animation: pointout 3.5s ease-in-out infinite;
+}
+
+@keyframes pointout {
+    0%,90% {
+        transform: translateX(0);
+    }
+
+	95% {
+		transform: translateX(-0.1rem);
+	}
+
+	97% {
+		transform: translateX(0.1rem);
+	}
+}
+
+.button-next p {
+    font-size: 2rem;
+    transform: translateY(-1rem);
+    line-height: 0;
+}
+
+
+#trigger-warning-box .button #checkbox {
     display: block;
     width: 1em;
     height: 1em;
@@ -392,7 +442,11 @@ canvas.scene.blured {
     transition: background 150ms ease-in-out;
 }
 
-#trigger-warning-box .button .checkbox:hover {
+#trigger-warning-box .button #checkbox:hover {
+    background-color: black;
+}
+
+#trigger-warning-box .button #checkbox.checked {
     background-color: black;
 }
 
@@ -400,7 +454,7 @@ canvas.minigame {
     margin: 0;
 }
 
-.bookmark-reference-flow {
+#reference-flow {
     display: flex;
     flex-direction: column;
     max-width: 28em;
