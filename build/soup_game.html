@@ -134,7 +134,7 @@
 
     // word mechanics
 
-    let letters = new Array();
+    let letters = new Array
     let total_letters = 20;
 
     let goodWord;
@@ -142,8 +142,6 @@
 
     let fail_meter;
     let fail;
-
-    letters = []
 
     let positionate_letters = () => {
         let n = 0
@@ -173,14 +171,21 @@
         fail = 0;
         fail_meter = 0;
 
+
         // choose words
-        goodWord = goodWords.sample();
+        if (goodWords.length) {
+            goodWord = goodWords[0]
+            goodWords.splice(0, 1)
+        } else {
+            goodWord = ""
+        }
+
+
         found_letters = [];
 
         // generate letters
-
         let spiral = Math.min(width, height)/2;
-
+        letters = new Array
 
         let generate_letter = (char) => {
             let i = alphabet.indexOf(char);
@@ -353,6 +358,7 @@
 
         window.requestAnimationFrame(step);
         loadgame();
+        console.log(goodWord)
         updateUI();
 
         // catch clicks
