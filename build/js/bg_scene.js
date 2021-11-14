@@ -22,16 +22,16 @@ function preloadEmotions(metas) {
 
 function preloadBackground(left, speaker) {
     url = "assets/backgrounds/" + speaker + "_background.svg";
+    let resource
     if (left) {
         background_l.src = url
+        resource = background_l
     } else {
         background_r.src = url
-        background_r.onload = () => {
-            source_width = background_r.width;
-            source_height = background_r.height;
-            console.log('source size', source_width, source_height)
-        }
+        resource = background_r
     }
+
+    resource.onload = () => {console.log('bg'); updateScale()}
 }
 
 function addForeground(left, speaker, name) {
@@ -74,27 +74,33 @@ var cr = document.createElement('canvas');
 let drawLeft = true;
 
 function updateFrame() {
+    updateScale()
+
     c.classList.add('scene');
+
     c.width = width;
     c.height = height;
 
-    cr.width = width/2 + step + stepOffset;
-    cr.height = height;
-    
-    let crx = cr.getContext('2d');
-    crx.beginPath();
-    crx.moveTo(0, height);
-    crx.lineTo(cr.width, height);
-    crx.lineTo(cr.width, 0);
-    crx.lineTo(2*step, 0);
-    crx.closePath();
-    crx.clip();
+    ctx = c.getContext('2d')
 
     if (drawLeft) {
+
+        cr.width = width/2 + step + stepOffset;
+        cr.height = height;
+        
+        crx = cr.getContext('2d');
+        crx.beginPath();
+        crx.moveTo(0, height);
+        crx.lineTo(cr.width, height);
+        crx.lineTo(cr.width, 0);
+        crx.lineTo(2*step, 0);
+        crx.closePath();
+        crx.clip();
+
         cl.width = width/2 + step - stepOffset;
         cl.height = height;
         
-        let clx = cl.getContext('2d');
+        clx = cl.getContext('2d');
         clx.beginPath();
         clx.moveTo(0, 0);
         clx.lineTo(cl.width, 0);
@@ -119,48 +125,43 @@ const drag = 20;
 */
 
 const scale_eps = 0.02
-let scale = (sp_height) => {return (height+2*drag)/sp_height + scale_eps}
+var width_bl, width_sl, width_br, width_sr, t_height
+const wscale = (sp) => {return sp.width*((t_height)/sp.height)}
+
+let ctx, clx, crx
 
 function draw1(totalTime) {
-    let ctx = c.getContext('2d')
-    
-    let crx = cr.getContext('2d')
+    // background
+    ctx.drawImage(background_r, width-width_br, -drag, width_br, t_height);
+    ctx.drawImage(background_r, drag*moveX*0.5 + width-width_br, -drag, width_br, t_height);
 
-    // backgrounds
-    ctx.drawImage(background_r, width-(background_r.width*scale(background_r.height)), -drag, source_width*scale(background_r.height)+drag, height+2*drag);
-    ctx.drawImage(background_r, drag*moveX*0.5 + width-(background_r.width*scale(background_r.height)) + rOffset, -drag, source_width*scale(background_r.height)+drag, height+2*drag);
-
-    // sprites
-    ctx.drawImage(sprite_r, drag*moveX + rOffset - source_width*scale(sprite_r.height)-drag + width, drag*moveY*0.2-drag, source_width*scale(sprite_r.height)+drag, height+2*drag)
+    // sprite
+    ctx.drawImage(sprite_r, drag*moveX-drag + width-width_sr, drag*moveY*0.2-drag, width_sr, t_height)
 
     // foregrounds
     foreground_r.forEach((f) => {
-        ctx.drawImage(f, drag*moveX*1.3 + width-(background_r.width*scale(background_r.height)) + rOffset, -drag, source_width*scale(background_r.height)+drag, height+2*drag);
+        ctx.drawImage(f, drag*moveX*1.3 + width-width_br + rOffset, -drag, width_br, t_height);
     })
 }
 
 const drag_intensity = 0.001;
 
 function draw2(totalTime) {
-    let ctx = c.getContext('2d')
     
-    let clx = cl.getContext('2d')
-    let crx = cr.getContext('2d')
-
     // backgrounds
-    clx.drawImage(background_l, -drag*moveX*0.5 - drag - lOffset, - drag, source_width*scale(background_l.height)+drag, height+2*drag);
-    crx.drawImage(background_r, drag*moveX*0.5 + cr.width-(background_r.width*scale(background_r.height)) + rOffset, -drag, source_width*scale(background_r.height)+drag, height+2*drag);
+    clx.drawImage(background_l, -drag*moveX*0.5 - drag - lOffset, - drag, width_bl, t_height);
+    crx.drawImage(background_r, drag*moveX*0.5 + cr.width-width_br + rOffset, -drag, width_br, t_height);
 
     // sprites
-    clx.drawImage(sprite_l, -drag*moveX - drag - lOffset, -drag*moveY*0.2 - drag, sprite_l.width*scale(sprite_l.height)+drag, height+2*drag);
-    crx.drawImage(sprite_r, drag*moveX + rOffset - source_width*scale(sprite_r.height)-drag + cr.width, drag*moveY*0.2-drag, source_width*scale(sprite_r.height)+drag, height+2*drag)
+    clx.drawImage(sprite_l, -drag*moveX - drag - lOffset, -drag*moveY*0.2 - drag, width_sl, t_height);
+    crx.drawImage(sprite_r, drag*moveX + rOffset - width_sr + cr.width, drag*moveY*0.2-drag, width_sr, t_height)
 
     // foregrounds
     foreground_l.forEach((f) => {
-        clx.drawImage(f, -drag*moveX*1.3 - drag - lOffset, - drag, source_width*scale(background_l.height)+drag, height+2*drag);
+        clx.drawImage(f, -drag*moveX*1.3 - drag - lOffset, - drag, width_bl, t_height);
     })
     foreground_r.forEach((f) => {
-        crx.drawImage(f, drag*moveX*1.3 + cr.width-(background_r.width*scale(background_r.height)) + rOffset, -drag, source_width*scale(background_r.height)+drag, height+2*drag);
+        crx.drawImage(f, drag*moveX*1.3 + cr.width-width_br + rOffset, -drag, width_br, t_height);
     })
 
     // draw frames
@@ -174,6 +175,7 @@ function draw2(totalTime) {
     ctx.lineWidth = dividerThickness;
     ctx.lineTo(width/2 - step, height);
     ctx.stroke();
+
 }
 
 let draw = null;
@@ -226,9 +228,19 @@ function animate(onProgress, duration) {
 }
 */
 
+function updateScale() {
+    updateWindowParams()
+    t_height = height + 2*drag
+    width_br = wscale(background_r)
+    width_bl = wscale(background_l)
+    width_sr = wscale(sprite_r)
+    width_sl = wscale(sprite_l)
+}
+
 function updateEmotion(left, emoIndex) {
     img = getEmotion(emoIndex);
-    console.log('emotion update', left, emoIndex, img);
+    updateScale()
+    console.log('emotion update', emoIndex);
     if (left) {
         sprite_l = img;
         /*
