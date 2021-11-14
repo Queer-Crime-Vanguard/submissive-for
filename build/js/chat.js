@@ -27,9 +27,9 @@ function getNextLine() {
 }
 
 let player_emotion = null
-function setEmotion(left, emoindex) {
+function setEmotion(left, emoindex, jump = false) {
     if (!left) {player_emotion = emoindex}
-    sendEmotion(left, emoindex)
+    sendEmotion(left, emoindex, jump)
 }
 
 const autoplayDelay = 350;
@@ -268,9 +268,11 @@ function showBubble(currentLine, force_instant) {
     const typingDuration = islong ? 1700 : 600;
     const textAppearDelay = 250;
 
+    let jump = lineNode.classList.contains('jump')
+
     if (isinstant) {
         setTimeout(() => {lineNode.classList.add("positioned")
-                          setEmotion(lineNode.classList.contains('left'), emoindex(meta))
+                          setEmotion(lineNode.classList.contains('left'), emoindex(meta), jump)
                           sound('notif').play()
                          },
                         microDelay)
@@ -300,7 +302,7 @@ function showBubble(currentLine, force_instant) {
 
     setTimeout(() => {lineNode.classList.add("positioned");
                       sound('typing').play()
-                      setEmotion(lineNode.classList.contains('left'), emoindex(meta))
+                      setEmotion(lineNode.classList.contains('left'), emoindex(meta), jump)
                       var typing_bubble_style = window.getComputedStyle(bubble, null);
                       bubble.style.width = typing_bubble_style.getPropertyValue("width");
                       bubble.style.height = typing_bubble_style.getPropertyValue("height");

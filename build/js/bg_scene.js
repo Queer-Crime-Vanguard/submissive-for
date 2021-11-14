@@ -67,21 +67,23 @@ const offset_delay = 300;
 var lOffset = side_offset;
 var rOffset = side_offset;
 
+let lj = 0, rj = 0
+
 var c = document.createElement('canvas');
+c.classList.add('scene');
+
 var cl = document.createElement('canvas');
 var cr = document.createElement('canvas');
 
 let drawLeft = true;
 
 function updateFrame() {
-    updateScale()
-
-    c.classList.add('scene');
-
     c.width = width;
     c.height = height;
 
     ctx = c.getContext('2d')
+
+    updateScale()
 
     if (drawLeft) {
 
@@ -153,8 +155,8 @@ function draw2(totalTime) {
     crx.drawImage(background_r, drag*moveX*0.5 + cr.width-width_br + rOffset, -drag, width_br, t_height);
 
     // sprites
-    clx.drawImage(sprite_l, -drag*moveX - drag - lOffset, -drag*moveY*0.2 - drag, width_sl, t_height);
-    crx.drawImage(sprite_r, drag*moveX + rOffset - width_sr + cr.width, drag*moveY*0.2-drag, width_sr, t_height)
+    clx.drawImage(sprite_l, -drag*moveX - drag - lOffset, -lj + -drag*moveY*0.2 - drag, width_sl, t_height);
+    crx.drawImage(sprite_r, drag*moveX + rOffset - width_sr + cr.width, -rj + drag*moveY*0.2-drag, width_sr, t_height)
 
     // foregrounds
     foreground_l.forEach((f) => {
@@ -175,7 +177,7 @@ function draw2(totalTime) {
     ctx.lineWidth = dividerThickness;
     ctx.lineTo(width/2 - step, height);
     ctx.stroke();
-
+    
 }
 
 let draw = null;
@@ -206,6 +208,27 @@ function varyValue(value, dest, delay) {
     const v_step = (dest-value)*delay_step/delay;
     let timer = setInterval(() => {value += v_step}, delay_step);
     setTimeout(() => {clearInterval(timer); value = dest;}, delay);
+}
+
+function ajump(left) {
+    const delay_step = 25;
+    const total_delay = 150;
+    const amplitude = 20;
+
+    const steps_amount = total_delay/delay_step;
+    const step = amplitude/steps_amount;
+
+    let timer, end
+
+    if (left) {
+        timer = setInterval(() => {lj += step}, delay_step)
+        end = () => {lj = 0}
+    } else {
+        timer = setInterval(() => {rj += step}, delay_step)
+        end = () => {rj = 0}
+    }
+
+    setTimeout(() => {clearInterval(timer); end()}, total_delay)
 }
 
 /*
@@ -277,6 +300,8 @@ function updateEmotion(left, emoIndex) {
 
 document.addEventListener("update_emotion", (e) => {
     updateEmotion(e.detail.isleft, e.detail.emotion_index);
+    console.log(e.detail)
+    if (e.detail.jump) {ajump(e.detail.isleft)}
 })
 
 function updateBG(totalTime) {

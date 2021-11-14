@@ -3,7 +3,7 @@
 Лия: Зоя, [привет!] #reading
 Зоя: Привет, Лия! #neutral
 Лия: а ты уже видела расследование про домогательства? #puzzled
-Лия: <a is="ext-ref">https://doxajournal.ru/uni/harassment/msu_faculty_of_philology</a> #!instant #pissed_2
+Лия: <a is="ext-ref">https://doxajournal.ru/uni/harassment/msu_faculty_of_philology</a> #!instant #!jump #pissed_2
 Зоя: На филфаке? #puzzled
 Зоя: А, да, оно #!instant #sad_2
 Лия: [ага] #!instant #puzzled
@@ -14,7 +14,7 @@
 -
 Лия: [это важный шаг] #!type:mad #wonders
 -}
-Лия: но к сожаоению не все их поддерживают #pissed_2
+Лия: но к сожаоению не все их поддерживают #!jump #pissed_2
 Лия: к сожалению* #!instant #pissed_2
 : #!vibe:nervous
 Лия: многие преподаватели на стороне этого профессора #pissed
@@ -22,7 +22,7 @@
 Зоя: Где посмотреть?! #!instant #puzzled
 Лия: [под постом] #pissed_2
 Лия: профессора #!instant #pissed
-Лия: он написал, что вся статьтя клевета #mad
+Лия: он написал, что вся статьтя клевета #!jump #mad
 Лия: статья* #!instant #mad
 Зоя: Но там против него есть доказательства... #puzzled
 Лия: комментаторов это не интересует #pissed_2

@@ -4,8 +4,8 @@ function emoindex(meta) {
     return speaker+':'+emotion;
 }
 
-function sendEmotion(isleft, emoindex) {
-    ev = new CustomEvent('update_emotion', {'detail': {'isleft': isleft, 'emotion_index': emoindex}})
+function sendEmotion(isleft, emoindex, jump = false) {
+    ev = new CustomEvent('update_emotion', {'detail': {isleft, 'emotion_index': emoindex, jump}})
     document.dispatchEvent(ev);
 }
 
