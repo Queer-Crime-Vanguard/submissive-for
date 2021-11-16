@@ -7,8 +7,7 @@ let background_l = new Image(),
 let foreground_l = new Array(),
     foreground_r = new Array()
 
-let source_width = 1;
-let source_height = 1;
+let overlapMode = false;
 
 let emotions = {};
 
@@ -57,12 +56,12 @@ function getEmotion(emoind) {
 
 const dividerThickness = 4;
 var step = 30;
-var stepOffset = 0;
 
-var stepOffsetAmp = 80;
+let stepOffset = 0;
+let stepOffsetAmp
+const offset_delay = 600;
 
 const side_offset = 60;
-const offset_delay = 300;
 
 var lOffset = side_offset;
 var rOffset = side_offset;
@@ -71,9 +70,9 @@ let lj = 0, rj = 0
 
 var c = document.createElement('canvas');
 c.classList.add('scene');
-
 var cl = document.createElement('canvas');
 var cr = document.createElement('canvas');
+
 
 let drawLeft = true;
 
@@ -87,7 +86,7 @@ function updateFrame() {
 
     if (drawLeft) {
 
-        cr.width = width/2 + step + stepOffset;
+        cr.width = width/2 + step - stepOffset;
         cr.height = height;
         
         crx = cr.getContext('2d');
@@ -99,7 +98,7 @@ function updateFrame() {
         crx.closePath();
         crx.clip();
 
-        cl.width = width/2 + step - stepOffset;
+        cl.width = width/2 + step + stepOffset;
         cl.height = height;
         
         clx = cl.getContext('2d');
@@ -142,7 +141,7 @@ function draw1(totalTime) {
 
     // foregrounds
     foreground_r.forEach((f) => {
-        ctx.drawImage(f, drag*moveX*1.3 + width-width_br + rOffset, -drag, width_br, t_height);
+        ctx.drawImage(f, drag*moveX*1.3 + width-width_br, -drag, width_br, t_height);
     })
 }
 
@@ -172,10 +171,10 @@ function draw2(totalTime) {
 
     // draw nice line
     ctx.beginPath();
-    ctx.moveTo(width/2 + step, 0);
+    ctx.moveTo(width/2 + step + stepOffset, 0);
     ctx.strokeStyle = "#152424";
     ctx.lineWidth = dividerThickness;
-    ctx.lineTo(width/2 - step, height);
+    ctx.lineTo(width/2 - step + stepOffset, height);
     ctx.stroke();
     
 }
@@ -239,7 +238,9 @@ function animate(onProgress, duration) {
 
   });
 }
-*/
+
+
+const spriteCharacterProportion = 0.3
 
 function updateScale() {
     updateWindowParams()
@@ -248,44 +249,58 @@ function updateScale() {
     width_bl = wscale(background_l)
     width_sr = wscale(sprite_r)
     width_sl = wscale(sprite_l)
+
+    let characterNeededSpace = spriteCharacterProportion*width_sr
+    let freeSideSpace = width/2 - step
+
+    stepOffsetAmp = Math.max(characterNeededSpace-freeSideSpace, 0)
+    overlapMode = stepOffsetAmp > 0
 }
+
+let dir = 0
 
 function updateEmotion(left, emoIndex) {
     img = getEmotion(emoIndex);
     updateScale()
     if (left) {
         sprite_l = img;
-        /*
-        stepOffset = -stepOffsetAmp;
-        animate((progress) => {
-            const start = lOffset;
-            const dest = 0;
-            lOffset = start + (dest-start)*progress
-        }, offset_delay);
-        animate((progress) => {
-            const start = rOffset;
-            const dest = side_offset;
-            rOffset = start + (dest-start)*progress
-        }, offset_delay);
-        */
     } else {
         sprite_r = img;
-        /*
-        stepOffset = stepOffsetAmp;
-        animate((progress) => {
-            const start = lOffset;
-            const dest = side_offset;
-            lOffset = start + (dest-start)*progress
-        }, offset_delay);
-        animate((progress) => {
-            const start = rOffset;
-            const dest = 0;
-            rOffset = start + (dest-start)*progress
-        }, offset_delay);
-        */
     }
 }
 
+let prevTime
+
+function moveOffset(totalTime) {
+
+    if (prevTime == null) {prevTime = totalTime}
+
+    let step = 2*stepOffsetAmp*(totalTime - prevTime)/offset_delay
+
+    stepOffset = dir*Math.min(dir*stepOffset+step, stepOffsetAmp)
+
+/*
+    const target = dir*stepOffsetAmp
+
+    const stepAmount = 10;
+    const step = (target-stepOffset)/stepAmount
+
+    let timer = setInterval(() => {
+        stepOffset = dir*Math.min(dir*(stepOffset+step), stepOffsetAmp)
+        updateFrame()
+    }, offset_delay/stepAmount);
+
+    setTimeout(() => {
+        clearInterval(timer)
+        stepOffset = target
+        updateFrame()
+    }, offset_delay)
+    */
+
+    prevTime = totalTime
+
+    updateFrame()
+}
 
 document.addEventListener("update_emotion", (e) => {
     updateEmotion(e.detail.isleft, e.detail.emotion_index);
@@ -295,6 +310,7 @@ document.addEventListener("update_emotion", (e) => {
 
 function updateBG(totalTime) {
     draw(totalTime);
+    if (dir*stepOffset < dir*dir*stepOffsetAmp) {moveOffset(totalTime)}
     areq = requestAnimationFrame(updateBG);
 }
 
