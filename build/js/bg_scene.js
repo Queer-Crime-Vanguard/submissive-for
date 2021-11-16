@@ -10,7 +10,16 @@ let drawLeft
 
 let emotions = {}
 
+let c, cl, cr
+let ctx, clx, crx
+
 function clearBg() {
+    c = document.createElement('canvas')
+    c.setAttribute('id', 'background')
+    c.classList.add('scene')
+    cl = document.createElement('canvas')
+    cr = document.createElement('canvas')
+
     sprite_l = new Image()
     sprite_r = new Image()
 
@@ -80,12 +89,6 @@ var rOffset = side_offset;
 
 let lj = 0, rj = 0
 
-var c = document.createElement('canvas');
-c.classList.add('scene');
-var cl = document.createElement('canvas');
-var cr = document.createElement('canvas');
-
-
 function updateFrame() {
     c.width = width;
     c.height = height;
@@ -139,8 +142,6 @@ const scale_eps = 0.02
 var width_bl, width_sl, width_br, width_sr, t_height
 const wscale = (sp) => {return sp.width*((t_height)/sp.height)}
 
-let ctx, clx, crx
-
 function draw1(totalTime) {
     // background
     ctx.drawImage(background_r, width-width_br, -drag, width_br, t_height);
@@ -192,7 +193,12 @@ function draw2(totalTime) {
 let draw = null;
 
 function initBg(left) {
-    document.body.appendChild(c);
+    let container = document.getElementById("slide-container")
+    if (container == null) {
+        document.body.appendChild(c)
+    } else {
+        container.appendChild(c)
+    }
 
     drawLeft = left
 

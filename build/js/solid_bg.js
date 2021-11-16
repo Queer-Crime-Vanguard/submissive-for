@@ -1,5 +1,3 @@
-var c = document.createElement('canvas');
-
 var frameArray = [];
 var totalFrames = 0;
 var currentFrameIndex = 0;

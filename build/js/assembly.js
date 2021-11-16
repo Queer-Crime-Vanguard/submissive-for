@@ -25,7 +25,7 @@ function insertScene(page_source) {
     /* remove */
     slide_container.removeChild(slide)
     if (body.classList.contains('background')) {
-        let bg = slide_container.querySelector('.background')
+        let bg = document.getElementById('background')
         if (bg) {slide_container.removeChild(bg)}
         clearBg()
     }
