@@ -9,14 +9,16 @@
   <meta name="author" content="HandsOff">
 </head>
 
-<body onload="setBg(false); preloadBackground(false, 's'); sendEmotion(false, 's:neutral'); setTrack()">
+<body onload="setBg(false); preloadBackground(false, 's'); addForeground(false, 's', 'laptop'); sendEmotion(false, 's:neutral'); setTrack()" class="animation background">
   <link rel="stylesheet" href="styles.css">
   <script type="text/javascript" src="js/track.js"></script>
   <script type="text/javascript" src="js/utils.js"></script>
   <script type="text/javascript" src="js/bg_scene.js"></script>
+  <script type="text/javascript" src="js/finish_scene.js"></script>
   <script type="text/javascript" src="js/bookmarks.js" referrerpolicy=""></script>
   
-  <div class="bookmark-reference-flow">
+  <div id="to-next"></div>
+  <div id="reference-flow">
     <bookmark-reference word="харассмент">
       <span slot="term">Виктимблейминг</span>
       <span slot="description">(victim blaming) — обвинение жертвы, перенос на постадавшую_его ответственности за произошедшее.</span>

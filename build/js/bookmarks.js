@@ -1,16 +1,26 @@
-let index = -1
+let index = 0
 let refs = new Array()
 
 function addRef(ref) {
+    index += 1
     ref.classList.add('hidden')
     refs.push(ref)
-    if (refs.length == 1) {showNext()}
 }
 
 function showNext() {
-    index += 1
+    index -= 1
     let nextRef = refs[index]
     if (nextRef)
+        {nextRef.classList.remove('hidden')}
+    else {
+        let b = document.createElement("div")
+        b.classList.add("button-next")
+        b.onclick = finishScene
+        let p = document.createElement("p")
+        p.innerText = "→"
+        b.appendChild(p)
+        document.getElementById("to-next").appendChild(b)
+    }
 }
 
 class Reference extends HTMLElement {
@@ -24,6 +34,7 @@ class Reference extends HTMLElement {
             addRef(this)
             const shadowRoot = this.attachShadow({mode: 'open'})
                 .appendChild(template.cloneNode(true));
+            if (index == document.querySelectorAll("bookmark-reference").length) {showNext()}
         }, 100)
 
         
@@ -31,7 +42,8 @@ class Reference extends HTMLElement {
             if (this.classList.contains('open') || refs.some((e) => {return e.classList.contains('click-block')})) {} else {
                 this.classList.add('open')
                 this.shadowRoot.querySelector('.bookmark-reference').classList.add('open')
-                sparkle(this);
+                sparkle(this)
+                showNext()
             }
         })
   }
