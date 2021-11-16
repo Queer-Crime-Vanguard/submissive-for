@@ -197,17 +197,10 @@ function initBg(left) {
         draw = draw1
     }
     updateBG(0);
-    
 }
 
-function varyValue(value, dest, delay) {
-    const delay_step = 50;
-    const v_step = (dest-value)*delay_step/delay;
-    let timer = setInterval(() => {value += v_step}, delay_step);
-    setTimeout(() => {clearInterval(timer); value = dest;}, delay);
-}
 
-function ajump(left) {
+function animate_jump(left) {
     const delay_step = 25;
     const total_delay = 150;
     const amplitude = 20;
@@ -228,7 +221,7 @@ function ajump(left) {
     setTimeout(() => {clearInterval(timer); end()}, total_delay)
 }
 
-/*
+
 function animate(onProgress, duration) {
 
   let start = performance.now();
@@ -260,7 +253,6 @@ function updateScale() {
 function updateEmotion(left, emoIndex) {
     img = getEmotion(emoIndex);
     updateScale()
-    console.log('emotion update', emoIndex);
     if (left) {
         sprite_l = img;
         /*
@@ -297,8 +289,8 @@ function updateEmotion(left, emoIndex) {
 
 document.addEventListener("update_emotion", (e) => {
     updateEmotion(e.detail.isleft, e.detail.emotion_index);
-    console.log(e.detail)
-    if (e.detail.jump) {ajump(e.detail.isleft)}
+    dir = e.detail.isleft ? 1 : -1
+    if (e.detail.jump) {animate_jump(e.detail.isleft)}
 })
 
 function updateBG(totalTime) {
