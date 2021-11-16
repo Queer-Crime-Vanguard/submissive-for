@@ -501,16 +501,19 @@ bookmark-reference.click-block {
 
 .word-panel {
     position: fixed;
+    display: inline-block;
     z-index: 10;
     top: 2em;
-    left: 25%;
-    width: 50%;
-    height: 4rem;
+    left: 50%;
+    margin-left: -10em;
+    padding-left: 1em;
+    padding-right: 1em;
+    height: 2.5rem;
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 4rem;
     text-align: center;
     font-family: 'Courier New', monospace;
-    font-size: 3rem;
+    font-size: 2rem;
     pointer-events: none;
 }
 

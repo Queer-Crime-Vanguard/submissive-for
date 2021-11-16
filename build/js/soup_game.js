@@ -52,7 +52,7 @@ const spoonRadialSpeed = 0.3;
 
 const alphabet = 'абвгдежзийклмнопрстуфхцчшщъыьэюя';
 
-const goodWords = ['согласие', 'депрессия', 'травма']
+const goodWords = ['виктимблейминг']
 
 // word mechanics
 
@@ -99,7 +99,8 @@ let loadgame = () => {
         goodWord = goodWords[0]
         goodWords.splice(0, 1)
     } else {
-        goodWord = ""
+        setTimeout(finishScene, 1500)
+        return
     }
 
 
@@ -343,7 +344,10 @@ function startSoupGame() {
     word_panel = document.createElement('div');
     word_panel.classList.add('word-panel');
 
-    document.body.appendChild(word_panel);
+    let container = document.querySelector("#slide-container .slide")
+    if (container == null) {container = document.body}
+
+    container.appendChild(word_panel);
 
     // lottie
 
@@ -358,13 +362,6 @@ function startSoupGame() {
         }
     });
 
-    document.body.appendChild(game_canvas)
-    game_canvas.width = width;
-    game_canvas.height = height;
-    positionate_letters()
-
-    start()
-
     window.addEventListener("size_update", () => {
         game_canvas.width = width;
         game_canvas.height = height;
@@ -373,4 +370,12 @@ function startSoupGame() {
 
         positionate_letters()
     })
+
+    game_canvas.width = width;
+    game_canvas.height = height;
+    positionate_letters()
+
+    start()
+
+    container.appendChild(game_canvas)
 }
