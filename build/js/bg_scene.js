@@ -183,13 +183,10 @@ function draw2(totalTime) {
 let draw = null;
 
 function initBg(left) {
-    
-    document.body.style.width = width;
-    document.body.style.height = height;
-
-    //stepOffsetAmp = document.getElementById("dialogue-box").offsetWidth*0.3
-
     document.body.appendChild(c);
+
+    foreground_l = new Array()
+    foreground_r = new Array()
 
     drawLeft = left;
 
