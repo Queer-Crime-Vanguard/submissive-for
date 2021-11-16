@@ -1,15 +1,27 @@
-let sprite_l = new Image(),
-    sprite_r = new Image();
+let sprite_l, sprite_r
 
-let background_l = new Image(),
+let background_l, background_r
+
+let foreground_l, foreground_r
+
+let overlapMode = false
+
+let drawLeft
+
+let emotions = {}
+
+function clearBg() {
+    sprite_l = new Image()
+    sprite_r = new Image()
+
+    background_l = new Image()
     background_r = new Image()
 
-let foreground_l = new Array(),
+    foreground_l = new Array()
     foreground_r = new Array()
+}
 
-let overlapMode = false;
-
-let emotions = {};
+clearBg()
 
 function preloadEmotions(metas) {
     metas.forEach((meta) => {
@@ -73,8 +85,6 @@ c.classList.add('scene');
 var cl = document.createElement('canvas');
 var cr = document.createElement('canvas');
 
-
-let drawLeft = true;
 
 function updateFrame() {
     c.width = width;
@@ -184,10 +194,7 @@ let draw = null;
 function initBg(left) {
     document.body.appendChild(c);
 
-    foreground_l = new Array()
-    foreground_r = new Array()
-
-    drawLeft = left;
+    drawLeft = left
 
     updateFrame();
     if (left) {

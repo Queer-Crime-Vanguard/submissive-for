@@ -27,6 +27,7 @@ function insertScene(page_source) {
     if (body.classList.contains('background')) {
         let bg = slide_container.querySelector('.background')
         if (bg) {slide_container.removeChild(bg)}
+        clearBg()
     }
     if (body.classList.contains('audio')) {document.dispatchEvent(new Event('stop_playing'))}
     if (body.classList.contains('animation')) {window.cancelAnimationFrame(areq)}
