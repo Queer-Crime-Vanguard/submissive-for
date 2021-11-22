@@ -20,6 +20,10 @@ function clearBg() {
     cl = document.createElement('canvas')
     cr = document.createElement('canvas')
 
+        ctx = c.getContext('2d')
+    crx = cr.getContext('2d')
+    clx = cl.getContext('2d')
+
     sprite_l = new Image()
     sprite_r = new Image()
 
@@ -51,7 +55,7 @@ function preloadBackground(left, speaker) {
         resource = background_r
     }
 
-    resource.onload = () => {console.log('bg'); updateScale()}
+    resource.onload = () => {updateScale()}
 }
 
 function addForeground(left, speaker, name) {
@@ -80,7 +84,7 @@ var step = 30;
 
 let stepOffset = 0;
 let stepOffsetAmp
-const offset_delay = 600;
+const offset_delay = 300;
 
 const side_offset = 60;
 
@@ -93,16 +97,13 @@ function updateFrame() {
     c.width = width;
     c.height = height;
 
-    ctx = c.getContext('2d')
-
     updateScale()
 
     if (drawLeft) {
 
         cr.width = width/2 + step - stepOffset;
         cr.height = height;
-        
-        crx = cr.getContext('2d');
+
         crx.beginPath();
         crx.moveTo(0, height);
         crx.lineTo(cr.width, height);
@@ -113,8 +114,7 @@ function updateFrame() {
 
         cl.width = width/2 + step + stepOffset;
         cl.height = height;
-        
-        clx = cl.getContext('2d');
+
         clx.beginPath();
         clx.moveTo(0, 0);
         clx.lineTo(cl.width, 0);
@@ -255,6 +255,8 @@ function animate(onProgress, duration) {
 
 const spriteCharacterProportion = 0.3
 
+let hideLeft = false
+
 function updateScale() {
     updateWindowParams()
     t_height = height + 2*drag
@@ -268,6 +270,8 @@ function updateScale() {
 
     stepOffsetAmp = Math.max(characterNeededSpace-freeSideSpace, 0)
     overlapMode = stepOffsetAmp > 0
+
+    if (hideLeft) {stepOffsetAmp = width/2+step}
 }
 
 let dir = 0
@@ -288,9 +292,9 @@ function moveOffset(totalTime) {
 
     if (prevTime == null) {prevTime = totalTime}
 
-    let step = 2*stepOffsetAmp*(totalTime - prevTime)/offset_delay
+    let _step = stepOffsetAmp*(totalTime - prevTime)/offset_delay
 
-    stepOffset = dir*Math.min(dir*stepOffset+step, stepOffsetAmp)
+    stepOffset = dir*Math.min(dir*stepOffset+_step, stepOffsetAmp)
 
 /*
     const target = dir*stepOffsetAmp
@@ -308,9 +312,7 @@ function moveOffset(totalTime) {
         stepOffset = target
         updateFrame()
     }, offset_delay)
-    */
-
-    prevTime = totalTime
+*/
 
     updateFrame()
 }
@@ -322,8 +324,9 @@ document.addEventListener("update_emotion", (e) => {
 })
 
 function updateBG(totalTime) {
-    draw(totalTime);
     if (dir*stepOffset < dir*dir*stepOffsetAmp) {moveOffset(totalTime)}
+    draw(totalTime)
+    prevTime = totalTime
     areq = requestAnimationFrame(updateBG);
 }
 
