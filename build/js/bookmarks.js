@@ -3,7 +3,6 @@ let refs = new Array()
 
 function addRef(ref) {
     index += 1
-    ref.classList.add('hidden')
     refs.push(ref)
 }
 
@@ -26,27 +25,61 @@ function showNext() {
 class Reference extends HTMLElement {
     constructor() {
         super();
+    }
 
-        setTimeout(() => {
-            const template = document.body
-                .querySelector("template#bookmark-reference")
-                .content;
-            addRef(this)
-            const shadowRoot = this.attachShadow({mode: 'open'})
-                .appendChild(template.cloneNode(true));
-            if (index == document.querySelectorAll("bookmark-reference").length) {showNext()}
-        }, 100)
+    connectedCallback() {
+
+        // current bookmarks
+
+        let word = this.getAttribute('word')
+        let bookmarks = currentBookmarks()
+        let b = bookmarks.filter((b) => {return b.word == word})
+
+        // rendering
+
+        this.classList.add('hidden')
+
+        const template = document.querySelector("template#bookmark-reference").content
+
+        const shadowRoot = this.attachShadow({mode: 'open'})
+            .appendChild(template.cloneNode(true));
 
         
+        // open  
+
+        const open = () => {
+            this.classList.add('open')
+            this.shadowRoot.querySelector('.bookmark-reference').classList.add('open')
+        }
+
+        // update bookmark if found
+       
+        if (b.length > 0) {
+            // visible if first
+            if (index == 0) {this.classList.remove('hidden')}
+
+            // open if researched
+            if (b[0].researched) {open()}
+
+            // count this reference
+            addRef(this)
+        }
+
+        // click event
+
         this.addEventListener("click", () => {
-            if (this.classList.contains('open') || refs.some((e) => {return e.classList.contains('click-block')})) {} else {
-                this.classList.add('open')
-                this.shadowRoot.querySelector('.bookmark-reference').classList.add('open')
+            if (this.classList.contains('open') || refs.some((e) => {return e.classList.contains('click-block')})) {
+                // if already opened or blocked -- ignore
+                showNext()
+            } else {
+                open()
+                researchBookmark(word)
                 sparkle(this)
                 showNext()
             }
         })
-  }
+
+    }
 }
 
 function updateRefs() {
@@ -64,7 +97,7 @@ function randint(b) {
 }
 
 const sparkle_offset = 10;
-const DESTROY_TIMEOUT = 1500;
+const DESTROY_TIMEOUT = 500;
 
 function sparkle(elem) {
     elem.classList.add('click-block')

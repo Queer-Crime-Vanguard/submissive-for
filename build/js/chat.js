@@ -112,6 +112,7 @@ function selectedOption() {
 
 function proceedBookmark(highlight_box) {
     animate_flyaway(highlight_box)
+    rememberBookmark(highlight_box.innerText)
     sound('absorb3').play()
     nextline(true, false)
     cleanHighlight()

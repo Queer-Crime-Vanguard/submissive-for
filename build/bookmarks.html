@@ -15,23 +15,8 @@
   <script type="text/javascript" src="js/utils.js"></script>
   <script type="text/javascript" src="js/bg_scene.js"></script>
   <script type="text/javascript" src="js/finish_scene.js"></script>
+  <script type="text/javascript" src="js/storage.js"></script>
   <script type="text/javascript" src="js/bookmarks.js" referrerpolicy=""></script>
-  
-  <div id="to-next"></div>
-  <div id="reference-flow">
-    <bookmark-reference word="харассмент">
-      <span slot="term">Виктимблейминг</span>
-      <span slot="description">(victim blaming) — обвинение жертвы, перенос на постадавшую_его ответственности за произошедшее.</span>
-    </bookmark-reference>
-    <bookmark-reference word="харассмент">
-      <span slot="term">Согласие</span>
-      <span slot="description"> - добровольное активное и информированное разрешение на сексуальное взаимодействие без злоупотребления доверием, властью или авторитетом, без принуждения или угроз. Согласие также можно отозвать в любой момент.</span>
-    </bookmark-reference>
-    <bookmark-reference word="харассмент">
-      <span slot="term">Травма</span>
-      <span slot="description"> - индивидуальный опыт переживания одного или нескольких событий, обстоятельств, воспринимаемых как небезопасные, а также их неблагоприятные последствия для физического, социального, эмоционального благополучия пострадавшего_ей</span>
-    </bookmark-reference>
-  </div>
 
   <components>
     <template id="bookmark-reference">
@@ -71,10 +56,11 @@
   border: solid 0.1em black;
 }
 
-
 .bookmark-reference .term-container::before {
   content: " ";
 }
+
+
       </style>
       <div class="bookmark-reference">
         <span class="term-container">
@@ -86,5 +72,22 @@
       </div>
     </template>
   </components>
+
+  <div id="to-next"></div>
+  <div id="reference-flow">
+    <bookmark-reference word="виктимблейминг">
+      <span slot="term">Виктимблейминг</span>
+      <span slot="description">(victim blaming) — обвинение жертвы, перенос на постадавшую_его ответственности за произошедшее.</span>
+    </bookmark-reference>
+    <bookmark-reference word="согласие">
+      <span slot="term">Согласие</span>
+      <span slot="description"> - добровольное активное и информированное разрешение на сексуальное взаимодействие без злоупотребления доверием, властью или авторитетом, без принуждения или угроз. Согласие также можно отозвать в любой момент.</span>
+    </bookmark-reference>
+    <bookmark-reference word="травма">
+      <span slot="term">Травма</span>
+      <span slot="description"> - индивидуальный опыт переживания одного или нескольких событий, обстоятельств, воспринимаемых как небезопасные, а также их неблагоприятные последствия для физического, социального, эмоционального благополучия пострадавше_й</span>
+    </bookmark-reference>
+  </div>
+
 </body>
 </html>
