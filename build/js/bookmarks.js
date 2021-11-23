@@ -6,6 +6,9 @@ function addRef(ref) {
     refs.push(ref)
 }
 
+const conrgatsDelay = 1500
+const nextDelay = 2500
+
 function showNext() {
     index -= 1
     let nextRef = refs[index]
@@ -13,15 +16,20 @@ function showNext() {
         document.getElementById("reference-flow").prepend(nextRef)
         nextRef.classList.remove('hidden')
     } else {
-        sparkle(document.body)
-        sendEmotion(false, "s:wonders")
-        let b = document.createElement("div")
-        b.classList.add("button-next")
-        b.onclick = finishScene
-        let p = document.createElement("p")
-        p.innerText = "→"
-        b.appendChild(p)
-        document.getElementById("to-next").appendChild(b)
+        setTimeout(() => {
+            sparkle(document.body)
+            sendEmotion(false, "s:wonders")
+        }, conrgatsDelay)
+
+        setTimeout(() => {
+            let b = document.createElement("div")
+            b.classList.add("button-next")
+            b.onclick = finishScene
+            let p = document.createElement("p")
+            p.innerText = "→"
+            b.appendChild(p)
+            document.getElementById("to-next").appendChild(b)
+        }, nextDelay)
     }
 }
 
@@ -74,7 +82,6 @@ class Reference extends HTMLElement {
         this.addEventListener("click", () => {
             if (this.classList.contains('open') || refs.some((e) => {return e.classList.contains('click-block')})) {
                 // if already opened or blocked -- ignore
-                showNext()
             } else {
                 open()
                 researchBookmark(word)
@@ -101,7 +108,7 @@ function randint(b) {
 }
 
 const sparkle_offset = 10;
-const DESTROY_TIMEOUT = 500;
+const DESTROY_TIMEOUT = 1000;
 
 function sparkle(elem) {
     elem.classList.add('click-block')
