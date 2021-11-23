@@ -9,9 +9,12 @@ function addRef(ref) {
 function showNext() {
     index -= 1
     let nextRef = refs[index]
-    if (nextRef)
-        {nextRef.classList.remove('hidden')}
-    else {
+    if (nextRef) {
+        document.getElementById("reference-flow").prepend(nextRef)
+        nextRef.classList.remove('hidden')
+    } else {
+        sparkle(document.body)
+        sendEmotion(false, "s:wonders")
         let b = document.createElement("div")
         b.classList.add("button-next")
         b.onclick = finishScene
@@ -48,6 +51,7 @@ class Reference extends HTMLElement {
         // open  
 
         const open = () => {
+            this.classList.remove('hidden')
             this.classList.add('open')
             this.shadowRoot.querySelector('.bookmark-reference').classList.add('open')
         }
@@ -55,14 +59,14 @@ class Reference extends HTMLElement {
         // update bookmark if found
        
         if (b.length > 0) {
-            // visible if first
-            if (index == 0) {this.classList.remove('hidden')}
 
-            // open if researched
-            if (b[0].researched) {open()}
-
-            // count this reference
-            addRef(this)
+            if (b[0].researched) {
+                // open if researched
+                open()
+            } else {
+                // count this reference
+                addRef(this)
+            }
         }
 
         // click event
@@ -74,7 +78,7 @@ class Reference extends HTMLElement {
             } else {
                 open()
                 researchBookmark(word)
-                sparkle(this)
+                //sparkle(this)
                 showNext()
             }
         })
