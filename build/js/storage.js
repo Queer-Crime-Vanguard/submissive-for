@@ -21,6 +21,5 @@ function currentBookmarks() {
     if (bookmarks == null) {bookmarks = new Array()}
     let researchedBm = storeGet('researchedBookmarks')
     if (researchedBm == null) {researchedBm = new Array()}
-    console.log(bookmarks, researchedBm)
     return bookmarks.map((word) => {return {word, researched: researchedBm.includes(word)}})
 }
