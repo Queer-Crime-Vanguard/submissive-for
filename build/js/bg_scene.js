@@ -260,6 +260,7 @@ function animate(onProgress, duration) {
 const spriteCharacterProportion = 0.3
 
 let hideLeft = false
+let dir = 0
 
 function updateScale() {
     updateWindowParams()
@@ -274,13 +275,16 @@ function updateScale() {
     let characterNeededSpace = spriteCharacterProportion*width_sr
     let freeSideSpace = width/2 - slopeStep
 
-    stepOffsetAmp = Math.max(characterNeededSpace-freeSideSpace, 0)
+    // step offset amplitude for enough sprite space
+    stepOffsetAmp = Math.max(characterNeededSpace-freeSideSpace, 0) || 0
+
+    // fix stepOffset on updateScale
+    stepOffset = dir*Math.min(Math.abs(stepOffset), stepOffsetAmp)
+
     overlapMode = stepOffsetAmp > 0
 
     if (hideLeft) {stepOffsetAmp = width/2 + slopeStep}
 }
-
-let dir = 0
 
 function updateEmotion(left, emoIndex) {
     img = getEmotion(emoIndex);
