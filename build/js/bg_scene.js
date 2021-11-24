@@ -20,7 +20,7 @@ function clearBg() {
     cl = document.createElement('canvas')
     cr = document.createElement('canvas')
 
-        ctx = c.getContext('2d')
+    ctx = c.getContext('2d')
     crx = cr.getContext('2d')
     clx = cl.getContext('2d')
 
@@ -33,8 +33,6 @@ function clearBg() {
     foreground_l = new Array()
     foreground_r = new Array()
 }
-
-clearBg()
 
 function preloadEmotions(metas) {
     metas.forEach((meta) => {
@@ -80,7 +78,9 @@ function getEmotion(emoind) {
 }
 
 const dividerThickness = 4;
-var step = 30;
+
+const slopeTg = 0.1
+let slopeStep
 
 let stepOffset = 0;
 let stepOffsetAmp
@@ -97,28 +97,31 @@ function updateFrame() {
     c.width = width;
     c.height = height;
 
+    ctx = c.getContext('2d')
+
     updateScale()
 
     if (drawLeft) {
 
-        cr.width = width/2 + step - stepOffset;
+        cr.width = width/2 + slopeStep - stepOffset;
         cr.height = height;
 
         crx.beginPath();
         crx.moveTo(0, height);
         crx.lineTo(cr.width, height);
         crx.lineTo(cr.width, 0);
-        crx.lineTo(2*step, 0);
+        crx.lineTo(2*slopeStep, 0);
         crx.closePath();
         crx.clip();
 
-        cl.width = width/2 + step + stepOffset;
+
+        cl.width = width/2 + slopeStep + stepOffset;
         cl.height = height;
 
         clx.beginPath();
         clx.moveTo(0, 0);
         clx.lineTo(cl.width, 0);
-        clx.lineTo(cl.width-2*step, height);
+        clx.lineTo(cl.width-2*slopeStep, height);
         clx.lineTo(0, height);
         clx.closePath();
         clx.clip();
@@ -182,10 +185,10 @@ function draw2(totalTime) {
 
     // draw nice line
     ctx.beginPath();
-    ctx.moveTo(width/2 + step + stepOffset, 0);
+    ctx.moveTo(width/2 + slopeStep + stepOffset, 0);
     ctx.strokeStyle = "#152424";
     ctx.lineWidth = dividerThickness;
-    ctx.lineTo(width/2 - step + stepOffset, height);
+    ctx.lineTo(width/2 - slopeStep + stepOffset, height);
     ctx.stroke();
     
 }
@@ -203,6 +206,7 @@ function initBg(left) {
     drawLeft = left
 
     updateFrame();
+
     if (left) {
         draw = draw2
     } else {
@@ -265,13 +269,15 @@ function updateScale() {
     width_sr = wscale(sprite_r)
     width_sl = wscale(sprite_l)
 
+    slopeStep = height*slopeTg
+
     let characterNeededSpace = spriteCharacterProportion*width_sr
-    let freeSideSpace = width/2 - step
+    let freeSideSpace = width/2 - slopeStep
 
     stepOffsetAmp = Math.max(characterNeededSpace-freeSideSpace, 0)
     overlapMode = stepOffsetAmp > 0
 
-    if (hideLeft) {stepOffsetAmp = width/2+step}
+    if (hideLeft) {stepOffsetAmp = width/2 + slopeStep}
 }
 
 let dir = 0
@@ -331,6 +337,7 @@ function updateBG(totalTime) {
 }
 
 function setBg(left = true, solid = false) {
+    clearBg()
     window.addEventListener("loaded", () => {
         if (solid) {
             initSolidBg()
