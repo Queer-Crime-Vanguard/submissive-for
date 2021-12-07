@@ -30,6 +30,10 @@ const Pages = {
     soup_game: {
         name: "soup_game",
         onload: () => {stopAnimation(); stopMusic(); startSoupGame()}
-    }
+    },
 
+    network: (person) => { return {
+        name: "network/"+person,
+        onload: () => {}
+    }}
 }
