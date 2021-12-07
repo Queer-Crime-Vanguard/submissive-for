@@ -1,60 +1,67 @@
 // atomic
 
-function loadScene(name) {
-    return fetch(name)
+function loadScene(name, callback) {
+    return fetch(name + ".html")
         .then((response) => {
             return response.text();
         })
-        .then(insertScene);
+        .then(insertScene(callback));
 }
 
+let root
+
 function parsePage(page_source) {
-    let parser = new DOMParser();
-    let doc = parser.parseFromString(page_source, 'text/html');
-    return doc.body;
+    root = null
+    root = document.createElement('div');
+    root.innerHTML = page_source;
+    console.log(root)
+    return root;
 }
 
 let areq = null;
 
-function insertScene(page_source) {
-    let body = parsePage(page_source) // body -> div class slide
+const insertScene = (callback) => (page_source) => {
+    body = parsePage(page_source) // body -> div class slide
     body.classList.add("slide")
     let slide_container = document.getElementById("slide-container")
     let slide = slide_container.querySelector('.slide')
 
-    /* remove */
-    slide_container.removeChild(slide)
+    /* prepare for new page */
+    if (body.classList.contains('animation')) {window.cancelAnimationFrame(areq)}
+    
     if (body.classList.contains('background')) {
         let bg = document.getElementById('background')
-        if (bg) {slide_container.removeChild(bg)}
+        if (bg) {slide_container.removeChild(bg)}e
         clearBg()
     }
+    
     if (body.classList.contains('audio')) {document.dispatchEvent(new Event('stop_playing'))}
-    if (body.classList.contains('animation')) {window.cancelAnimationFrame(areq)}
+
+    /* remove */
+    slide_container.removeChild(slide)
+    delete slide
 
     /* insert new */
     slide_container.appendChild(body)
-    eval(body.getAttribute('onload'))
+    return callback()
 }
 
 // scene sequence
 
-let scenes = new Array()
+let pages = new Array()
 let currentIndex = -1;
 
-function nextScene() {
+function nextPage() {
     currentIndex += 1
-    let new_scene = scenes[currentIndex]
-    console.log('loading', new_scene)
-    return loadScene(new_scene)
+    let new_page = pages[currentIndex]
+    console.log('loading', new_page.name)
+    return loadScene(new_page.name, new_page.onload)
 }
 
-function loadSceneList() {
-    document.getElementById("assembly-list").childNodes.forEach((n) => {
-        if (n.tagName == "LI") {scenes.push(n.innerText)}
-    })
+function setPageList(newPages) {
+    pages = newPages
 }
 
 document.body.addEventListener('finish_scene', () => {
-    nextScene().then(endPending)
+    nextPage().then(endPending)
 })
