@@ -11,9 +11,37 @@
   <link rel="shortcut icon" href="handsoff_logo_favicon.png" type="image/x-icon"/>
 </head>
 
-<body onload="startGradient(); loadSceneList()">
-  
+<body onload="startGradient(); setTrack(); setPageList(
+  [
+    Pages.trigger_warning,
+    Pages.single('intro'),
+    Pages.network('zoya'),
+    Pages.scene('0.1'),
+    Pages.bookmarks,
+    Pages.scene('0.2'),
+    Pages.network('olya'),
+    Pages.scene('1.1'),
+    Pages.bookmarks,
+    Pages.scene('1.2'),
+    Pages.flashback,
+    Pages.scene('1.3'),
+    Pages.scene('2.1'),
+    Pages.soup_game,
+    Pages.scene('2.2'),
+    Pages.network('nailya'),
+    Pages.scene('3.1'),
+    Pages.bookmarks,
+    Pages.single('outro')
+  ]
+)">
+
   <link rel="stylesheet" href="styles.css">
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.8/lottie_canvas.min.js"></script>
+  <script src="https://unpkg.com/perlin-noise-3d"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.17/Tone.js"></script>
+
+  <script type="text/javascript" src="js/gradient.js"></script>
   <script type="text/javascript" src="js/assembly.js"></script>
   <script type="text/javascript" src="js/bookmarks.js"></script>
   <script type="text/javascript" src="js/finish_scene.js"></script>
@@ -27,177 +55,14 @@
   <script type="text/javascript" src="js/reflection.js"></script>
   <script type="text/javascript" src="js/tw.js"></script>
   <script type="text/javascript" src="js/sprite.js"></script>
-  <script type="text/javascript" src="js/storage.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.8/lottie_canvas.min.js"></script>
-  <script src="https://unpkg.com/perlin-noise-3d"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.17/Tone.js"></script>
   <script src="js/soup_game.js"></script>
+  <script type="text/javascript" src="js/storage.js"></script>
 
-<style>
-.bg {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    opacity: 0.5;
-    z-index: 1;
-    mix-blend-mode: exclusion;
-    transition: opacity 1s linear;
-}
 
-.fade.out {
-    opacity: 0;
-}
-
-#logo-container {
-    position: absolute;
-    display: block;
-    width: 16em;
-    height: 16em;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-}
-
-#logo {
-    display: block;
-    max-height: 16em;
-    animation: glitch 3s linear infinite;
-    width: 100%;
-    opacity: 0.75;
-    transition: opacity 300ms linear;
-}
-
-@keyframes glitch{
-  3%,63%{
-    transform: translate(3px,0) skew(0deg);
-  }
-  4%,61%{
-    transform: translate(-3px,0) skew(0deg);
-  }
-  62%{
-    transform: translate(0,0) skew(5deg); 
-  }
-}
-
-#logo:hover {
-    animation: none !important;
-    opacity: 1;
-}
-
-#assembly-list {
-    display: none;
-}
-
-</style>
-
-<script>
-    let initialized = false;
-
-    function hitlogo() {
-        finishScene()
-        /*setTimeout(() => {playMusic('intro90')}, 100)*/
-    }
-
-class GradientAnimation {
-  constructor() {
-    this.cnv        = document.querySelector(`canvas.bg`);
-    this.ctx        = this.cnv.getContext(`2d`);
-
-    this.circlesNum = 25;
-    this.minRadius  = 350;
-    this.maxRadius  = 450;
-    this.speed      = .02;
-    
-    (window.onresize = () => {
-      this.setCanvasSize();
-      this.createCircles();
-    })();
-    this.drawAnimation();
-
-  }
-  setCanvasSize() {
-    this.w = this.cnv.width  = innerWidth * devicePixelRatio;
-    this.h = this.cnv.height = innerHeight * devicePixelRatio;
-    this.ctx.scale(devicePixelRatio, devicePixelRatio)
-  }
-  createCircles() {
-    this.circles = [];
-    for (let i = 0 ; i < this.circlesNum ; ++i) {
-      this.circles.push(new Circle(this.w, this.h, this.minRadius, this.maxRadius));
-    }
-  }
-  drawCircles() {
-    this.circles.forEach(circle => circle.draw(this.ctx, this.speed));
-  }
-  clearCanvas() {
-    this.ctx.clearRect(0, 0, this.w, this.h); 
-  }
-  drawAnimation() {
-    this.clearCanvas();
-    this.drawCircles();
-    areq = window.requestAnimationFrame(() => this.drawAnimation());
-  }
-}
-
-const colors = ["#bf1765", "#3eedcd", "#beed3e", "#a930ff", "#ff8e2b", "#27f2d7"]
-
-class Circle {
-  constructor(w, h, minR, maxR) {
-    this.x = Math.random() * w;
-    this.y = Math.random() * h;
-    this.angle  = Math.random() * Math.PI * 2;
-    this.radius = Math.random() * (maxR - minR) + minR;
-    this.firstColor  = colors[Math.floor(colors.length*Math.random())];
-    this.secondColor = colors[Math.floor(colors.length*Math.random())] + "00";
-  }
-  draw(ctx, speed) {
-    this.angle += speed;
-    const x = this.x + Math.cos(this.angle) * 200;
-    const y = this.y + Math.sin(this.angle) * 200;
-    const gradient = ctx.createRadialGradient(x, y, 0, x, y, this.radius);
-          gradient.addColorStop(0, this.firstColor);
-          gradient.addColorStop(1, this.secondColor);
-
-    ctx.globalCompositeOperation = `overlay`;
-    ctx.fillStyle = gradient;
-    ctx.beginPath();
-    ctx.arc(x, y, this.radius, 0, Math.PI * 2);
-    ctx.fill(); 
-  }
-}
-let gradient = null;
-startGradient = () => {
-  gradient = new GradientAnimation();
-}
-
-</script>
-
-<ul id="assembly-list">
-    <li>trigger_warning.html</li>
-    <li>intro.html</li>
-    <li>scene0.1.html</li>
-    <li>bookmarks.html</li>
-    <li>scene0.2.html</li>
-    <li>scene1.1.html</li>
-    <li>bookmarks.html</li>
-    <li>scene1.2.html</li>
-    <li>flashback.html</li>
-    <li>scene1.3.html</li>
-    <li>scene2.1.html</li>
-    <li>soup_game.html</li>
-    <li>scene2.2.html</li>
-    <li>scene3.html</li>
-    <li>bookmarks.html</li>
-    <li>outro.html</li>
-</ul>
+  <script type="text/javascript" src="pages.js"></script>
 
 <div id="slide-container">
-    <div id="background">
-      <canvas class="bg"></canvas>
-    </div>
+    <canvas id="background" class="bg"></canvas>
     <div class="slide">
         <div id="logo-container">
             <img id="logo" src="assets/logo.svg" onclick="hitlogo()">

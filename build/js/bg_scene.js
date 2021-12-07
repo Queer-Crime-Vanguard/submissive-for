@@ -13,16 +13,14 @@ let emotions = {}
 let c, cl, cr
 let ctx, clx, crx
 
-function clearBg() {
-    c = document.createElement('canvas')
-    c.setAttribute('id', 'background')
-    c.classList.add('scene')
-    cl = document.createElement('canvas')
-    cr = document.createElement('canvas')
+cl = document.createElement('canvas')
+cr = document.createElement('canvas')
 
-    ctx = c.getContext('2d')
-    crx = cr.getContext('2d')
-    clx = cl.getContext('2d')
+crx = cr.getContext('2d')
+clx = cl.getContext('2d')
+
+function clearBg() {
+    //c = document.createElement('canvas')
 
     sprite_l = new Image()
     sprite_r = new Image()
@@ -35,6 +33,8 @@ function clearBg() {
 }
 
 function preloadEmotions(metas) {
+    emotions = null
+    emotions = {}
     metas.forEach((meta) => {
         img = new Image();
         img.src = "assets/sprites/" + meta.getAttribute('speaker') + "_" + meta.getAttribute('emotion') + ".svg"
@@ -98,6 +98,8 @@ function updateFrame() {
     c.height = height;
 
     ctx = c.getContext('2d')
+    ctx.strokeStyle = "#152424";
+    ctx.lineWidth = dividerThickness;
 
     updateScale()
 
@@ -113,7 +115,6 @@ function updateFrame() {
         crx.lineTo(2*slopeStep, 0);
         crx.closePath();
         crx.clip();
-
 
         cl.width = width/2 + slopeStep + stepOffset;
         cl.height = height;
@@ -147,7 +148,7 @@ const wscale = (sp) => {return sp.width*((t_height)/sp.height)}
 
 function draw1(totalTime) {
     // background
-    ctx.drawImage(background_r, width-width_br, -drag, width_br, t_height);
+    ctx.drawImage(background_r, 0, -drag, width_br, t_height);
     ctx.drawImage(background_r, drag*moveX*0.5 + width-width_br, -drag, width_br, t_height);
 
     // sprite
@@ -171,6 +172,7 @@ function draw2(totalTime) {
     clx.drawImage(sprite_l, -drag*moveX - drag - lOffset, -lj + -drag*moveY*0.2 - drag, width_sl, t_height);
     crx.drawImage(sprite_r, drag*moveX + rOffset - width_sr + cr.width, -rj + drag*moveY*0.2-drag, width_sr, t_height)
 
+    /*
     // foregrounds
     foreground_l.forEach((f) => {
         clx.drawImage(f, -drag*moveX*1.3 - drag - lOffset, - drag, width_bl, t_height);
@@ -178,6 +180,7 @@ function draw2(totalTime) {
     foreground_r.forEach((f) => {
         crx.drawImage(f, drag*moveX*1.3 + cr.width-width_br + rOffset, -drag, width_br, t_height);
     })
+    */
 
     // draw frames
     ctx.drawImage(cl, 0, 0);
@@ -186,28 +189,37 @@ function draw2(totalTime) {
     // draw nice line
     ctx.beginPath();
     ctx.moveTo(width/2 + slopeStep + stepOffset, 0);
-    ctx.strokeStyle = "#152424";
-    ctx.lineWidth = dividerThickness;
     ctx.lineTo(width/2 - slopeStep + stepOffset, height);
-    ctx.stroke();
-    
+    ctx.stroke();   
 }
 
 let draw = null;
 
-function initBg(left) {
-    let container = document.getElementById("slide-container")
-    if (container == null) {
-        document.body.appendChild(c)
-    } else {
+function initBg(left, solid) {
+    /*
+ 
+    */
+
+    c = document.querySelector("canvas#background")
+    if (c == null) {
+        let container = document.getElementById("slide-container")
+        if (container == null) {
+            container = document.body
+        }
+        c = document.createElement('canvas')
+        c.setAttribute('id', 'background')
         container.appendChild(c)
     }
+    c.setAttribute('class', 'scene')
+    ctx = c.getContext('2d')
 
     drawLeft = left
 
     updateFrame();
 
-    if (left) {
+    if (solid) {
+        draw = drawSolid
+    } else if (left) {
         draw = draw2
     } else {
         draw = draw1
@@ -279,7 +291,7 @@ function updateScale() {
     stepOffsetAmp = Math.max(characterNeededSpace-freeSideSpace, 0) || 0
 
     // fix stepOffset on updateScale
-    stepOffset = dir*Math.min(Math.abs(stepOffset), stepOffsetAmp)
+    stepOffset = Math.sign(stepOffset)*Math.min(Math.abs(stepOffset), stepOffsetAmp)
 
     overlapMode = stepOffsetAmp > 0
 
@@ -296,15 +308,13 @@ function updateEmotion(left, emoIndex) {
     }
 }
 
-let prevTime
+let prevTime = 0
 
 function moveOffset(totalTime) {
 
-    if (prevTime == null) {prevTime = totalTime}
-
     let _step = stepOffsetAmp*(totalTime - prevTime)/offset_delay
 
-    stepOffset = dir*Math.min(dir*stepOffset+_step, stepOffsetAmp)
+    stepOffset += dir*_step
 
 /*
     const target = dir*stepOffsetAmp
@@ -334,7 +344,7 @@ document.addEventListener("update_emotion", (e) => {
 })
 
 function updateBG(totalTime) {
-    if (dir*stepOffset < dir*dir*stepOffsetAmp) {moveOffset(totalTime)}
+    if (dir*stepOffset < stepOffsetAmp) {moveOffset(totalTime)}
     draw(totalTime)
     prevTime = totalTime
     areq = requestAnimationFrame(updateBG);
@@ -342,12 +352,7 @@ function updateBG(totalTime) {
 
 function setBg(left = true, solid = false) {
     clearBg()
-    window.addEventListener("loaded", () => {
-        if (solid) {
-            initSolidBg()
-        } else {
-            initBg(left)
-        }})
+    initBg(left, solid)
     window.addEventListener("size_update", updateFrame);
 }
 

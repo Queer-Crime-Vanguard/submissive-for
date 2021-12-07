@@ -351,8 +351,15 @@ function startSoupGame() {
 
     // lottie
 
+    document.getElementById('background').remove()    
+
+    let bg_container = document.createElement("div")
+    bg_container.setAttribute("id", "background")
+
+    container.appendChild(bg_container)
+
     lottie.loadAnimation({
-        container: document.getElementById('background'), // the dom element that will contain the animation
+        container: bg_container, // the dom element that will contain the animation
         renderer: 'canvas',
         loop: true,
         autoplay: true,
