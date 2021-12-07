@@ -27,6 +27,63 @@ html, body {
   }
 }
 
+.bg {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    opacity: 0.5;
+    z-index: 1;
+    mix-blend-mode: exclusion;
+    transition: opacity 1s linear;
+}
+
+.fade.out {
+    opacity: 0;
+}
+
+#logo-container {
+    position: absolute;
+    display: block;
+    width: 16em;
+    height: 16em;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+#logo {
+    display: block;
+    max-height: 16em;
+    animation: glitch 3s linear infinite;
+    width: 100%;
+    opacity: 0.75;
+    transition: opacity 300ms linear;
+}
+
+@keyframes glitch{
+  3%,63%{
+    transform: translate(3px,0) skew(0deg);
+  }
+  4%,61%{
+    transform: translate(-3px,0) skew(0deg);
+  }
+  62%{
+    transform: translate(0,0) skew(5deg); 
+  }
+}
+
+#logo:hover {
+    animation: none !important;
+    opacity: 1;
+}
+
+#assembly-list {
+    display: none;
+}
+
 #reflection-box {
     font-size: 120%;
     font-style: italic;
