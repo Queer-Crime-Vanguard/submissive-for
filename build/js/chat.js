@@ -39,9 +39,22 @@ const finishSceneDelay = 1000;
 
 let optionsContainer = null;
 
+function setBubbleBoxHeight() {
+    let dialogue_box = document.getElementById("dialogue-box")
+    let bubble_box = document.getElementById("bubble-box")
+    
+    let dh = parseInt(window.getComputedStyle(dialogue_box).height, 10)
+    let by = parseInt(window.getComputedStyle(bubble_box).bottom, 10)
+
+    bubble_box.style.height = (dh-by + "px");
+}
+
 function prepareHighlight(highlights) {
-    let highlight_box = document.querySelector('#highlight-box')
+    let highlight_box = document.getElementById('highlight-box')
     optionsContainer = document.createElement('div')
+
+    setBubbleBoxHeight()
+
     highlights.forEach((h) => {
 
         if (h.classList.contains('option')) {
@@ -68,7 +81,10 @@ function prepareHighlight(highlights) {
     }
 
     highlight_box.appendChild(optionsContainer);
+
 }
+
+window.addEventListener("size_update", setBubbleBoxHeight)
 
 function cleanHighlight() {
     optionsContainer.parentNode.removeChild(optionsContainer)
