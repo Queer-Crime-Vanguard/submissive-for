@@ -13,6 +13,9 @@ body {
 }
 
 .network {
+  overflow-y: scroll;
+  height: 100vh;
+  background-color: white;
   max-width: 1000px;
   min-height: 100vh;
   margin: 0 auto;
@@ -289,6 +292,7 @@ h2 {
 
 .network__icons {
   display: flex;
+  overflow-y: hidden;
   overflow-x: scroll;
 }
 
