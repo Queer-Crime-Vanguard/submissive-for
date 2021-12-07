@@ -172,7 +172,7 @@ function draw2(totalTime) {
     clx.drawImage(sprite_l, -drag*moveX - drag - lOffset, -lj + -drag*moveY*0.2 - drag, width_sl, t_height);
     crx.drawImage(sprite_r, drag*moveX + rOffset - width_sr + cr.width, -rj + drag*moveY*0.2-drag, width_sr, t_height)
 
-    /*
+    
     // foregrounds
     foreground_l.forEach((f) => {
         clx.drawImage(f, -drag*moveX*1.3 - drag - lOffset, - drag, width_bl, t_height);
@@ -180,7 +180,7 @@ function draw2(totalTime) {
     foreground_r.forEach((f) => {
         crx.drawImage(f, drag*moveX*1.3 + cr.width-width_br + rOffset, -drag, width_br, t_height);
     })
-    */
+    
 
     // draw frames
     ctx.drawImage(cl, 0, 0);
