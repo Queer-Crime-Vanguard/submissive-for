@@ -523,6 +523,8 @@ canvas.minigame {
     display: flex;
     flex-direction: column;
     max-width: 28em;
+    overflow-y: scroll;
+    height: 85vh;
     position: absolute;
     margin-left: auto;
     margin-right: auto;
