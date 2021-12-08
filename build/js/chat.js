@@ -15,7 +15,7 @@ let current_branch = null
 
 function getNextLine() {
     if (current_branch) {
-        let node = current_branch.querySelector('.line:not(.shown)')
+        let node = current_branch.querySelector('.line:not(.taken)')
         if (node) {
             return node
         } else {
@@ -23,7 +23,7 @@ function getNextLine() {
             current_branch = null
         } 
     }
-    return document.querySelector('#dialogue > *:not(.shown)')
+    return document.querySelector('#dialogue > *:not(.taken)')
 }
 
 let player_emotion = null
@@ -32,7 +32,7 @@ function setEmotion(left, emoindex, jump = false) {
     sendEmotion(left, emoindex, jump)
 }
 
-const autoplayDelay = 350;
+const autoplayDelay = 500;
 const pauseEmotionDelay = 1600;
 const pauseDelay = 2000;
 const finishSceneDelay = 1000;
@@ -101,7 +101,7 @@ function selectOption(option_, by_index=false) {
     
     if (by_index) {
         if (options.length == 1) {
-            option = options[option_-1]
+            option = options[0]
         } else {
             option = options[option_]
         }
@@ -130,7 +130,7 @@ function proceedBookmark(highlight_box) {
     animate_flyaway(highlight_box)
     rememberBookmark(highlight_box.innerText)
     sound('absorb3').play()
-    nextline(true, false)
+    nextline(true)
     cleanHighlight()
 }
 
@@ -143,26 +143,32 @@ function proceedOption(option = null) {
 let chatProceed = activateHighlight
 
 function activateHighlight() {
-    if (optionsContainer.classList.contains('options')) {
-        let option = optionsContainer.querySelector('.option.selected')
-        if (option) {proceedOption(option)}
+    let option = optionsContainer.querySelector('.option.selected')
+    if (option) {
+        proceedOption(option)
     } else if (optionsContainer.querySelector('.bookmark')) {
         proceedBookmark(optionsContainer.parentNode)
-    } else if (optionsContainer.querySelector('.option')) {
+    } 
+    /* else if (optionsContainer.querySelector('.option')) {
         proceedOption()
-    }
+    } */
 }
 
-function initiateHighlight() {
-    /*highlight_box.addEventListener('click', chatProceed)*/
-    document.body.onkeyup = (e) => {
-        if (optionsContainer) {
-            if (e.code == 'Space') {activateHighlight()}
-            if (e.code == 'ArrowLeft') {selectOption(0, true)}
-            if (e.code == 'ArrowRight') {selectOption(1, true)}
+document.body.onkeyup = (e) => {
+    if (optionsContainer) {
+        if (e.code == 'Space') {activateHighlight()}
+        if (e.code == 'ArrowLeft') {selectOption(0, true)}
+        if (e.code == 'ArrowRight') {selectOption(1, true)}
+    } else {
+        if (e.code == 'Space') {
+            const lineNode = currentLineNode
+            if (lineNode.classList.contains('shown')) {
+                clearTimeout(nextLineTimeout)
+                nextline(true)
+            }
+            jumpToBubbleFinal(lineNode)
         }
     }
-    nextline()
 }
 
 function setBubbleColor(left, color) {
@@ -185,24 +191,34 @@ function initializeDialogue() {
         addForeground(left, speaker, meta.getAttribute('foreground'))
         setEmotion(left, emoindex(meta))
     })
-    initiateHighlight();
+    nextline()
 }
 
+let nextLineTimeout, currentLine
 
-function nextline(force_instant, show_bubble=true) {
-    let currentLine = getNextLine()
+function nextline(force_instant=false) {
+
+    let bind = true
+
+    currentLine = getNextLine()
 
     if (currentLine) {
-
-        currentLine.classList.add('shown')
-
         let delay = 0
+
+        let highlights = currentLine.querySelectorAll(".highlight")
+        let bookmark = currentLine.querySelector(".bookmark")
+        let bubble = currentLine.querySelector('.bubble')
+
+        if (highlights.length) {
+            prepareHighlight(highlights);
+            bind = false
+        }
 
         if (currentLine.classList.contains('pause')) {
             delay = 1000;
         }
         
-        if (currentLine.classList.contains('typing')) {
+        if (currentLine.classList.contains('typing') && !force_instant) {
             delay = pauseDelay;
 
             typing_bubble = document.createElement('div');
@@ -221,23 +237,19 @@ function nextline(force_instant, show_bubble=true) {
             sendVibe(meta.getAttribute('vibe'))
         }
 
-        let bubble = currentLine.querySelector('.bubble');
-        if (show_bubble && bubble) {
-            delay = showBubble(currentLine, force_instant);
+        if (highlights.length || bookmark) {
+            bind = false
+        } else {
+            if (bubble) {delay = showBubble(currentLine, force_instant)}
         }
 
-        setTimeout(() => {let nextLine = getNextLine();
-                        if (nextLine) {
-                            let highlights = nextLine.querySelectorAll(".highlight");
-                            if (highlights.length) {
-                                prepareHighlight(highlights);
-                            } else {
-                                nextline(false);
-                            }
-                        } else {
-                            setTimeout(finishScene, finishSceneDelay)
-                        }},
-                   1.5*delay+autoplayDelay);
+        if (bind) {
+            currentLine.classList.add('taken')
+            nextLineTimeout = setTimeout(nextline, delay+autoplayDelay);
+        }
+            
+    } else {
+        setTimeout(finishScene, finishSceneDelay)
     }
 }
 
@@ -261,45 +273,54 @@ function animate_flyaway(node, duration=500) {
     setTimeout(() => {document.body.removeChild(box)}, duration)
 }
 
-function showBubble(currentLine, force_instant) {
-    let lineNode = currentLine.cloneNode(true);
-    let bubble = lineNode.querySelector('.bubble');
-    let meta = lineNode.querySelector('linemeta');
-    let highlight = lineNode.querySelector('.highlight');
+let currentLineNode
+let poisitioned_TO, shown_TO, notif_TO, text_appear_TO
 
-    let bubble_box = document.querySelector('#bubble-box');
+const microDelay = 20;
+const positioningDelay = 500;
+const typingDurationLong = 1700
+const typingDurationShort = 600;
+const textAppearDelay = 250;
+
+function showBubble(currentLine, force_instant, additional_delay = 0) {
+
+    currentLineNode = currentLine.cloneNode(true);
+
+    const lineNode = currentLineNode
+
+    const bubble = lineNode.querySelector('.bubble');
+    const meta = lineNode.querySelector('linemeta');
+    const highlight = lineNode.querySelector('.highlight');
+
+    const bubble_box = document.querySelector('#bubble-box');
     bubble_box.insertBefore(lineNode, bubble_box.firstChild);
 
-    if (highlight) {lineNode.removeChild(highlight);}
+    if (highlight) {lineNode.removeChild(highlight)}
      
-    let islong = lineNode.classList.contains('pause');
-    let isinstant = lineNode.classList.contains('instant') || force_instant;
+    const islong = lineNode.classList.contains('pause');
+    const isinstant = lineNode.classList.contains('instant') || force_instant;
     
+    const jump = lineNode.classList.contains('jump')
+
     lineNode.classList.add("appeared");
-    var bubble_style = window.getComputedStyle(bubble, null);
-    let b_width = bubble_style.getPropertyValue("width");
-    let b_height = bubble_style.getPropertyValue("height");
-
-    const microDelay = 20;
-    const positioningDelay = 500;
-    const typingDuration = islong ? 1700 : 600;
-    const textAppearDelay = 250;
-
-    let jump = lineNode.classList.contains('jump')
+    const bubble_style = window.getComputedStyle(bubble, null);
+    const b_width = bubble_style.getPropertyValue("width");
+    const b_height = bubble_style.getPropertyValue("height");
 
     if (isinstant) {
-        setTimeout(() => {lineNode.classList.add("positioned")
+        positioned_TO = setTimeout(() => {
+                          if (lineNode.classList.contains('blocked')) {return}
+                          lineNode.classList.add("positioned")
                           setEmotion(lineNode.classList.contains('left'), emoindex(meta), jump)
+                          lineNode.classList.add('notified')
                           sound('notif').play()
+                          lineNode.classList.add("shown");
+                          currentLine.classList.add('shown')
                          },
-                        microDelay)
-        setTimeout(() => {
-                         lineNode.classList.add("shown");
-                        }, positioningDelay)
-        return positioningDelay;
+                        additional_delay+microDelay)
+        return additional_delay+microDelay;
     }
     
-    lineNode.classList.remove("appeared");
     lineNode.classList.add("texthide")
     typingDots = document.querySelector('components .wave').cloneNode(true);
     bubble.appendChild(typingDots);
@@ -317,32 +338,75 @@ function showBubble(currentLine, force_instant) {
 
     dialogue.scrollTop = dialogue.scrollHeight;
 
-    setTimeout(() => {lineNode.classList.add("positioned");
+    positioned_TO = setTimeout(() => {
+                      if (lineNode.classList.contains('blocked')) {return}
+                      lineNode.classList.add("positioned");
                       sound('typing').play()
                       setEmotion(lineNode.classList.contains('left'), emoindex(meta), jump)
                       var typing_bubble_style = window.getComputedStyle(bubble, null);
                       bubble.style.width = typing_bubble_style.getPropertyValue("width");
                       bubble.style.height = typing_bubble_style.getPropertyValue("height");
-                      }, microDelay)
+                      }, additional_delay + microDelay)
     
-    setTimeout(() => {
+    shown_TO = setTimeout(() => {
+        if (lineNode.classList.contains('blocked')) {return}
+        currentLine.classList.add('shown')
         lineNode.classList.add("shown");
-    }, positioningDelay)
+    }, additional_delay+positioningDelay)
     
-    setTimeout(() => {bubble.style.width = b_width;
+    const typingDuration = islong ? typingDurationLong : typingDurationShort
+
+    notif_TO = setTimeout(() => {
+                      if (lineNode.classList.contains('blocked')) {return}
+                      bubble.style.width = b_width;
                       bubble.style.height = b_height;
                       lineNode.classList.remove("typing");
+                      lineNode.classList.add('notified')
                       sound('notif').play()
-    }, positioningDelay + typingDuration)
+    }, additional_delay + positioningDelay + typingDuration)
     
-    setTimeout(() => {
+    text_appear_TO = setTimeout(() => {
+        if (lineNode.classList.contains('blocked')) {return}
         bubble.style.width = null
         bubble.style.height = null
         lineNode.classList.remove("texthide");
         bubble.scrollIntoView();
-    }, positioningDelay+typingDuration+textAppearDelay)
+    }, additional_delay + positioningDelay + typingDuration + textAppearDelay)
 
-    return positioningDelay+typingDuration+textAppearDelay;
+    return additional_delay+positioningDelay+typingDuration+textAppearDelay;
+}
+
+
+function jumpToBubbleFinal(node) {
+
+    node.classList.add('blocked')
+
+    const lineNode = node
+
+    // selecting bubble and meta
+    const bubble = lineNode.querySelector('.bubble');
+    const meta = lineNode.querySelector('linemeta');
+
+    // final visible state
+    lineNode.classList.add("shown");
+    bubble.style.width = null
+    bubble.style.height = null
+    lineNode.classList.remove("typing");
+    sound('typing').pause()
+    sound('typing').currentTime = 0
+    lineNode.classList.remove("texthide");
+    bubble.scrollIntoView();
+    
+
+    // playing notif if have not
+    if (!lineNode.classList.contains('notified')) {
+        lineNode.classList.add('notified')
+        sound('notif').play()
+    }
+
+    // update emotion
+    let jump = lineNode.classList.contains('jump')
+    setEmotion(lineNode.classList.contains('left'), emoindex(meta), jump)
 }
 
 
