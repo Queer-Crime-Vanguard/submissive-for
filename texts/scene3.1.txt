@@ -27,7 +27,7 @@
 Лия: совсем нет #wonders
 Наиля: буду рада, если смогу помочь #neutral
 Лия: [такое дело] #neutral
-Лия: !#typing #neutral
+Лия: #!typing #neutral
 Лия: я собираю истории для публикации #wonders
 Лия: о домогательствах в университете #puzzled
 : #!vibe:nervous
