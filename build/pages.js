@@ -24,7 +24,7 @@ const Pages = {
 
     flashback: {
         name: "flashback",
-        onload: () => {stopAnimation(); stopMusic(); window.cancelAnimationFrame(areq); preloadImages(); setBg(false, true); showReflection(); playMusic('flashback')}
+        onload: () => {stopAnimation(); stopMusic(); window.cancelAnimationFrame(areq); preloadImages(); setBg(false, true); showReflection(); playMusic('flashback', 0.2)}
     },
 
     soup_game: {
@@ -34,6 +34,6 @@ const Pages = {
 
     network: (person) => { return {
         name: "network/"+person,
-        onload: () => {}
+        onload: () => {stopMusic()}
     }}
 }
