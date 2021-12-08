@@ -20,13 +20,14 @@ let current_vibe = 'basic';
 
 let music_audio = {}
 
-function playMusic(name) {
+function playMusic(name, volume=1) {
     let a = music_audio[name]
     if (a == null) {
         a = new Audio('assets/music/'+name+'.mp3')
         music_audio[name] = a
     }
     current_playing.push(a)
+    a.volume = volume
     a.play()
 }
 
