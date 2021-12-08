@@ -36,7 +36,7 @@
 -
 Лия: [немного сомневаюсь] #!type:imposter #wonders
 Лия: может, это не лучшая идея #puzzled
-Лия: но... !#instant #wonders
+Лия: но... #!instant #wonders
 -}
 Лия: вдруг ты хотела бы поделиться своим опытом #wonders
 Наиля: Эээ #scared_2
