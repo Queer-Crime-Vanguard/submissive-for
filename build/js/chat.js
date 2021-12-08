@@ -140,10 +140,15 @@ function proceedOption(option = null) {
     cleanHighlight()
 }
 
-let chatProceed = activateHighlight
+const chatProceed = () => {activateHighlight(true)}
 
-function activateHighlight() {
-    let option = optionsContainer.querySelector('.option.selected')
+function activateHighlight(ignore_selection = false) {
+    let option
+    if (ignore_selection) {
+        option = optionsContainer.querySelector('.option')
+    } else {
+        option = optionsContainer.querySelector('.option.selected')
+    }
     if (option) {
         proceedOption(option)
     } else if (optionsContainer.querySelector('.bookmark')) {
@@ -191,16 +196,16 @@ function initializeDialogue() {
         addForeground(left, speaker, meta.getAttribute('foreground'))
         setEmotion(left, emoindex(meta))
     })
-    nextline()
+    nextline(true)
 }
 
-let nextLineTimeout, currentLine
+let nextLineTimeout
 
 function nextline(force_instant=false) {
 
     let bind = true
 
-    currentLine = getNextLine()
+    const currentLine = getNextLine()
 
     if (currentLine) {
         let delay = 0
