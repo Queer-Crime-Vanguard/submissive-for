@@ -208,6 +208,7 @@ html, body {
 }
 
 #highlight-box .option, #highlight-box .bookmark {
+    cursor: pointer;
     display: flex;
     flex-basis: 50%;
     justify-content: center; /* align horizontal */

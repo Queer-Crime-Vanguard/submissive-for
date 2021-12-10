@@ -119,16 +119,16 @@
   color: white;
 }
 
-.network button {
+.network button.network__send {
   cursor: pointer;
   transition: .3s ease;
 }
 
-.network button:hover {
+.network button.network__send:hover {
   opacity: .7;
 }
 
-.network button:active {
+.network button.network__send:active {
   opacity: 1;
 }
 
