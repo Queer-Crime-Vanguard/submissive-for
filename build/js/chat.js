@@ -216,7 +216,6 @@ function nextline(force_instant=false) {
 
         if (highlights.length) {
             prepareHighlight(currentLine, highlights);
-            currentLine.classList.add('')
             bind = false
         }
 
