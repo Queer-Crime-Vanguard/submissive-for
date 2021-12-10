@@ -188,7 +188,7 @@ html, body {
     font-weight: 300;
     font-size: 100%;
     bottom: 0;
-    height: 2.4em;
+    height: 2.6em;
     width: calc(min(100%, 28em));
     border-radius: 1.5em;
     background-color: rgba(255, 255, 255, 0.65);
@@ -200,12 +200,19 @@ html, body {
 }
 
 #highlight-box p {
-    line-height: 0.5em;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1em;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
 }
 
 #highlight-box .option, #highlight-box .bookmark {
-    display: inline-block;
-    height: 2.4em;
+    display: flex;
+    flex-basis: 50%;
+    justify-content: center; /* align horizontal */
+    align-items: center;
+    height: 2.6em;
     transform: translateY(-3px);
     border: solid 3px rgba(255, 255, 255, 0);
 }
@@ -229,6 +236,10 @@ html, body {
 
 #highlight-box > :not(.options) .option {
     animation: lure 3.5s infinite;
+}
+
+#highlight-box .options {
+    display: flex;
 }
 
 #highlight-box .options > .option {
