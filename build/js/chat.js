@@ -49,7 +49,7 @@ function setBubbleBoxHeight() {
     bubble_box.style.height = (dh-by + "px");
 }
 
-function prepareHighlight(highlights) {
+function prepareHighlight(line, highlights) {
     let highlight_box = document.getElementById('highlight-box')
     optionsContainer = document.createElement('div')
 
@@ -68,6 +68,7 @@ function prepareHighlight(highlights) {
             h.addEventListener('mouseout', (e) => selectOption(null))
             h.addEventListener('click', (e) => proceedOption(h))
         } else if (h.classList.contains('bookmark')) {
+            line.classList.add('bookmark')
             h.addEventListener('click', (e) => proceedBookmark(highlight_box))
         } 
 
@@ -211,11 +212,11 @@ function nextline(force_instant=false) {
         let delay = 0
 
         let highlights = currentLine.querySelectorAll(".highlight")
-        let bookmark = currentLine.querySelector(".bookmark")
         let bubble = currentLine.querySelector('.bubble')
 
         if (highlights.length) {
-            prepareHighlight(highlights);
+            prepareHighlight(currentLine, highlights);
+            currentLine.classList.add('')
             bind = false
         }
 
@@ -242,10 +243,12 @@ function nextline(force_instant=false) {
             sendVibe(meta.getAttribute('vibe'))
         }
 
-        if (highlights.length || bookmark) {
+        if (highlights.length) {
             bind = false
         } else {
-            if (bubble) {delay = showBubble(currentLine, force_instant)}
+            if (bubble && !currentLine.classList.contains('bookmark')) {
+                delay = showBubble(currentLine, force_instant
+            )}
         }
 
         if (bind) {
