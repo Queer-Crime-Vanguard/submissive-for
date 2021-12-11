@@ -230,7 +230,7 @@ function nextline(force_instant=false) {
             typing_bubble.classList.add('bubble');
             typing_bubble.appendChild(document.querySelector('components .wave').cloneNode(true));
 
-            prepareHighlight([typing_bubble]);
+            prepareHighlight(currentLine, [typing_bubble]);
 
             setTimeout(() => {
                 cleanHighlight(false, false);
