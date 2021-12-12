@@ -457,6 +457,10 @@ canvas.scene.blured {
     padding: 0.25em;
 }
 
+#trigger-warning-box.hidden {
+    display: none;
+}
+
 #next.hidden {
     opacity: 0;
 }

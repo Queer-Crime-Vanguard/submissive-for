@@ -65,6 +65,8 @@ let found_letters;
 let fail_meter;
 let fail;
 
+let clickUpdate
+
 let positionate_letters = () => {
     let n = 0
 
@@ -290,8 +292,7 @@ function start() {
         (letter.pos_x < x && x < letter.pos_x + alph_width) &&
         (letter.pos_y < y && y < letter.pos_y + alph_height)
 
-
-    game_canvas.addEventListener('click', (e) => {
+    clickUpdate = (e) => {
         let x = e.pageX
         let y = e.pageY
 
@@ -301,8 +302,12 @@ function start() {
                 break;
             }
         }
-    })
+    }
 
+}
+
+function addCanvasClickListener() {
+    game_canvas.addEventListener('click', clickUpdate)
 }
 
 const restart_game = () => {
@@ -385,4 +390,9 @@ function startSoupGame() {
     start()
 
     container.appendChild(game_canvas)
+}
+
+function hideInstruction() {
+    document.getElementById("trigger-warning-box").classList.add('hidden')
+    addCanvasClickListener()
 }
