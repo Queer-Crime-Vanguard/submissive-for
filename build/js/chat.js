@@ -85,7 +85,16 @@ function prepareHighlight(line, highlights) {
 
 }
 
-window.addEventListener("size_update", setBubbleBoxHeight)
+function addChatListeners() {
+    window.addEventListener("size_update", setBubbleBoxHeight)
+    document.addEventListener("keyup", handleKeyboard)
+}
+
+function removeChatListeners() {
+    console.log('removee')
+    window.removeEventListener("size_update", setBubbleBoxHeight)
+    document.removeEventListener("keyup", handleKeyboard)
+}
 
 function cleanHighlight() {
     optionsContainer.parentNode.removeChild(optionsContainer)
@@ -160,7 +169,7 @@ function activateHighlight(ignore_selection = false) {
     } */
 }
 
-document.body.onkeyup = (e) => {
+const handleKeyboard = (e) => {
     if (optionsContainer) {
         if (e.code == 'Space') {activateHighlight()}
         if (e.code == 'ArrowLeft') {selectOption(0, true)}
