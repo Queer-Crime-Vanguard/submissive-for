@@ -1,11 +1,13 @@
 // atomic
 
-function loadScene(name, callback) {
+let currentDestroy;
+
+function loadScene(name, onload, ondestroy) {
     return fetch(name + ".html")
         .then((response) => {
             return response.text();
         })
-        .then(insertScene(callback));
+        .then(insertScene(onload, ondestroy));
 }
 
 let root
@@ -14,13 +16,12 @@ function parsePage(page_source) {
     root = null
     root = document.createElement('div');
     root.innerHTML = page_source;
-    console.log(root)
     return root;
 }
 
 let areq = null;
 
-const insertScene = (callback) => (page_source) => {
+const insertScene = (onload, ondestroy) => (page_source) => {
     body = parsePage(page_source) // body -> div class slide
     body.classList.add("slide")
     let slide_container = document.getElementById("slide-container")
@@ -41,9 +42,13 @@ const insertScene = (callback) => (page_source) => {
     slide_container.removeChild(slide)
     delete slide
 
+    /* destroy all */
+    if (currentDestroy) {currentDestroy()}
+    currentDestroy = ondestroy
+
     /* insert new */
     slide_container.appendChild(body)
-    return callback()
+    return onload()
 }
 
 // scene sequence
@@ -54,8 +59,7 @@ let currentIndex = -1;
 function nextPage() {
     currentIndex += 1
     let new_page = pages[currentIndex]
-    console.log('loading', new_page.name)
-    return loadScene(new_page.name, new_page.onload)
+    return loadScene(new_page.name, new_page.onload, new_page.ondestroy)
 }
 
 function setPageList(newPages) {

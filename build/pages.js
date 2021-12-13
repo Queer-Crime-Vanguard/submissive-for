@@ -4,12 +4,14 @@ const stopMusic = () => {document.dispatchEvent(new Event('stop_playing'))}
 const Pages = {
     scene: (v) => {return {
         name: "scene"+v,
-        onload: () => {stopAnimation(); stopMusic(); setBg(); initializeDialogue(); startVibe()}
+        onload: () => {stopAnimation(); stopMusic(); setBg(); initializeDialogue(); startVibe(); addChatListeners()},
+        ondestroy: () => {removeChatListeners()}
     }},
 
     single: (name) => { return {
         name,
-        onload: () => {stopAnimation(); stopMusic(); window.cancelAnimationFrame(areq); setBg(false); initializeDialogue(); startVibe(); document.querySelector('.slide').addEventListener("click", chatProceed)}
+        onload: () => {stopAnimation(); stopMusic(); window.cancelAnimationFrame(areq); setBg(false); initializeDialogue(); startVibe(); addChatListeners(); document.querySelector('.slide').addEventListener("click", chatProceed)},
+        ondestroy: () => {removeChatListeners()}
     }},
 
     bookmarks: {
