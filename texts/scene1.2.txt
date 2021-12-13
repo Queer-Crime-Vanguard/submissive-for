@@ -41,7 +41,7 @@
 Оля: Он в отношениях #sad
 Оля: И мне жаль его девушку #sad_3
 {-
-Лия: [понимаю и сочувствую] #!type:sister #neutral
+Лия: [понимаю] #!type:sister #neutral
 -
 Лия: [сложная ситуация] #!type:objective #shocked
 -}

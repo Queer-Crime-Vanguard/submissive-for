@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <title>Social Network</title>
+    <link href="./assets/styles/normalize.css" rel="stylesheet" />
+    <link href="./assets/styles/style.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="network">
+      <header class="network__header">
+        <a href="#" class="network__logo">
+          <img src="./assets/images/logo.svg" alt="logo cloud" />
+        </a>
+
+        <a href="#" class="network__avatar-small">
+          <img src="./assets/images/avatar-small.jpg" alt="user avatar" />
+        </a>
+      </header>
+      <main class="network__content">
+        <section class="network__info">
+          <div class="network__avatar">
+            <img src="./assets/images/avatar.jpg" alt="user avatar" />
+          </div>
+
+          <div class="network__main-info">
+            <div class="network__buttons">
+              <button class="network__action network__send" onclick="finishScene()">
+                <div>
+                  <img src="./assets/images/send.png" alt="envelope" />
+                </div>
+                <span>Написать</span>
+              </button>
+              <button class="network__action network__add">
+                <div>
+                  <img src="./assets/images/person.png" alt="person" />
+                </div>
+                <span>В друзьях</span>
+              </button>
+            </div>
+
+            <div class="network__name">
+              <h1>Зоя Мощная</h1>
+              <div class="network__mark network__mark-active"></div>
+            </div>
+            <p>@zoyapower</p>
+            <p>Кто со мной на двигательную практику?</p>
+          </div>
+        </section>
+
+        <section class="network__description">
+          <p>Живет в г. <b>Москва</b></p>
+          <p>Из г. <b>Нижний Новгород</b></p>
+          <p>Учится в <b>ВШЭ, Консультативная психология</b></p>
+          <p>Училась в <b>МГУ, Политология</b></p>
+        </section>
+        <section class="network__description">
+          <p>
+            Состоит в
+            <b
+              > Магистратура Психологи, Клиническая практика, travaeducation, ФАР, Foodsharing, CO-TOUCH,
+              ТЕХНО/ПОЭЗИЯ, Фудшеринг, КРАЙ, taste the waste, Death Cafe в Петербурге ...</b
+            >
+          </p>
+        </section>
+
+        <section class="network__friends">
+          <div class="network__count">
+            <h2>Общие друзья</h2><span>36</span>
+          </div>
+
+          <div class="network__icons">
+            <div class="network__icon">
+              <div>
+                <img src="./assets/images/user-4.jpg" alt="user avatar" />
+              </div>
+              <h5>Аня Рыжая</h5>
+            </div>
+
+            <div class="network__icon">
+              <div>
+                <img src="./assets/images/alla.jpg" alt="user avatar" />
+              </div>
+              <h5>Алла Гутникова</h5>
+            </div>
+
+            <div class="network__icon">
+              <div>
+                <img src="./assets/images/serenko.jpg" alt="user avatar" />
+              </div>
+              <h5>Дарья Серенко</h5>
+            </div>
+
+            <div class="network__icon">
+              <div>
+                <img src="./assets/images/ava_cat.jpeg" alt="user avatar" />
+              </div>
+              <h5>Кило Мяу</h5>
+            </div>
+
+            <div class="network__icon">
+              <div>
+                <img src="./assets/images/polina.jpg" alt="user avatar" />
+              </div>
+              <h5>Полина Титова</h5>
+            </div>
+          </div>
+        </section>
+
+        <section class="network__songs">
+          <h2>Музыка Зои</h2>
+
+          <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/398267223&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/tiekhnopoeziia" title="ТЕХНО/ПОЭЗИЯ" target="_blank" style="color: #cccccc; text-decoration: none;">ТЕХНО/ПОЭЗИЯ</a> · <a href="https://soundcloud.com/tiekhnopoeziia/qmsuf4svbe6t" title="Долой патриархат!" target="_blank" style="color: #cccccc; text-decoration: none;">Долой патриархат!</a></div>
+
+  
+          
+        </section>
+
+        <section class="network__posts">
+          <h2>Посты</h2>
+          <div class="network__post">
+            <div class="network__post-main">
+              <div class="network__post-avatar">
+                <img src="./assets/images/user-1.jpg" alt="user avatar" />
+              </div>
+              <div class="network__post-content">
+                <div class="network__post-header">
+                  <h4>Зоя Мощная</h4>
+<!-- 
+                  <span>26 Ноября 16:43</span>
+ -->
+                </div>
+
+                <p> Стигматизация — наделение отталкивающими чертами, дегуманизация, навешивание ярлыков, лишение общественного признания. Она ведёт к прямой дискриминации: например, отказу в медицинском обслуживании или приёме на работу.
+
+Приглашаем на психологический тренинг разобраться, что такое стигма, откуда она берётся. Понять, насколько нам свойственна самостигма или стигматизация других людей, употребляющих наркотики, и как с этим быть.</p>
+              </div>
+            </div>
+
+            <div class="network__post-footer">
+              <div class="network__likes">
+                <img src="./assets/images/empty-heart.png" alt="heart" />
+              </div>
+
+              <div class="network__bubble">
+                <img src="./assets/images/bubble.jpg" alt="bubble" />
+              </div>
+              <span>28</span>
+
+              <div class="network__arrow">
+                <img src="./assets/images/arrow.jpg" alt="arrow" />
+              </div>
+            </div>
+          </div>
+
+          <div class="network__post">
+            <div class="network__post-main">
+              <div class="network__post-avatar">
+                <img src="./assets/images/user-1.jpg" alt="user avatar" />
+              </div>
+              <div class="network__post-content">
+                <div class="network__post-header">
+                  <h4>Зоя Мощная</h4>
+<!-- 
+                  <span>26 Ноября 16:43</span>
+ -->
+                </div>
+
+                <p>      Почему в отношениях с людьми мы ведём себя так или иначе? Как быть, если сложно доверять? Что делать со страхом знакомств? А если не даёт покоя мысль «что обо мне подумают»? — с этими и другими вопросами наши психологи и гештальт-терапевты помогают разбираться во время групповой терапии про отношения.
+
+У нас стартует новая длительная терапевтическая группа. Это безопасное пространство, где можно попробовать вести себя по-новому, получить ресурс и поддержку. Можно увидеть и прочувствовать разные грани, взгляды, аспекты своей ситуации, и получить обратную связь от других.
+
+Запросы для участия в групповой терапии про отношения могут быть самые разные: желание исследовать свои особенности в построении отношений, напряженные отношения с начальником, конфликты с близкими людьми, напряжение при общении в компании новых людей, ощущение «что со мной что-то не так», тревога.
+
+Участницы/ки предыдущих групп делятся своими осознаваниями: «С людьми может быть безопаснее, чем в одиночестве. Скрытие своего реального состояния от людей вызывает у них чувство небезопасности и неизвестности, как будто нет инструкции ко мне, как со мной разговаривать, боятся случайно задеть».
+
+«Можно заблуждаться и прозревать. Можно быть мягче без опасений. В чем я осуждаю других тем, скорее всего, сам грешу. Я могу быть неправ и это не смертельно, а даже полезно».
+
+Пищите в личные сообщения за подробностями и записью на предварительную встречу-знакомство.   </p>
+              </div>
+            </div>
+
+            <div class="network__post-footer">
+              <div class="network__likes">
+                <img src="./assets/images/empty-heart.png" alt="heart" />
+              </div>
+
+              <div class="network__bubble">
+                <img src="./assets/images/bubble.jpg" alt="bubble" />
+              </div>
+              <span>28</span>
+
+              <div class="network__arrow">
+                <img src="./assets/images/arrow.jpg" alt="arrow" />
+              </div>
+            </div>
+          </div>
+
+          <div class="network__post">
+            <div class="network__post-main">
+              <div class="network__post-avatar">
+                <img src="./assets/images/user-1.jpg" alt="user avatar" />
+              </div>
+              <div class="network__post-content">
+                <div class="network__post-header">
+                  <h4>Зоя Мощная</h4>
+<!-- 
+                  <span>01 Января 00:00</span>
+ -->
+                </div>
+
+                <p>Введению педагогического проекта по развитию свободы воли угнетенных препятствуют либеральные умонастроения в университетской системе, а также несовершенства и упущения во многих радикальных критических педагогиках. Среди них — антропоцентричность.</p>
+
+				<p> Анархо-экофеминизм подчеркивает важность контекста для понимания перспектив экологии человека без уменьшения социальной значимости для окружающей среды или игнорирования политики власти в обществе. Подробнее читайте в переводе коллектива taste the waste: https://teletype.in/@tastethewaste/anarchaecofeminism</p>
+              </div>
+            </div>
+
+            <div class="network__post-footer">
+              <div class="network__likes">
+                <img src="./assets/images/empty-heart.png" alt="heart" />
+              </div>
+
+              <div class="network__bubble">
+                <img src="./assets/images/bubble.jpg" alt="bubble" />
+              </div>
+              <span>1</span>
+
+              <div class="network__arrow">
+                <img src="./assets/images/arrow.jpg" alt="arrow" />
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
