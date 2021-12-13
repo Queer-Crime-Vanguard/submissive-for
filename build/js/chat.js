@@ -35,7 +35,6 @@ function setEmotion(left, emoindex, jump = false) {
 const autoplayDelay = 500;
 const pauseEmotionDelay = 1600;
 const pauseDelay = 2000;
-const finishSceneDelay = 1000;
 
 let optionsContainer = null;
 
@@ -49,7 +48,7 @@ function setBubbleBoxHeight() {
     bubble_box.style.height = (dh-by + "px");
 }
 
-function prepareHighlight(line, highlights) {
+function prepareHighlight(highlights) {
     let highlight_box = document.getElementById('highlight-box')
     optionsContainer = document.createElement('div')
 
@@ -68,7 +67,6 @@ function prepareHighlight(line, highlights) {
             h.addEventListener('mouseout', (e) => selectOption(null))
             h.addEventListener('click', (e) => proceedOption(h))
         } else if (h.classList.contains('bookmark')) {
-            line.classList.add('bookmark')
             h.addEventListener('click', (e) => proceedBookmark(highlight_box))
         } 
 
@@ -91,7 +89,6 @@ function addChatListeners() {
 }
 
 function removeChatListeners() {
-    console.log('removee')
     window.removeEventListener("size_update", setBubbleBoxHeight)
     document.removeEventListener("keyup", handleKeyboard)
 }
@@ -224,7 +221,8 @@ function nextline(force_instant=false) {
         let bubble = currentLine.querySelector('.bubble')
 
         if (highlights.length) {
-            prepareHighlight(currentLine, highlights);
+            prepareHighlight(highlights);
+            if (highlights[0].classList.contains('bookmark')) {currentLine.classList.add('bookmark')}
             bind = false
         }
 
@@ -239,7 +237,7 @@ function nextline(force_instant=false) {
             typing_bubble.classList.add('bubble');
             typing_bubble.appendChild(document.querySelector('components .wave').cloneNode(true));
 
-            prepareHighlight(currentLine, [typing_bubble]);
+            prepareHighlight([typing_bubble]);
 
             setTimeout(() => {
                 cleanHighlight(false, false);
@@ -255,8 +253,8 @@ function nextline(force_instant=false) {
             bind = false
         } else {
             if (bubble && !currentLine.classList.contains('bookmark')) {
-                delay = showBubble(currentLine, force_instant
-            )}
+                delay = showBubble(currentLine, force_instant)
+            }
         }
 
         if (bind) {
@@ -265,7 +263,7 @@ function nextline(force_instant=false) {
         }
             
     } else {
-        setTimeout(finishScene, finishSceneDelay)
+        prepareHighlight([document.querySelector('components .button-next').cloneNode(true)])
     }
 }
 

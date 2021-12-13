@@ -510,6 +510,17 @@ canvas.scene.blured {
     line-height: 0;
 }
 
+#highlight-box .button-next {
+    height: 1.5rem;
+    background-color: transparent;
+    color: black;
+}
+
+#highlight-box .button-next p {
+    font-size: 1.5rem;
+    transform: translateY(-1.5rem);
+}
+
 
 #trigger-warning-box .button #checkbox {
     display: block;
