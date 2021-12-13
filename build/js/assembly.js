@@ -46,6 +46,9 @@ const insertScene = (onload, ondestroy) => (page_source) => {
     if (currentDestroy) {currentDestroy()}
     currentDestroy = ondestroy
 
+    // ready for new `finishScene`
+    endPending()
+
     /* insert new */
     slide_container.appendChild(body)
     return onload()
@@ -67,5 +70,5 @@ function setPageList(newPages) {
 }
 
 document.body.addEventListener('finish_scene', () => {
-    nextPage().then(endPending)
+    nextPage()
 })
