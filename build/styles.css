@@ -479,6 +479,7 @@ canvas.scene.blured {
 }
 
 .button-next {
+    cursor: pointer;
     margin: 0.5em 0;
     font-weight: 500;
     border: 0.15em solid black;
@@ -528,6 +529,7 @@ canvas.scene.blured {
 
 
 #trigger-warning-box .button #checkbox {
+    cursor: pointer;
     display: block;
     width: 1em;
     height: 1em;
