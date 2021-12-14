@@ -1,7 +1,8 @@
 function vibe_audio(name) {
-    let a = new Audio('assets/music/vibes/'+name+'.mp3')
-    a.volume = 0;
-    a.loop = true;
+    let a = new Tone.Player('assets/music/vibes/'+name+'.mp3').toDestination();
+    a.volume.value = -30
+    a.volume.mute = true;
+
     return a
 }
 
@@ -20,53 +21,56 @@ let current_vibe = 'basic';
 
 let music_audio = {}
 
-function playMusic(name, volume=1) {
+function playMusic(name, volume=0) {
     let a = music_audio[name]
     if (a == null) {
-        a = new Audio('assets/music/'+name+'.mp3')
+        a = new Tone.Player('assets/music/'+name+'.mp3').toDestination()
+        a.volume.value = volume
         music_audio[name] = a
+        Tone.loaded().then(() => {a.start()})
+    } else {
+        a.volume.value = volume
+        a.start()
     }
     current_playing.push(a)
-    a.volume = volume
-    a.play()
 }
+
+const crossFadeDelay = 2
+const startStopDelay = 1
 
 function startVibe() {
-    mus_vibes.forEach(
-        (vibe) => {
-            let a = vibes_audio[vibe]
-            a.play()
-            if (vibe == current_vibe) {a.volume = 1}
-            current_playing.push(a)
-        }
-    )
+    Tone.loaded().then(() => {
+        mus_vibes.forEach(
+            (vibe) => {
+                let a = vibes_audio[vibe]
+                a.start()
+                if (vibe == current_vibe) {
+                    a.volume.value = -30
+                    a.volume.mute = false
+                    a.volume.rampTo(0, startStopDelay)
+                }
+                current_playing.push(a)
+            }
+        )
+    });
 }
-
-const crossFadeLength = 3000;
-const fadeStep = 0.02;
 
 function v_d(v, d) {
     return Math.max(Math.min(v + d, 1), 0)
 }
 
 function switchVibe(new_vibe) {
-    let crossfade = true;
-    setInterval(() => {
-        if (crossfade) {
-            vibes_audio[current_vibe].volume = v_d(vibes_audio[current_vibe].volume, -fadeStep)
-            vibes_audio[new_vibe].volume = v_d(vibes_audio[new_vibe].volume, fadeStep)
-        }
-    }, crossFadeLength*fadeStep)
-    setTimeout(() => {
-        crossfade = false;
-        vibes_audio[current_vibe].volume = 0;
-        vibes_audio[new_vibe].volume = 1;
-        current_vibe = new_vibe
-    }, crossFadeLength)
+    vibes_audio[new_vibe].volume.rampTo(0, crossFadeDelay)
+    vibes_audio[current_vibe].volume.rampTo(-30, crossFadeDelay)
+    setTimeout(() => {vibes_audio[current_vibe].volume.mute = true}, crossFadeDelay)
+    current_vibe = new_vibe
 }
 
 function stopPlaying() {
-    current_playing.forEach((a) => {a.pause()})
+    current_playing.forEach((a) => {
+        a.stop("+"+startStopDelay)
+        a.volume.rampTo(-30, startStopDelay)
+    })
     current_playing = new Array()
 }
 
