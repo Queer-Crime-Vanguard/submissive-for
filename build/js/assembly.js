@@ -59,10 +59,19 @@ const insertScene = (onload, ondestroy) => (page_source) => {
 let pages = new Array()
 let currentIndex = -1;
 
+function loadPage() {
+    currentIndex = loadProgress()
+    let new_page = pages[currentIndex]
+    if (new_page) {
+        return loadScene(new_page.name, new_page.onload, new_page.ondestroy)
+    }
+}
+
 function nextPage() {
     let new_page = pages[currentIndex+1]
     if (new_page) {
         currentIndex += 1
+        saveProgress(currentIndex)
         return loadScene(new_page.name, new_page.onload, new_page.ondestroy)
     }
 }

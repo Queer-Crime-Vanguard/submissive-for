@@ -1,8 +1,21 @@
 const storeGet = (k) => JSON.parse(localStorage.getItem(k))
 const storeSet = (k, v) => localStorage.setItem(k, JSON.stringify(v))
 
+function saveProgress(index) {
+    storeSet('progress', index)
+}
+
+function loadProgress() {
+    let progress = storeGet('progress')
+    if (progress == null) {
+        storeSet('progress', 0)
+        return 0
+    } else {
+        return progress
+    }
+}
+
 function rememberBookmark(word) {
-    console.log('remember', word)
     let bookmarks = storeGet('rememberedBookmarks')
     if (bookmarks == null) {bookmarks = new Array()}
     bookmarks.push(word)

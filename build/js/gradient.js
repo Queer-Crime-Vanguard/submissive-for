@@ -1,11 +1,5 @@
 let gradient = null;
 
-function hitlogo() {
-    gradient = null
-    finishScene()
-    /*setTimeout(() => {playMusic('intro90')}, 100)*/
-}
-
 class GradientAnimation {
   constructor() {
     this.cnv        = document.querySelector(`canvas.bg`);
