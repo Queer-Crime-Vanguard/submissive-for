@@ -58,12 +58,12 @@
 -
 Лия: [наверно я все-таки не готова] #!type:imposter #shocked
 -}
-Зоя: Могу посоветовать тебе еще материал #puzzled
+Зоя: Могу посоветовать тебе еще материал проекта Девятнадцатая #puzzled
 Зоя: Советы психологини столкнувшимся с домогательствами в университете #neutral
 Зоя: Может помочь понять изнутри #neutral_2
 Зоя: Статья вызывает доверие, но авторку я не знаю #neutral
 Лия: [ну давай] #shocked
-Зоя:  <a is="ext-ref">https://doxajournal.ru/uni/harassment_guide_serenko</a> #neutral_2
+Зоя:  <a is="ext-ref">https://nineteenacademy.tilda.ws/kak_pomoch_sebe</a> #neutral_2
 : #!vibe:calm
 {-
 Лия: [почитаю] #neutral
