@@ -10,7 +10,7 @@ const Pages = {
 
     single: (name) => { return {
         name,
-        onload: () => {stopAnimation(); stopMusic(); window.cancelAnimationFrame(areq); setBg(false); initializeDialogue(); startVibe(); addChatListeners(); document.querySelector('.slide').addEventListener("click", chatProceed)},
+        onload: () => {stopAnimation(); stopMusic(); setBg(false); initializeDialogue(); startVibe(); addChatListeners(); document.querySelector('.slide').addEventListener("click", chatProceed)},
         ondestroy: () => {removeChatListeners()}
     }},
 
@@ -25,8 +25,8 @@ const Pages = {
     },
 
     flashback: {
-        name: "flashback",
-        onload: () => {stopAnimation(); stopMusic(); window.cancelAnimationFrame(areq); preloadImages(); setBg(false, true); showReflection(); playMusic('flashback', 0.2)}
+        name: "flashback", 
+        onload: () => {stopAnimation(); stopMusic(); preloadImages(); setBg(false, true); showReflection(); playMusic('flashback', -15)}
     },
 
     soup_game: {
