@@ -19,7 +19,7 @@ function getNextLine() {
         if (node) {
             return node
         } else {
-            current_branch.parentNode.classList.add('shown')
+            current_branch.parentNode.classList.add('taken')
             current_branch = null
         } 
     }
@@ -190,7 +190,6 @@ function setBubbleColor(left, color) {
 
     let root = document.documentElement
     root.style.setProperty('--' + pref + '-bubble-color', "#"+color)
-    console.log(color)
 }
 
 function initializeDialogue() {
@@ -347,6 +346,7 @@ function showBubble(currentLine, force_instant, additional_delay = 0) {
     lineNode.classList.add("typing");
     lineNode.classList.add("appeared");
     
+    /*
     if (islong) {
         let playAgain = true
         playSound('typing')
@@ -358,8 +358,8 @@ function showBubble(currentLine, force_instant, additional_delay = 0) {
                 playAgain = false
             }
         })}
-        */
-    }
+    */
+    
 
     dialogue.scrollTop = dialogue.scrollHeight;
 
@@ -417,7 +417,7 @@ function jumpToBubbleFinal(node) {
     bubble.style.width = null
     bubble.style.height = null
     lineNode.classList.remove("typing");
-    //sound('typing').pause()
+    //sound('typing').pause()  TODO stop with Tone.js
     //sound('typing').currentTime = 0
     lineNode.classList.remove("texthide");
     bubble.scrollIntoView();
