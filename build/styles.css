@@ -55,6 +55,7 @@ html, body {
 }
 
 #logo {
+    cursor: pointer;
     display: block;
     max-height: 16em;
     animation: glitch 3s linear infinite;
@@ -376,6 +377,10 @@ linemeta {
 
 #highlight-box .bubble {
     background: none;
+}
+
+components {
+    display: none;
 }
 
 components * {
