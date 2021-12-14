@@ -1,8 +1,8 @@
-let index = 0
+let refIndex = 0
 let refs = new Array()
 
 function addRef(ref) {
-    index += 1
+    refIndex += 1
     refs.push(ref)
 }
 
@@ -10,8 +10,8 @@ const conrgatsDelay = 1500
 const nextDelay = 2500
 
 function showNext() {
-    index -= 1
-    let nextRef = refs[index]
+    refIndex -= 1
+    let nextRef = refs[refIndex]
     if (nextRef) {
         document.getElementById("reference-flow").prepend(nextRef)
         nextRef.classList.remove('hidden')
