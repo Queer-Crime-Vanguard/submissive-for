@@ -60,9 +60,11 @@ let pages = new Array()
 let currentIndex = -1;
 
 function nextPage() {
-    currentIndex += 1
-    let new_page = pages[currentIndex]
-    return loadScene(new_page.name, new_page.onload, new_page.ondestroy)
+    let new_page = pages[currentIndex+1]
+    if (new_page) {
+        currentIndex += 1
+        return loadScene(new_page.name, new_page.onload, new_page.ondestroy)
+    }
 }
 
 function setPageList(newPages) {
