@@ -1,16 +1,24 @@
 let sound_cache = {}
 
-function sound(name) {
-    let cached = sound_cache[name]
-    let res = null;
-    if (cached == null) {
-        res = new Audio('assets/sound/'+name+'.ogg')
-        res.volume = 0.5
-        sound_cache[name] = res
-    } else {
-        res = cached
-    }
-    return res
+let sound_volume = -10;
+
+function cacheSound(name, callback = () => {}) {
+    let player = new Tone.Player('assets/sound/'+name+'.ogg', callback).toDestination()
+    sound_cache[name] = player
+    return player
 }
 
-['typing', 'notif', 'powerup', 'consume', 'absorb3'].forEach((n) => {sound(n)})
+function playSound(name, volume=0) {
+    let player = sound_cache[name]
+
+    if (player == null) {
+        player = cacheSound(name, () => {player.start()})
+    } else {
+        player.start()
+    }
+
+    player.volume.value = sound_volume+volume
+
+}
+
+['typing', 'notif', 'powerup', 'consume', 'absorb3'].forEach((n) => {cacheSound(n)})

@@ -136,7 +136,7 @@ function selectedOption() {
 function proceedBookmark(highlight_box) {
     animate_flyaway(highlight_box)
     rememberBookmark(highlight_box.innerText)
-    sound('absorb3').play()
+    playSound('absorb3')
     nextline(true)
     cleanHighlight()
 }
@@ -333,7 +333,7 @@ function showBubble(currentLine, force_instant, additional_delay = 0) {
                           lineNode.classList.add("positioned")
                           setEmotion(lineNode.classList.contains('left'), emoindex(meta), jump)
                           lineNode.classList.add('notified')
-                          sound('notif').play()
+                          playSound('notif')
                           lineNode.classList.add("shown");
                           currentLine.classList.add('shown')
                          },
@@ -348,20 +348,25 @@ function showBubble(currentLine, force_instant, additional_delay = 0) {
     lineNode.classList.add("appeared");
     
     if (islong) {
-        var playAgain = true;
-        sound('typing').addEventListener("ended", () => {
+        let playAgain = true
+        playSound('typing')
+        
+        /*
+        .addEventListener("ended", () => {
             if (playAgain) {
-                sound('typing').play()
+                playSound('typing')
                 playAgain = false
             }
         })}
+        */
+    }
 
     dialogue.scrollTop = dialogue.scrollHeight;
 
     positioned_TO = setTimeout(() => {
                       if (lineNode.classList.contains('blocked')) {return}
                       lineNode.classList.add("positioned");
-                      sound('typing').play()
+                      playSound('typing')
                       setEmotion(lineNode.classList.contains('left'), emoindex(meta), jump)
                       var typing_bubble_style = window.getComputedStyle(bubble, null);
                       bubble.style.width = typing_bubble_style.getPropertyValue("width");
@@ -382,7 +387,7 @@ function showBubble(currentLine, force_instant, additional_delay = 0) {
                       bubble.style.height = b_height;
                       lineNode.classList.remove("typing");
                       lineNode.classList.add('notified')
-                      sound('notif').play()
+                      playSound('notif')
     }, additional_delay + positioningDelay + typingDuration)
     
     text_appear_TO = setTimeout(() => {
@@ -412,8 +417,8 @@ function jumpToBubbleFinal(node) {
     bubble.style.width = null
     bubble.style.height = null
     lineNode.classList.remove("typing");
-    sound('typing').pause()
-    sound('typing').currentTime = 0
+    //sound('typing').pause()
+    //sound('typing').currentTime = 0
     lineNode.classList.remove("texthide");
     bubble.scrollIntoView();
     
@@ -421,7 +426,7 @@ function jumpToBubbleFinal(node) {
     // playing notif if have not
     if (!lineNode.classList.contains('notified')) {
         lineNode.classList.add('notified')
-        sound('notif').play()
+        playSound('notif')
     }
 
     // update emotion

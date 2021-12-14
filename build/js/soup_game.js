@@ -185,7 +185,7 @@ function start() {
             letter.display = 'success'
             updateUI();
             if (win) {
-                congrat = () => {sound_win.play()}
+                congrat = () => {playSound('win')}
                 setTimeout(congrat, 700);
                 setTimeout(restart_game, 1700);
             }
@@ -193,12 +193,12 @@ function start() {
             letter.display = 'wrong'
             fail_meter += 1
             if (fail_meter >= 5) {
-                sound_fail.play()
+                playSound('buzz')
                 fail = true;
                 fail_meter = 0;
                 setTimeout(restart_game, 1700);
             } else {
-                sound_wrong.play()
+                playSound('wrong', -5)
             }
         }
     }
