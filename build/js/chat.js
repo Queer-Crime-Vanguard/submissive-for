@@ -151,6 +151,7 @@ const chatProceed = () => {activateHighlight(true)}
 
 function activateHighlight(ignore_selection = false) {
     let option
+    if (optionsContainer == null) {return}
     if (ignore_selection) {
         option = optionsContainer.querySelector('.option')
     } else {
@@ -263,7 +264,12 @@ function nextline(force_instant=false) {
         }
             
     } else {
-        prepareHighlight([document.querySelector('components .button-next').cloneNode(true)])
+        let button = document.querySelector('components .button-next')
+        if (button) {
+            prepareHighlight([button.cloneNode(true)])
+        } else {
+            finishScene()
+        }
     }
 }
 
