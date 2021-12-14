@@ -57,12 +57,21 @@ function prepareHighlight(highlights) {
     highlights.forEach((h) => {
 
         if (h.classList.contains('option')) {
-            let line = h.parentNode
-            let branch = line.parentNode
+            const line = h.parentNode
+            const branch = line.parentNode
 
             if (branch.tagName == 'BRANCH') {h.branch = branch}
 
-            h.emotion = emoindex(line.querySelector('linemeta'))
+            const meta = line.querySelector('linemeta')
+
+            h.emotion = emoindex(meta)
+            const type = meta.getAttribute('type')
+
+            if (type) {
+                h.type = type
+                countType(type)
+            }
+
             h.addEventListener('mouseover', (e) => selectOption(h))
             h.addEventListener('mouseout', (e) => selectOption(null))
             h.addEventListener('click', (e) => proceedOption(h))
@@ -142,7 +151,8 @@ function proceedBookmark(highlight_box) {
 }
 
 function proceedOption(option = null) {
-    if (option) {current_branch = option.branch} 
+    if (option) {current_branch = option.branch}
+    if (option.type) {countSelectedType(option.type)}
     nextline(true)
     cleanHighlight()
 }

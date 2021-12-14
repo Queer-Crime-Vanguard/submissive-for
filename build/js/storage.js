@@ -1,8 +1,17 @@
 const storeGet = (k) => JSON.parse(localStorage.getItem(k))
 const storeSet = (k, v) => localStorage.setItem(k, JSON.stringify(v))
 
+let types = {}
+
 function saveProgress(index) {
     storeSet('progress', index)
+
+    const savedTypes = storeGet('types') || {}
+    Object.keys(types).forEach((t) => {
+        savedTypes[t] = (savedTypes[t] || 0) + types[t]
+    })
+    types = {}
+    storeSet('types', savedTypes)
 }
 
 function loadProgress() {
@@ -13,6 +22,16 @@ function loadProgress() {
     } else {
         return progress
     }
+}
+
+function countType(type) {
+    let c = types[type+'_total'] || 0
+    types[type+'_total'] = c + 1
+}
+
+function countSelectedType(type) {
+    let c = types[type] || 0
+    types[type] = c + 1
 }
 
 function rememberBookmark(word) {
