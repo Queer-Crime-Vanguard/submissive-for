@@ -39,17 +39,17 @@ const pauseDelay = 2000;
 let optionsContainer = null;
 
 function setBubbleBoxHeight() {
-    let dialogue_box = document.getElementById("dialogue-box")
-    let bubble_box = document.getElementById("bubble-box")
+    const dialogue_box = document.getElementById("dialogue-box")
+    const bubble_box = document.getElementById("bubble-box")
     
-    let dh = parseInt(window.getComputedStyle(dialogue_box).height, 10)
-    let by = parseInt(window.getComputedStyle(bubble_box).bottom, 10)
+    const dh = parseInt(window.getComputedStyle(dialogue_box).height, 10)
+    const by = parseInt(window.getComputedStyle(bubble_box).bottom, 10)
 
     bubble_box.style.height = (dh-by + "px");
 }
 
 function prepareHighlight(highlights) {
-    let highlight_box = document.getElementById('highlight-box')
+    const highlight_box = document.getElementById('highlight-box')
     optionsContainer = document.createElement('div')
 
     setBubbleBoxHeight()
