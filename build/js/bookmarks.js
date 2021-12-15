@@ -1,20 +1,11 @@
-let refIndex = 0
-let refs = new Array()
-
-function addRef(ref) {
-    refIndex += 1
-    refs.push(ref)
-}
-
 const conrgatsDelay = 1500
 const nextDelay = 2500
 
 function showNext() {
-    refIndex -= 1
-    let nextRef = refs[refIndex]
+    let nextRef = document.querySelector('bookmark-reference.willing')
     if (nextRef) {
-        document.getElementById("reference-flow").prepend(nextRef)
         nextRef.classList.remove('hidden')
+        nextRef.classList.remove('willing')
     } else {
         setTimeout(() => {
             sparkle(document.body)
@@ -37,18 +28,16 @@ class Reference extends HTMLElement {
     constructor() {
         super();
     }
-
+    
     connectedCallback() {
 
         // current bookmarks
 
-        let word = this.getAttribute('word')
+        this.word = this.getAttribute('word')
         let bookmarks = currentBookmarks()
-        let b = bookmarks.filter((b) => {return b.word == word})
+        let b = bookmarks.filter((b) => {return b.word == this.word})
 
         // rendering
-
-        this.classList.add('hidden')
 
         const template = document.querySelector("template#bookmark-reference").content
 
@@ -59,7 +48,6 @@ class Reference extends HTMLElement {
         // open  
 
         const open = () => {
-            this.classList.remove('hidden')
             this.classList.add('open')
             this.shadowRoot.querySelector('.bookmark-reference').classList.add('open')
         }
@@ -67,28 +55,34 @@ class Reference extends HTMLElement {
         // update bookmark if found
        
         if (b.length > 0) {
-
             if (b[0].researched) {
                 // open if researched
-                open()
+                this.classList.add('open')
+                this.shadowRoot.querySelector('.bookmark-reference').classList.add('open')
             } else {
-                // count this reference
-                addRef(this)
+                // if not researched but remembered it's willing to be displayed
+                this.classList.add('willing')
             }
+        } else {
+            // if not remembered dont show at all
+            this.classList.add('hidden')
         }
 
         // click event
 
-        this.addEventListener("click", () => {
-            if (this.classList.contains('open') || refs.some((e) => {return e.classList.contains('click-block')})) {
-                // if already opened or blocked -- ignore
+        const tryOpen = () => {
+            if (document.querySelector('bookmark-reference.click-block')) {
+                // if blocked -- ignore
             } else {
                 open()
-                researchBookmark(word)
+                researchBookmark(this.word)
                 //sparkle(this)
                 showNext()
+                this.removeEventListener('click', tryOpen)
             }
-        })
+        }
+
+        this.addEventListener("click", tryOpen)
 
     }
 }
