@@ -496,6 +496,10 @@ canvas.scene.blured {
     animation: pointout 3.5s ease-in-out infinite;
 }
 
+.button-next.white {
+    border: 0.15em double white;
+}
+
 @keyframes pointout {
     0%,90% {
         transform: translateX(0);
@@ -558,7 +562,7 @@ canvas.minigame {
     flex-direction: column;
     max-width: 28em;
     overflow-y: scroll;
-    height: 85vh;
+    height: 95vh;
     position: absolute;
     margin-left: auto;
     margin-right: auto;

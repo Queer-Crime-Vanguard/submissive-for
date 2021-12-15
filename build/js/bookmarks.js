@@ -1,8 +1,18 @@
 const conrgatsDelay = 1500
 const nextDelay = 2500
 
+const scrollFlow = () => {
+
+    const flow = document.getElementById('reference-flow')
+    flow.scrollTo({
+        'top': flow.scrollHeight,
+        'behavior': 'smooth'
+    })
+}
+
 function showNext() {
     let nextRef = document.querySelector('bookmark-reference.willing')
+
     if (nextRef) {
         nextRef.classList.remove('hidden')
         nextRef.classList.remove('willing')
@@ -15,20 +25,24 @@ function showNext() {
         setTimeout(() => {
             let b = document.createElement("div")
             b.classList.add("button-next")
+            b.classList.add("white")
             b.onclick = finishScene
             let p = document.createElement("p")
             p.innerText = "→"
             b.appendChild(p)
             document.getElementById("to-next").appendChild(b)
+            scrollFlow()
         }, nextDelay)
     }
+
+    scrollFlow()
 }
 
 class Reference extends HTMLElement {
     constructor() {
         super();
     }
-    
+
     connectedCallback() {
 
         // current bookmarks
@@ -62,6 +76,7 @@ class Reference extends HTMLElement {
             } else {
                 // if not researched but remembered it's willing to be displayed
                 this.classList.add('willing')
+                this.classList.add('hidden')
             }
         } else {
             // if not remembered dont show at all
