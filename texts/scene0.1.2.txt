@@ -98,7 +98,7 @@
 Зоя: Сразу могу посоветовать гайд #neutral_2
 Зоя: Как писать о харассменте в университете #neutral_2
 Лия: [ооо почитаю] #happy
-Зоя:  <a is="ext-ref">https://doxajournal.ru/uni/harassment_guide_serenko</a> #neutral_2
+Зоя: <figure><img src="assets/previews/doxa_serenko.png"> <figcaption><a is="ext-ref">https://doxajournal.ru/uni/harassment_guide_serenko</a> </figcaption></figure> #neutral_2
 Зоя: #!pause #neutral
 Зоя: Слушай... #neutral
 Лия: [м?] #wonders
