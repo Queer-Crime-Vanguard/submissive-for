@@ -274,6 +274,8 @@ const spriteCharacterProportion = 0.3
 let hideLeft = false
 let dir = 0
 
+const minOffsetAmp = 100
+
 function updateScale() {
     updateWindowParams()
     t_height = height + 2*drag
@@ -289,6 +291,7 @@ function updateScale() {
 
     // step offset amplitude for enough sprite space
     stepOffsetAmp = Math.max(characterNeededSpace-freeSideSpace, 0) || 0
+    if (stepOffsetAmp < minOffsetAmp) {stepOffsetAmp = 0}
 
     // fix stepOffset on updateScale
     stepOffset = Math.sign(stepOffset)*Math.min(Math.abs(stepOffset), stepOffsetAmp)
