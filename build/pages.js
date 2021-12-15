@@ -37,5 +37,11 @@ const Pages = {
     network: (person) => { return {
         name: "network/"+person,
         onload: () => {stopMusic()}
-    }}
+    }},
+
+    outro: {
+        name: 'outro',
+        onload: () => {stopAnimation(); stopMusic(); setBg(false); initializeDialogue(); startVibe(); addChatListeners(); document.querySelector('.slide').addEventListener("click", chatProceed); insertType()},
+        ondestroy: () => {removeChatListeners()}
+    }
 }

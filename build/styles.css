@@ -355,6 +355,11 @@ linemeta {
     background-color: white;
 }
 
+.widebubble .bubble {
+    font-size: 1.1rem !important;
+    max-width: 22em !important;
+}
+
 .bubble p {
     overflow-wrap: break-word;
     margin-top: 0;
