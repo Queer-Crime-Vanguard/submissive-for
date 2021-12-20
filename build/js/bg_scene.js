@@ -105,7 +105,7 @@ function updateFrame() {
 
     if (drawLeft) {
 
-        cr.width = width/2 + slopeStep - stepOffset;
+        cr.width = Math.max(width/2 + slopeStep - stepOffset, 1);
         cr.height = height;
 
         crx.beginPath();
@@ -116,7 +116,7 @@ function updateFrame() {
         crx.closePath();
         crx.clip();
 
-        cl.width = width/2 + slopeStep + stepOffset;
+        cl.width = Math.max(width/2 + slopeStep + stepOffset, 1);
         cl.height = height;
 
         clx.beginPath();
