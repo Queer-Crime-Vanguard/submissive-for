@@ -366,6 +366,10 @@ linemeta {
     margin-bottom: 0;
 }
 
+.bubble figure {
+    overflow-wrap: break-word;
+}
+
 .bubble a {
     color: rgb(0, 145, 145);
 }
