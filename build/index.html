@@ -67,9 +67,15 @@
   <script type="text/javascript" src="pages.js"></script>
 
   <script>
+    let hit = false
+
     function hitlogo() {
+      if (hit) {return}
+      hit = true
       gradient = null
-      loadPage()
+      let audioCtx = new (window.AudioContext || window.webkitAudioContext)
+      Tone.context = audioCtx
+      Tone.context.resume().then(loadPage)
     }
   </script>
 
