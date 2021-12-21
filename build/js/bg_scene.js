@@ -86,7 +86,7 @@ let stepOffset = 0;
 let stepOffsetAmp
 const offset_delay = 300;
 
-const side_offset = 0;
+const side_offset = 50;
 
 var lOffset = side_offset;
 var rOffset = side_offset;
