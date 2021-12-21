@@ -7,8 +7,38 @@ html, body {
     width: 100%;
     font-family: sans-serif;
     font-weight: 300;
-    font-size: 14px;
 }
+
+@media (max-width: 480px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 480px) {
+    html {
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 992px) {
+    html {
+        font-size: 17px;
+    }
+}
+
+@media (min-width: 1200px) {
+    html {
+        font-size: 18px;
+    }
+}
+
 
 #background {
     position: absolute;
@@ -17,14 +47,11 @@ html, body {
     z-index: -1;
 }
 
-@media only screen and (min-width: 768px) {
-    body {
-        font-size: 14pt;
-    }
-    
+@media (min-aspect-ratio: 3/4) {    
     #dialogue-box.single {
-        max-width: 35em;
-        transform: translate(-10em, 0);
+        right: auto;
+        width: 35em;
+        left: 10% !important;
     }
 
     #reference-flow {
@@ -156,12 +183,11 @@ html, body {
 }
 
 #dialogue-box {
-    z-index: 0;
-    position: absolute;
-    margin-left: auto;
-    margin-right: auto;
     left: 1em;
     right: 1em;
+    margin: 0 auto;
+    z-index: 0;
+    position: absolute;
     max-width: 28em;
     background-color: rgba(170,208,228, 0.5);
     top: 1em;
@@ -171,6 +197,7 @@ html, body {
 }
 
 #dialogue-box.single {
+    max-width: 28em;
     background: none;
     top: 0;
     bottom: 0;
@@ -370,7 +397,7 @@ linemeta {
 
 .widebubble .bubble {
     font-size: 1.1rem !important;
-    max-width: 22em !important;
+    max-width: 24em !important;
 }
 
 .bubble p {
