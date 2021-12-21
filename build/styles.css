@@ -47,7 +47,13 @@ html, body {
     z-index: -1;
 }
 
-@media (min-aspect-ratio: 3/4) {    
+@media (min-aspect-ratio: 3/4) {   
+    #trigger-warning-box {
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        max-width: 32em;
+    }
+    
     #dialogue-box.single {
         right: auto;
         width: 35em;
@@ -68,6 +74,10 @@ html, body {
     #reflection-box.story1 {
         left: 0;
         right: 55%;
+    }
+
+    .word-panel {
+        font-size: 2rem !important;
     }
 }
 
@@ -494,11 +504,11 @@ canvas.scene.blured {
 }
 
 #trigger-warning-box {
-    position: absolute;
+    left: 1em;
+    right: 1em;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    max-width: 28em;
+    transform: translateY(-50%);
+    position: absolute;
     background-color: rgba(255, 255, 255, 0.35);
     padding: 0 1em;
     border-radius: 0.3em;
@@ -657,7 +667,7 @@ bookmark-reference.click-block {
     border-radius: 4rem;
     text-align: center;
     font-family: 'Courier New', monospace;
-    font-size: 2rem;
+    font-size: 1.4rem;
     pointer-events: none;
 }
 
