@@ -1,5 +1,5 @@
 const stopAnimation = () => {window.cancelAnimationFrame(areq)}
-const stopMusic = () => {document.dispatchEvent(new Event('stop_playing'))}
+const stopMusic = () => {document.dispatchEvent(new Event('stop_playing')); Tone.context.resume()}
 
 const Pages = {
     scene: (v) => {return {
