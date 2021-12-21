@@ -22,6 +22,9 @@ let current_vibe = 'basic';
 let music_audio = {}
 
 function playMusic(name, volume=0) {
+
+    if (Tone.context.state !== "running") {return}
+
     let a = music_audio[name]
     if (a == null) {
         a = new Tone.Player('assets/music/'+name+'.mp3').toDestination()
@@ -39,6 +42,9 @@ const crossFadeDelay = 2
 const startStopDelay = 1
 
 function startVibe() {
+
+    if (Tone.context.state !== "running") {return}
+
     Tone.loaded().then(() => {
         mus_vibes.forEach(
             (vibe) => {
@@ -60,6 +66,9 @@ function v_d(v, d) {
 }
 
 function switchVibe(new_vibe) {
+
+    if (Tone.context.state !== "running") {return}
+
     vibes_audio[new_vibe].volume.rampTo(0, crossFadeDelay)
     vibes_audio[current_vibe].volume.rampTo(-30, crossFadeDelay)
     setTimeout(() => {vibes_audio[current_vibe].volume.mute = true}, crossFadeDelay)

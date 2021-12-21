@@ -9,6 +9,9 @@ function cacheSound(name, callback = () => {}) {
 }
 
 function playSound(name, volume=0) {
+
+    if (Tone.context.state !== "running") {return}
+
     let player = sound_cache[name]
 
     if (player == null) {
