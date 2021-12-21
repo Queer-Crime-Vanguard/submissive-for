@@ -342,9 +342,9 @@ function showBubble(currentLine, force_instant, additional_delay = 0) {
                           lineNode.classList.add("positioned")
                           setEmotion(lineNode.classList.contains('left'), emoindex(meta), jump)
                           lineNode.classList.add('notified')
-                          playSound('notif')
                           lineNode.classList.add("shown");
                           currentLine.classList.add('shown')
+                          playSound('notif')
                          },
                         additional_delay+microDelay)
         return additional_delay+microDelay;
