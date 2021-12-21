@@ -86,7 +86,7 @@ let stepOffset = 0;
 let stepOffsetAmp
 const offset_delay = 300;
 
-const side_offset = 60;
+const side_offset = 0;
 
 var lOffset = side_offset;
 var rOffset = side_offset;
@@ -149,14 +149,14 @@ const wscale = (sp) => {return sp.width*((t_height)/sp.height)}
 function draw1(totalTime) {
     // background
     ctx.drawImage(background_r, 0, -drag, width_br, t_height);
-    ctx.drawImage(background_r, drag*moveX*0.5 + width-width_br, -drag, width_br, t_height);
+    ctx.drawImage(background_r, drag*moveX*0.5 + width-width_br + widthPenalty/2, -drag, width_br, t_height);
 
     // sprite
-    ctx.drawImage(sprite_r, drag*moveX-drag + width-width_sr, drag*moveY*0.2-drag, width_sr, t_height)
+    ctx.drawImage(sprite_r, drag*moveX-drag + width-width_sr + widthPenalty/2, drag*moveY*0.2-drag, width_sr, t_height)
 
     // foregrounds
     foreground_r.forEach((f) => {
-        ctx.drawImage(f, drag*moveX*1.3 + width-width_br, -drag, width_br, t_height);
+        ctx.drawImage(f, drag*moveX*1.3 + width-width_br + widthPenalty/2, -drag, width_br, t_height);
     })
 }
 
@@ -165,20 +165,20 @@ const drag_intensity = 0.001;
 function draw2(totalTime) {
     
     // backgrounds
-    clx.drawImage(background_l, -drag*moveX*0.5 - drag - lOffset, - drag, width_bl, t_height);
-    crx.drawImage(background_r, drag*moveX*0.5 + cr.width-width_br + rOffset, -drag, width_br, t_height);
+    clx.drawImage(background_l, -drag*moveX*0.5 - drag - lOffset - widthPenalty/2, - drag, width_bl, t_height);
+    crx.drawImage(background_r, drag*moveX*0.5 + cr.width-width_br + rOffset + widthPenalty/2, -drag, width_br, t_height);
 
     // sprites
-    clx.drawImage(sprite_l, -drag*moveX - drag - lOffset, -lj + -drag*moveY*0.2 - drag, width_sl, t_height);
-    crx.drawImage(sprite_r, drag*moveX + rOffset - width_sr + cr.width, -rj + drag*moveY*0.2-drag, width_sr, t_height)
+    clx.drawImage(sprite_l, -drag*moveX - drag - lOffset - widthPenalty/2, -lj + -drag*moveY*0.2 - drag, width_sl, t_height);
+    crx.drawImage(sprite_r, drag*moveX + rOffset - width_sr + cr.width + widthPenalty/2, -rj + drag*moveY*0.2-drag, width_sr, t_height)
 
     
     // foregrounds
     foreground_l.forEach((f) => {
-        clx.drawImage(f, -drag*moveX*1.3 - drag - lOffset, - drag, width_bl, t_height);
+        clx.drawImage(f, -drag*moveX*1.3 - drag - lOffset - widthPenalty/2, - drag, width_bl, t_height);
     })
     foreground_r.forEach((f) => {
-        crx.drawImage(f, drag*moveX*1.3 + cr.width-width_br + rOffset, -drag, width_br, t_height);
+        crx.drawImage(f, drag*moveX*1.3 + cr.width-width_br + rOffset + widthPenalty/2, -drag, width_br, t_height);
     })
     
 
@@ -268,8 +268,9 @@ function animate(onProgress, duration) {
   });
 }
 
+let widthPenalty = 0
 
-const spriteCharacterProportion = 0.3
+const spriteCharacterProportion = 0.4
 
 let hideLeft = false
 let dir = 0
@@ -288,6 +289,8 @@ function updateScale() {
 
     let characterNeededSpace = spriteCharacterProportion*width_sr
     let freeSideSpace = width/2 - slopeStep
+
+    widthPenalty = Math.max(0, characterNeededSpace-width)
 
     // step offset amplitude for enough sprite space
     stepOffsetAmp = Math.max(characterNeededSpace-freeSideSpace, 0) || 0
