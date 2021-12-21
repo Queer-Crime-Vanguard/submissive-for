@@ -145,9 +145,9 @@ function selectedOption() {
 function proceedBookmark(highlight_box) {
     animate_flyaway(highlight_box)
     rememberBookmark(highlight_box.innerText)
-    playSound('absorb3')
     nextline(true)
     cleanHighlight()
+    playSound('absorb3')
 }
 
 function proceedOption(option = null) {
@@ -376,11 +376,11 @@ function showBubble(currentLine, force_instant, additional_delay = 0) {
     positioned_TO = setTimeout(() => {
                       if (lineNode.classList.contains('blocked')) {return}
                       lineNode.classList.add("positioned");
-                      playSound('typing')
                       setEmotion(lineNode.classList.contains('left'), emoindex(meta), jump)
                       var typing_bubble_style = window.getComputedStyle(bubble, null);
                       bubble.style.width = typing_bubble_style.getPropertyValue("width");
                       bubble.style.height = typing_bubble_style.getPropertyValue("height");
+                      playSound('typing')
                       }, additional_delay + microDelay)
     
     shown_TO = setTimeout(() => {
