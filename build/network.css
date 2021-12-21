@@ -9,7 +9,6 @@
 
 .network {
   font-family: 'Roboto', sans-serif;
-  font-size: 14px;
   overflow-y: scroll;
   height: 100vh;
   background-color: white;
@@ -50,7 +49,7 @@
   padding: 14px;
 }
 
-@media (min-width: 768px) {
+@media (min-aspect-ratio: 3/4) {
   .network__content {
     padding: 22px 32px;
   }
@@ -63,7 +62,7 @@
   grid-template-rows: auto;
 }
 
-@media (min-width: 768px) {
+@media (min-aspect-ratio: 3/4) {
   .network__info {
     grid-template-columns: auto 1fr;
     grid-template-rows: 1fr;
@@ -80,7 +79,7 @@
   border-radius: 50%;
 }
 
-@media (min-width: 768px) {
+@media (min-aspect-ratio: 3/4) {
   .network__avatar {
     margin: 0;
   }
@@ -98,7 +97,7 @@
   margin: 0 auto;
 }
 
-@media (min-width: 768px) {
+@media (min-aspect-ratio: 3/4) {
   .network__buttons {
     margin: 0;
   }
@@ -108,7 +107,7 @@
   background: var(--first-color);
 }
 
-@media (min-width: 768px) {
+@media (min-aspect-ratio: 3/4) {
   .network__send {
     width: 78px;
     height: 78px;
@@ -137,7 +136,7 @@
   height: 35px;
 }
 
-@media (min-width: 768px) {
+@media (min-aspect-ratio: 3/4) {
   .network__send div {
     width: 50px;
     height: 70px;
@@ -154,7 +153,7 @@
   border-radius: 38px;
 }
 
-@media (min-width: 768px) {
+@media (min-aspect-ratio: 3/4) {
   .network__action {
     min-width: 272px;
     padding: 0 18px;
@@ -167,7 +166,7 @@
   height: 17px;
 }
 
-@media (min-width: 768px) {
+@media (min-aspect-ratio: 3/4) {
   .network__action div {
     width: 50px;
     height: 35px;
@@ -180,7 +179,7 @@
   font-size: 22px;
 }
 
-@media (min-width: 768px) {
+@media (min-aspect-ratio: 3/4) {
   .network__action span {
     font-size: 30px;
   }
@@ -201,7 +200,7 @@
   margin: 18px 0;
 }
 
-@media (min-width: 768px) {
+@media (min-aspect-ratio: 3/4) {
   .network__name {
     justify-content: start;
   }
@@ -230,13 +229,13 @@
   margin: 0;
   color: var(--second-color);
   font-size: 14px;
-  line-height: 24px;
+  line-height: 18px;
 }
 
-@media (min-width: 768px) {
+@media (min-aspect-ratio: 3/4) {
   .network  p {
-    font-size: 16px;
-    line-height: 36px;
+    font-size: 18px;
+    line-height: 22px;
   }
 }
 
@@ -264,7 +263,7 @@
   font-weight: 700;
 }
 
-@media (min-width: 768px) {
+@media (min-aspect-ratio: 3/4) {
   .network  h2 {
     font-size: 32px;
   }
@@ -281,7 +280,7 @@
   font-weight: 400;
 }
 
-@media (min-width: 768px) {
+@media (min-aspect-ratio: 3/4) {
   .network__count span {
     font-size: 38px;
   }
@@ -315,7 +314,7 @@
   font-weight: normal;
 }
 
-@media (min-width: 768px) {
+@media (min-aspect-ratio: 3/4) {
   .network__icon h5 {
     font-size: 26px;
   }
@@ -346,7 +345,7 @@
   font-size: 24px;
 }
 
-@media (min-width: 768px) {
+@media (min-aspect-ratio: 3/4) {
   .network__song-info span {
     font-size: 30px;
   }
@@ -367,7 +366,7 @@
   font-size: 22px;
 }
 
-@media (min-width: 768px) {
+@media (min-aspect-ratio: 3/4) {
   .network__time {
     font-size: 30px;
   }
@@ -403,7 +402,7 @@
   border-radius: 50%;
 }
 
-@media (min-width: 768px) {
+@media (min-aspect-ratio: 3/4) {
   .network__post-avatar {
     width: 84px;
     height: 84px;
@@ -426,7 +425,7 @@
   font-weight: 700;
 }
 
-@media (min-width: 768px) {
+@media (min-aspect-ratio: 3/4) {
   .network__post-header h4 {
     font-size: 30px;
   }
@@ -437,9 +436,9 @@
   font-size: 14px;
 }
 
-@media (min-width: 768px) {
+@media (min-aspect-ratio: 3/4) {
   .network__post-header span {
-    font-size: 16px;
+    font-size: 18px;
   }
 }
 
@@ -448,13 +447,13 @@
   margin-top: 10px;
   color: var(--third-color);
   font-size: 14px;
-  line-height: 24px;
+  line-height: 18px;
 }
 
-@media (min-width: 768px) {
+@media (min-aspect-ratio: 3/4) {
   .network__post-content p {
-    font-size: 16px;
-    line-height: 40px;
+    font-size: 18px;
+    line-height: 22px;
   }
 }
 
@@ -475,9 +474,9 @@
   font-weight: 500;
 }
 
-@media (min-width: 768px) {
+@media (min-aspect-ratio: 3/4) {
   .network__post-footer span {
-    font-size: 16px;
+    font-size: 18px;
   }
 }
 
@@ -496,7 +495,7 @@
   height: 25px;
 }
 
-@media (min-width: 768px) {
+@media (min-aspect-ratio: 3/4) {
   .network__likes, .network__bubble, .network__arrow {
     width: 50px;
     height: 50px;
