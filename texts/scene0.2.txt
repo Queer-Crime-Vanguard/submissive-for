@@ -1,5 +1,5 @@
-Лия: #!init #reading #!foreground:laptop
 Зоя: #!init #neutral #!foreground:cups_laptop
+Лия: #!init #reading #!foreground:laptop
 Лия: [ну как?] #relaxed
 Лия: Оля ответила? #wonders
 Зоя: да, мы поговорили #neutral
