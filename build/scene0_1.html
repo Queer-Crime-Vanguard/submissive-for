@@ -1,0 +1,92 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>HandsOff Dialogue</title>
+  <meta name="description" content="HandsOff dialogue">
+  <meta name="author" content="HandsOff">
+</head>
+
+<body onload="setBg(); initializeDialogue(); setTrack(); startVibe()" class="audio animation background">
+  <link rel="stylesheet" href="styles.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.17/Tone.js"></script>
+
+  <script type="text/javascript" src="js/track.js"></script>
+  <script type="text/javascript" src="js/utils.js"></script>
+  <script type="text/javascript" src="js/sound.js"></script>
+  <script type="text/javascript" src="js/music.js"></script>
+  <script type="text/javascript" src="js/chat.js"></script>
+  <script type="text/javascript" src="js/bg_scene.js"></script>
+  <script type="text/javascript" src="js/finish_scene.js"></script>
+  <script type="text/javascript" src="js/storage.js"></script>
+  
+  <div id="dialogue-box">
+    <div id="bubble-box">
+      <div class="placeholder"></div>
+    </div>
+    <div id="dialogue">
+      <div class="line left init foreground">  <linemeta speaker="z" emotion="neutral" foreground="cups_laptop" bubble_color="fef9ee"></linemeta></div>
+      <div class="line right init foreground">  <linemeta speaker="s" emotion="reading" foreground="laptop" bubble_color="ffe7ec"></linemeta></div>
+      <div class="line None vibe">  <linemeta vibe="basic"></linemeta></div>
+      <div class="line right "><div class="highlight option"><p>привет!</p></div> <div class="bubble"><p>Зоя, привет!</p></div> <linemeta speaker="s" emotion="reading"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Привет, Лия!</p></div> <linemeta speaker="z" emotion="neutral"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>ты уже видела расследование про домогательства?</p></div> <linemeta speaker="s" emotion="puzzled"></linemeta></div>
+      <div class="line right instant jump"> <div class="bubble"><p><figure><img src="assets/previews/doxa_msu.jpg"> <figcaption><a is="ext-ref">https://doxajournal.ru/uni/harassment/msu_faculty_of_philology</a> </figcaption></figure></p></div> <linemeta speaker="s" emotion="pissed_2"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>На филфаке?</p></div> <linemeta speaker="z" emotion="puzzled"></linemeta></div>
+      <div class="line left instant"> <div class="bubble"><p>А, да, оно</p></div> <linemeta speaker="z" emotion="sad_2"></linemeta></div>
+      <div class="line right instant"><div class="highlight option"><p>ага</p></div> <div class="bubble"><p>ага</p></div> <linemeta speaker="s" emotion="puzzled"></linemeta></div>
+      <div class="line left instant"> <div class="bubble"><p>Да...</p></div> <linemeta speaker="z" emotion="sad"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Очень сочувствую всем девушкам(</p></div> <linemeta speaker="z" emotion="sad_2"></linemeta></div>
+      <branching><branch>
+      <div class="line right type"><div class="highlight option"><p>всем сердцем сочувствую</p></div> <div class="bubble"><p>всем сердцем сочувствую</p></div> <linemeta speaker="s" emotion="sad" type="sister"></linemeta></div>
+      </branch><branch>
+      <div class="line right type"><div class="highlight option"><p>это важный шаг</p></div> <div class="bubble"><p>это важный шаг</p></div> <linemeta speaker="s" emotion="inspired" type="activist"></linemeta></div>
+      </branch></branching>
+      <div class="line right jump"> <div class="bubble"><p>но к сожаоению не все их поддерживают</p></div> <linemeta speaker="s" emotion="pissed_2"></linemeta></div>
+      <div class="line right instant"> <div class="bubble"><p>к сожалению*</p></div> <linemeta speaker="s" emotion="pissed_2"></linemeta></div>
+      <div class="line None vibe">  <linemeta vibe="nervous"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>многие преподаватели на стороне этого профессора</p></div> <linemeta speaker="s" emotion="pissed"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>я читала жуткие комментарии знакомых</p></div> <linemeta speaker="s" emotion="pissed"></linemeta></div>
+      <div class="line left instant"> <div class="bubble"><p>Где посмотреть?!</p></div> <linemeta speaker="z" emotion="puzzled"></linemeta></div>
+      <div class="line right "><div class="highlight option"><p>под постом профессора</p></div> <div class="bubble"><p>под постом профессора</p></div> <linemeta speaker="s" emotion="pissed_2"></linemeta></div>
+      <div class="line right jump"> <div class="bubble"><p>он написал, что вся статьтя клевета</p></div> <linemeta speaker="s" emotion="mad"></linemeta></div>
+      <div class="line right instant"> <div class="bubble"><p>статья*</p></div> <linemeta speaker="s" emotion="mad"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Но там против него есть доказательства...</p></div> <linemeta speaker="z" emotion="puzzled"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>комментаторов это не интересует</p></div> <linemeta speaker="s" emotion="pissed_2"></linemeta></div>
+      <div class="line right instant"> <div class="bubble"><p>им бы только порассуждать 🙄</p></div> <linemeta speaker="s" emotion="pissed"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Про "новую этику"?</p></div> <linemeta speaker="z" emotion="mad"></linemeta></div>
+      <div class="line right type"><div class="highlight option"><p>о да</p></div> <div class="bubble"><p>о да</p></div> <linemeta speaker="s" emotion="pissed_2" type="ironic"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>я в шоке от комментария моего руководителя практики</p></div> <linemeta speaker="s" emotion="mad"></linemeta></div>
+      <div class="line right "> <div class="bubble"><p>он считает что одна из студенток откровенно одевалась</p></div> <linemeta speaker="s" emotion="pissed"></linemeta></div>
+      <div class="line right instant"> <div class="bubble"><p>"сама напросилась"</p></div> <linemeta speaker="s" emotion="mad"></linemeta></div>
+      <div class="line left "> <div class="bubble"><p>Классический виктимблейминг (</p></div> <linemeta speaker="z" emotion="sad_2"></linemeta></div>
+      <div class="line right pause">  <linemeta speaker="s" emotion="neutral"></linemeta></div>
+      <div class="line right "><div class="highlight bookmark"><p>виктимблейминг</p></div> <div class="bubble"><p>@виктимблейминг</p></div> <linemeta speaker="s" emotion="neutral"></linemeta></div>
+      <div class="line None vibe">  <linemeta vibe="calm"></linemeta></div>
+      <branching><branch>
+      <div class="line right type"><div class="highlight option"><p>ты как всегда</p></div> <div class="bubble"><p>ты как всегда</p></div> <linemeta speaker="s" emotion="relaxed" type="ironic"></linemeta></div>
+      <div class="line right instant"> <div class="bubble"><p>сыпешь умными терминами</p></div> <linemeta speaker="s" emotion="neutral"></linemeta></div>
+      </branch><branch>
+      <div class="line right "><div class="highlight option"><p>что-что?</p></div> <div class="bubble"><p>что-что?</p></div> <linemeta speaker="s" emotion="puzzled"></linemeta></div>
+      </branch></branching>
+      <div class="line right "> <div class="bubble"><p>теперь придется гуглить виктимблейминг...</p></div> <linemeta speaker="s" emotion="wonders"></linemeta></div>
+      <div class="line right "><div class="highlight option"><p>👀</p></div> <div class="bubble"><p>👀</p></div> <linemeta speaker="s" emotion="wonders"></linemeta></div>
+    </div>
+    <div id="highlight-box" ></div>
+  </div>
+  
+  <components>
+    <div class="wave">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+    <div class="button-next" onclick="finishScene();">
+      <p>→</p>
+    </div>
+  </components>
+</body>
+</html>
