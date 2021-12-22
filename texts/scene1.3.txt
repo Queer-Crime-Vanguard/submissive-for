@@ -1,5 +1,6 @@
+Оля: #!init #neutral
 Лия: #!init #reading #!foreground:laptop
-Оля: #!init #neutral 
+: #!vibe:basic
 Лия: [Оля, привет] #neutral
 Лия: я прочитала твою историю #wonders
 Лия: собираюсь написать главному редактору #wonders

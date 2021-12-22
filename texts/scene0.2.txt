@@ -1,9 +1,11 @@
 Зоя: #!init #neutral #!foreground:cups_laptop
 Лия: #!init #reading #!foreground:laptop
+: #!vibe:basic
 Лия: [ну как?] #relaxed
 Лия: Оля ответила? #wonders
 Зоя: да, мы поговорили #neutral
 Зоя: Она согласна! #neutral
+: #!vibe:insight
 Зоя: Пиши ей скорее #!instant #happy
 {-
 Лия: [ура] #neutral
