@@ -210,7 +210,7 @@
   width: fit-content;
   margin: 0 10px 0 0;
   color: var(--first-color);
-  font-size: 38px;
+  font-size: 32px;
   font-weight: 700;
 }
 
@@ -259,13 +259,13 @@
 .network h2 {
   margin: 0 0 10px 0;
   color: var(--third-color);
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 700;
 }
 
 @media (min-aspect-ratio: 3/4) {
   .network  h2 {
-    font-size: 32px;
+    font-size: 28px;
   }
 }
 
@@ -274,9 +274,9 @@
 }
 
 .network__count span {
-  margin-left: 14px;
+  margin-left: 8px;
   color: var(--third-color);
-  font-size: 30px;
+  font-size: 24px;
   font-weight: 400;
 }
 
@@ -381,7 +381,7 @@
 
 .network__post {
   padding: 20px;
-  border-radius: 39px;
+  border-radius: 14px;
   box-shadow: 0 1px 4px 1px rgba(0, 0, 0, .25);
 }
 
