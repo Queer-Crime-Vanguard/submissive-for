@@ -1,5 +1,6 @@
 function vibe_audio(name) {
     let a = new Tone.Player('assets/music/vibes/'+name+'.mp3').toDestination();
+    a.loop = true;
     a.volume.value = -30
     a.volume.mute = true;
 
@@ -68,6 +69,8 @@ function v_d(v, d) {
 function switchVibe(new_vibe) {
 
     if (Tone.context.state !== "running") {return}
+
+    if (new_vibe == current_vibe) {return}
 
     vibes_audio[new_vibe].volume.rampTo(0, crossFadeDelay)
     vibes_audio[current_vibe].volume.rampTo(-30, crossFadeDelay)
