@@ -63,7 +63,7 @@
 Зоя: Может помочь понять изнутри #neutral_2
 Зоя: Статья вызывает доверие, но авторку я не знаю #neutral
 Лия: [ну давай] #shocked
-Зоя: <figure><img src="assets/previews/19_help.png"> <figcaption><a is="ext-ref">https://nineteenacademy.tilda.ws/kak_pomoch_sebe</a> </figcaption></figure> #neutral_2
+Зоя: <figure><img src="assets/previews/19_help.jpg"> <figcaption><a is="ext-ref">https://nineteenacademy.tilda.ws/kak_pomoch_sebe</a> </figcaption></figure> #neutral_2
 : #!vibe:calm
 {-
 Лия: [почитаю] #neutral
