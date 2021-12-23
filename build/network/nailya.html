@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <title>Social Network</title>
-    <link href="./assets/styles/normalize.css" rel="stylesheet" />
-    <link href="./assets/styles/style.css" rel="stylesheet" />
+    <link href="/network.css" rel="stylesheet" />
+    <link href="/styles.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,30 +16,38 @@
     <div class="network">
       <header class="network__header">
         <a href="#" class="network__logo">
-          <img src="./assets/images/logo.svg" alt="logo cloud" />
+          <img src="/assets/images/logo.svg" alt="logo cloud" />
         </a>
 
         <a href="#" class="network__avatar-small">
-          <img src="./assets/images/avatar-small.jpg" alt="user avatar" />
+          <img src="/assets/images/avatar-small.jpg" alt="user avatar" />
         </a>
       </header>
       <main class="network__content">
         <section class="network__info">
           <div class="network__avatar">
-            <img src="./assets/images/nailya.jpg" alt="user avatar" />
+            <img src="/assets/images/nailya.jpg" alt="user avatar" />
           </div>
 
           <div class="network__main-info">
             <div class="network__buttons">
               <button class="network__action network__send"  onclick="finishScene()">
                 <div>
-                  <img src="./assets/images/send.png" alt="envelope" />
+                  <img src="/assets/images/send.png" alt="envelope" />
                 </div>
                 <span>Написать</span>
               </button>
               
             </div>
-
+          
+            <div class="network__name">
+              <h1>Наиля Садыкова</h1>
+              <div class="network__mark network__mark-active"></div>
+            </div>
+            <p>@nailyasad</p>
+            <p>Все на конференцию молодых ученых!</p>
+          </div>
+        </section>
 
 
         <section class="network__description">
@@ -66,35 +74,35 @@
           <div class="network__icons">
             <div class="network__icon">
               <div>
-                <img src="./assets/images/user-4.jpg" alt="user avatar" />
+                <img src="/assets/images/user-4.jpg" alt="user avatar" />
               </div>
               <h5>Кое Кто</h5>
             </div>
 
             <div class="network__icon">
               <div>
-                <img src="./assets/images/liza.jpeg" alt="user avatar" />
+                <img src="/assets/images/liza.jpeg" alt="user avatar" />
               </div>
               <h5>Елизавета Власова</h5>
             </div>
 
             <div class="network__icon">
               <div>
-                <img src="./assets/images/volodya.jpg" alt="user avatar" />
+                <img src="/assets/images/volodya.jpg" alt="user avatar" />
               </div>
               <h5>Владимир Метёлкин</h5>
             </div>
 
             <div class="network__icon">
               <div>
-                <img src="./assets/images/ava_cat.jpeg" alt="user avatar" />
+                <img src="/assets/images/ava_cat.jpeg" alt="user avatar" />
               </div>
               <h5>Кило Мяу</h5>
             </div>
 
             <div class="network__icon">
               <div>
-                <img src="./assets/images/osip.jpg" alt="user avatar" />
+                <img src="/assets/images/osip.jpg" alt="user avatar" />
               </div>
               <h5>Осип М.</h5>
             </div>
@@ -113,7 +121,7 @@
           <div class="network__post">
             <div class="network__post-main">
               <div class="network__post-avatar">
-                <img src="./assets/images/nailya.jpg" alt="user avatar" />
+                <img src="/assets/images/nailya.jpg" alt="user avatar" />
               </div>
               <div class="network__post-content">
                 <div class="network__post-header">
@@ -129,17 +137,17 @@
 
             <div class="network__post-footer">
               <div class="network__likes">
-                <img src="./assets/images/empty-heart.png" alt="heart" />
+                <img src="/assets/images/empty-heart.png" alt="heart" />
               </div>
              
 
               <div class="network__bubble">
-                <img src="./assets/images/bubble.jpg" alt="bubble" />
+                <img src="/assets/images/bubble.jpg" alt="bubble" />
               </div>
               <span>10</span>
 
               <div class="network__arrow">
-                <img src="./assets/images/arrow.jpg" alt="arrow" />
+                <img src="/assets/images/arrow.jpg" alt="arrow" />
               </div>
             </div>
           </div>
@@ -147,7 +155,7 @@
           <div class="network__post">
             <div class="network__post-main">
               <div class="network__post-avatar">
-                <img src="./assets/images/nailya.jpg" alt="user avatar" />
+                <img src="/assets/images/nailya.jpg" alt="user avatar" />
               </div>
               <div class="network__post-content">
                 <div class="network__post-header">
@@ -175,7 +183,6 @@
               <div class="network__post-content">
                 <div class="network__post-header">
                   <h4>Наиля Садыкова</h4>
-<!-- 
                   <span>01 Января 00:00</span>
  -->
                 </div>
@@ -186,17 +193,17 @@
 
             <div class="network__post-footer">
               <div class="network__likes">
-                <img src="./assets/images/empty-heart.png" alt="heart" />
+                <img src="/assets/images/empty-heart.png" alt="heart" />
               </div>
               
 
               <div class="network__bubble">
-                <img src="./assets/images/bubble.jpg" alt="bubble" />
+                <img src="/assets/images/bubble.jpg" alt="bubble" />
               </div>
               <span>12</span>
 
               <div class="network__arrow">
-                <img src="./assets/images/arrow.jpg" alt="arrow" />
+                <img src="/assets/images/arrow.jpg" alt="arrow" />
               </div>
             </div>
           </div>
@@ -204,7 +211,7 @@
           <div class="network__post">
             <div class="network__post-main">
               <div class="network__post-avatar">
-                <img src="./assets/images/nailya.jpg" alt="user avatar" />
+                <img src="/assets/images/nailya.jpg" alt="user avatar" />
               </div>
               <div class="network__post-content">
                 <div class="network__post-header">
@@ -229,17 +236,17 @@
 
             <div class="network__post-footer">
               <div class="network__likes">
-                <img src="./assets/images/empty-heart.png" alt="heart" />
+                <img src="/assets/images/empty-heart.png" alt="heart" />
               </div>
               
 
               <div class="network__bubble">
-                <img src="./assets/images/bubble.jpg" alt="bubble" />
+                <img src="/assets/images/bubble.jpg" alt="bubble" />
               </div>
               <span>28</span>
 
               <div class="network__arrow">
-                <img src="./assets/images/arrow.jpg" alt="arrow" />
+                <img src="/assets/images/arrow.jpg" alt="arrow" />
               </div>
             </div>
           </div>
@@ -247,7 +254,7 @@
           <div class="network__post">
             <div class="network__post-main">
               <div class="network__post-avatar">
-                <img src="./assets/images/nailya.jpg" alt="user avatar" />
+                <img src="/assets/images/nailya.jpg" alt="user avatar" />
               </div>
               <div class="network__post-content">
                 <div class="network__post-header">
@@ -263,17 +270,17 @@
 
             <div class="network__post-footer">
               <div class="network__likes">
-                <img src="./assets/images/empty-heart.png" alt="heart" />
+                <img src="/assets/images/empty-heart.png" alt="heart" />
               </div>
               
 
               <div class="network__bubble">
-                <img src="./assets/images/bubble.jpg" alt="bubble" />
+                <img src="/assets/images/bubble.jpg" alt="bubble" />
               </div>
               <span>40</span>
 
               <div class="network__arrow">
-                <img src="./assets/images/arrow.jpg" alt="arrow" />
+                <img src="/assets/images/arrow.jpg" alt="arrow" />
               </div>
             </div>
           </div>
