@@ -11,34 +11,13 @@
   <link rel="icon" href="handsoff_logo_favicon.png" type="image/x-icon"/>
   <link rel="shortcut icon" href="handsoff_logo_favicon.png" type="image/x-icon"/>
 
-  <!-- plausible analytics -->
-  <script defer data-domain="handsoff.doxajournal.ru" src="https://plausible.io/js/plausible.js"></script>
+  <!-- kilomeow <3 -->
 
 </head>
 
 <body onload="startGradient(); setTrack(); setPageList(
   [
-    Pages.trigger_warning,
-    Pages.single('intro'),
-    Pages.scene('0_1'),
-    Pages.bookmarks,
-    Pages.scene('0_1_2'),
-    Pages.network('zoya1'),
-    Pages.scene('0_2'),
-    Pages.network('olya'),
-    Pages.scene('1_1'),
-    Pages.bookmarks,
-    Pages.scene('1_2'),
-    Pages.flashback,
-    Pages.scene('1_3'),
-    Pages.network('zoya2'),
-    Pages.scene('2_1'),
-    Pages.soup_game,
-    Pages.scene('2_2'),
-    Pages.network('nailya'),
-    Pages.scene('3_1'),
-    Pages.bookmarks,
-    Pages.outro
+    Pages.queerdisaster
   ]
 )">
 
@@ -79,7 +58,11 @@
       gradient = null
       let audioCtx = new (window.AudioContext || window.webkitAudioContext)
       Tone.context = audioCtx
-      Tone.context.resume().then(loadPage)
+      Tone.context.resume().then(() => {
+        playMusic('2')
+        loadPage()
+      }
+        )
     }
   </script>
 
@@ -87,7 +70,7 @@
     <canvas id="background" class="bg"></canvas>
     <div class="slide">
         <div id="logo-container">
-            <img id="logo" src="assets/logo.svg" onclick="hitlogo()">
+            <img id="logo" src="sumbissive_for.svg" onclick="hitlogo()">
         </div>
     </div>
 </div>

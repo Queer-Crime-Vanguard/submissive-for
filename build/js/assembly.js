@@ -60,19 +60,20 @@ let pages = new Array()
 let currentIndex = -1;
 
 function loadPage() {
-    currentIndex = loadProgress()
-    let new_page = pages[currentIndex]
+    let new_page = pages[0]
     if (new_page) {
-        return loadScene(new_page.name, new_page.onload, new_page.ondestroy)
+        return loadScene(new_page.name(), new_page.onload, new_page.ondestroy)
     }
 }
 
 function nextPage() {
-    let new_page = pages[currentIndex+1]
+    let new_page = pages[0]
     if (new_page) {
         currentIndex += 1
         saveProgress(currentIndex)
-        return loadScene(new_page.name, new_page.onload, new_page.ondestroy)
+        let pageName =  new_page.name()
+        console.log(pageName)
+        return loadScene(pageName, new_page.onload, new_page.ondestroy)
     }
 }
 

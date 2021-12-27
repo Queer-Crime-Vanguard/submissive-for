@@ -1,47 +1,26 @@
 const stopAnimation = () => {window.cancelAnimationFrame(areq)}
 const stopMusic = () => {document.dispatchEvent(new Event('stop_playing'))}
 
+// to be implemented in queer communism
+const destroyGender = () => {}
+
+// already implemented
+const embraceYourBecoming = () => {console.log(
+    `It doesn't matter 
+    What you create 
+    If you have no fun 
+    Pretty girl 
+    Put down your pen 
+    Come over here 
+    I'll show you how its done 
+    https://youtu.be/ANmL7LvNzdw
+`)}
+
+
 const Pages = {
-    scene: (v) => {return {
-        name: "scene"+v,
-        onload: () => {stopAnimation(); stopMusic(); setBg(); initializeDialogue(); startVibe(); addChatListeners()},
-        ondestroy: () => {removeChatListeners()}
-    }},
-
-    single: (name) => { return {
-        name,
-        onload: () => {stopAnimation(); stopMusic(); setBg(false); initializeDialogue(); startVibe(); addChatListeners(); document.querySelector('.slide').addEventListener("click", chatProceed)},
-        ondestroy: () => {removeChatListeners()}
-    }},
-
-    bookmarks: {
-        name: "bookmarks",
-        onload: () => {stopAnimation(); setBg(false); preloadBackground(false, 's'); addForeground(false, 's', 'laptop'); sendEmotion(false, 's:neutral'); showNext()}
-    },
-
-    trigger_warning: {
-        name: "trigger_warning",
-        onload: () => {}
-    },
-
-    flashback: {
-        name: "flashback", 
-        onload: () => {stopAnimation(); stopMusic(); preloadImages(); setBg(false, true); showReflection(); playMusic('flashback', -15)}
-    },
-
-    soup_game: {
-        name: "soup_game",
-        onload: () => {stopAnimation(); stopMusic(); startSoupGame()}
-    },
-
-    network: (person) => { return {
-        name: "network/"+person,
-        onload: () => {stopMusic()}
-    }},
-
-    outro: {
-        name: 'outro',
-        onload: () => {stopAnimation(); stopMusic(); setBg(false); initializeDialogue(); startVibe(); addChatListeners(); document.querySelector('.slide').addEventListener("click", chatProceed); insertType()},
-        ondestroy: () => {removeChatListeners()}
+    queerdisaster: {
+        name: () => {return "roditel3/"+(1+Math.floor(Math.random()*18))},
+        onload: () => {embraceYourBecoming()},
+        ondestroy: () => {destroyGender();}
     }
 }

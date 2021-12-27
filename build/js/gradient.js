@@ -61,7 +61,7 @@ class Circle {
           gradient.addColorStop(0, this.firstColor);
           gradient.addColorStop(1, this.secondColor);
 
-    ctx.globalCompositeOperation = `overlay`;
+    ctx.globalCompositeOperation = `new-content`;
     ctx.fillStyle = gradient;
     ctx.beginPath();
     ctx.arc(x, y, this.radius, 0, Math.PI * 2);

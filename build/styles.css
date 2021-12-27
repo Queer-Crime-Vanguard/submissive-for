@@ -1,4 +1,5 @@
 html, body {
+    background-color: rgba(0, 0, 0, 0.3);
     margin: 0%;
     padding: 0%;
     height: 100%;
@@ -7,6 +8,10 @@ html, body {
     width: 100%;
     font-family: sans-serif;
     font-weight: 300;
+}
+
+.queerdisaster {
+    width: 20em;
 }
 
 @media (max-width: 480px) {
@@ -87,9 +92,8 @@ html, body {
     height: 100%;
     left: 0;
     top: 0;
-    opacity: 0.5;
+    opacity: 1;
     z-index: 1;
-    mix-blend-mode: exclusion;
     transition: opacity 1s linear;
 }
 
@@ -100,8 +104,8 @@ html, body {
 #logo-container {
     position: absolute;
     display: block;
-    width: 16em;
-    height: 16em;
+    width: 26em;
+    height: 26em;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -111,7 +115,7 @@ html, body {
 #logo {
     cursor: pointer;
     display: block;
-    max-height: 16em;
+    max-height: 26em;
     animation: glitch 3s linear infinite;
     width: 100%;
     opacity: 0.75;
@@ -126,7 +130,7 @@ html, body {
     transform: translate(-3px,0) skew(0deg);
   }
   62%{
-    transform: translate(0,0) skew(5deg); 
+    transform: translate(-130px,0) skew(15deg); 
   }
 }
 
